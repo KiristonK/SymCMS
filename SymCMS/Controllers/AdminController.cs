@@ -13,6 +13,7 @@ namespace SymCMS.Controllers
     public class AdminController : Controller
     {
         private PostService _postService = new PostService();
+
         public ActionResult Index()
         {
             return RedirectToAction("Panel");
@@ -105,6 +106,20 @@ namespace SymCMS.Controllers
         {
             _postService.RemovePost(id);
             return RedirectToAction("PostsView");
+        }
+
+        public ViewResult CreatePostData()
+        {
+            var categories = _postService.GetCategories();
+            ViewData["Categories"] = categories;
+            return View("~/Views/Admin/CreatePost.cshtml");
+        }
+
+
+        public PartialViewResult CategorySelectModal()
+        {
+            ViewBag.ExCategories = new SelectList(_postService.GetCategories());
+            return PartialView("~/Views/Shared/_CategorySelectModal.cshtml");
         }
 
     }

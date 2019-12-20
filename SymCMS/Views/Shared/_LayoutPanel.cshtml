@@ -82,80 +82,101 @@
                     </div>
                 </div>
 
-                <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Site map</p>
+                <div class="col">
+                    
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleSitemap" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Site map</p>
+                        </button>
+                       
+                            <div class="collapse" id="navbarToggleSitemap">
+                                <ul class="nav flex-column bg-white mb-0">
+                                    <li class="nav-item">
+                                        <a href="/Home/Index/" class="nav-link text-dark font-italic bg-light">
+                                            <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Home/About/" class="nav-link text-dark font-italic bg-light">
+                                            <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                                            About
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Home/Contact/" class="nav-link text-dark font-italic bg-light">
+                                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                                            Contact
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/PostModels/" class="nav-link text-dark font-italic bg-light">
+                                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                                            Blog
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                      
 
-                <ul class="nav flex-column bg-white mb-0">
-                    <li class="nav-item">
-                        <a href="/Home/Index/" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/Home/About/" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-                            About
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/Home/Contact/" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                            Contact
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/PostModels/" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                            Blog
-                        </a>
-                    </li>
-                </ul>
+                    
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePosts" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Posts</p>
+                        </button>
+                      
+                            <div class="collapse" id="navbarTogglePosts">
+                                <ul class="nav flex-column bg-white mb-0">
+                                    <li class="nav-item">
+                                        <a href="/Admin/CreatePost" class="nav-link text-dark font-italic bg-light">
+                                            <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                                            New post
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Admin/PostsView" class="nav-link text-dark font-italic bg-light">
+                                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                                            Show all posts
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link text-dark font-italic bg-light">
+                                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                                            Edit posts
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        
+                 
 
-                <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Posts</p>
-
-                <ul class="nav flex-column bg-white mb-0">
-                    <li class="nav-item">
-                        <a href="/Admin/CreatePost" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-                            New post
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/Admin/PostsView" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                            Show all posts
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                            Edit posts
-                        </a>
-                    </li>
-                </ul>
-
-                <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Pages</p>
-
-                <ul class="nav flex-column bg-white mb-0">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
-                            New page
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
-                            All pages
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-dark font-italic bg-light">
-                            <i class="fa fa-pie-chart mr-3 text-primary fa-fw"></i>
-                            Edit pages
-                        </a>
-                    </li>
-                </ul>
+                    
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePages" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0" style="width:inherit;">Pages</p>
+                        </button>
+                        
+                            <div class="collapse" id="navbarTogglePages">
+                                <ul class="nav flex-column bg-white mb-0">
+                                     <li class="nav-item">
+                                         <a href="#" class="nav-link text-dark font-italic bg-light">
+                                             <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
+                                             New page
+                                         </a>
+                                     </li>
+                                     <li class="nav-item">
+                                         <a href="#" class="nav-link text-dark font-italic bg-light">
+                                             <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
+                                             All pages
+                                         </a>
+                                     </li>
+                                     <li class="nav-item">
+                                         <a href="#" class="nav-link text-dark font-italic bg-light">
+                                             <i class="fa fa-pie-chart mr-3 text-primary fa-fw"></i>
+                                             Edit pages
+                                         </a>
+                                     </li>
+                                </ul>
+                            </div>
+                     
+                </div>
             </div>
             <div class="row">
                 <div class="page-content p-5" id="content">
@@ -165,11 +186,11 @@
                     @RenderBody()
                     <hr />
                     <footer class="justify-content-center">
-                        <p>&copy; @DateTime.Now.Year - SymCMS</p>
+                          <p>&copy; @DateTime.Now.Year - SymCMS</p>
                     </footer>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

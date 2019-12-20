@@ -17,6 +17,8 @@ namespace SymCMS.ViewModels
             this.Title = postModel.Title;
             this.Content = postModel.Content;
             this.Visible = postModel.Visible;
+            this.CategoryId = postModel.CategoryId;
+            this.Category = postModel.Category;
         }
 
         public int Id { get; set; }
@@ -25,5 +27,8 @@ namespace SymCMS.ViewModels
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public bool Visible { get; set; }
+        public int CategoryId { get; set; }
+        public PostCategory Category { get; set; }
+
     }
 }

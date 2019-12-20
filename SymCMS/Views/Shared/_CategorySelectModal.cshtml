@@ -1,0 +1,26 @@
+﻿<!-- Modal -->
+
+<div class="modal fade" id="modal-url" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form class="selectionForm--Customer">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Wybierz klienta z bazy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="select2-modal-body">
+                    Jeżeli nie znajdziesz klienta na liście - możesz wpisać dane ręcznie w formularzu.
+                    <hr />
+                    @Html.DropDownList("ExCust", null, htmlAttributes: new { @class = "form-control select2-modal" })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-success">Wybierz</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -78,5 +78,11 @@ namespace SymCMS.Services
             _db.SaveChanges();
             return true;
         }
+
+
+        public List<PostCategory> GetCategories()
+        {
+            return _db.PostCategories.ToList();
+        }
     }
 }

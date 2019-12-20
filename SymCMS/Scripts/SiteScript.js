@@ -1,6 +1,5 @@
 ﻿
 $(document).ready(function () {
-
     $('textarea').autoResize();
 });
 
@@ -15,6 +14,50 @@ $('.post_visibility').change(function () {
     });
 });
 
+
+function createCategory() {
+    var e = document.getElementById("selectCategory");
+    if (e.options[e.selectedIndex].value == 0) {
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+
+        modal.style.display = "block";
+      
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        //var catName = prompt("Please enter category name: ", "My Category");
+        //if (catName == null || catName == "") {
+        //    //<div class="alert alert-danger" role="alert">
+        //    //    Category name can not be empty !
+        //    //</div>
+        //    alert("Category name can not be empty !");
+        //}
+        //else {
+        //    var option = document.createElement("option");
+        //    option.text = catName;
+        //    var categories = paramview;
+        //    e.add(option);
+        //    e.selectedIndex = 0;
+        //}
+    } else {
+        
+    }
+   
+}
 
 
 (function ($) {
