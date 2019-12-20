@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using SymCMS.DAL;
+using SymCMS.Models;
 using SymCMS.Services.Interfaces;
 using SymCMS.ViewModels;
 
@@ -17,15 +19,19 @@ namespace SymCMS.Services
             _db.PostModels.Add(new Models.PostModel()
             {
                 Title = postViewModel.Title,
-                Content = postViewModel.Content
+                Content = postViewModel.Content,
+                Visible = postViewModel.Visible
             });
             _db.SaveChanges();
             return true;
         }
 
-        public PostViewModel EditPost(int id)
+        public PostViewModel EditPost(PostViewModel postViewModel)
         {
-            return null;
+            var postModel = new PostModel(postViewModel);
+            _db.Entry(postModel).State = EntityState.Modified;
+            _db.SaveChanges();
+            return new PostViewModel(postModel);
         }
 
         public PostViewModel GetPost(int id)
@@ -36,10 +42,17 @@ namespace SymCMS.Services
                 return new PostViewModel() {
                     Id = post.Id,
                     Title = post.Title,
-                    Content = post.Content
+                    Content = post.Content,
+                    Visible = post.Visible
                 };
             }
             return null;
+        }
+
+        public void UpdateVisibility(PostViewModel postViewModel)
+        {
+            _db.PostModels.Find(postViewModel.Id).Visible = postViewModel.Visible;
+            _db.SaveChanges();
         }
 
         public List<PostViewModel> GetPosts()
@@ -51,10 +64,19 @@ namespace SymCMS.Services
                 {
                     Id = post.Id,
                     Title = post.Title,
-                    Content = post.Content
+                    Content = post.Content,
+                    Visible = post.Visible
                 });
             }
             return posts;
+        }
+
+        public bool RemovePost(int id)
+        {
+            var postModel = _db.PostModels.Find(id);
+            _db.PostModels.Remove(postModel);
+            _db.SaveChanges();
+            return true;
         }
     }
 }

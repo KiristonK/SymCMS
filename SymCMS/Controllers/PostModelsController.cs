@@ -51,7 +51,7 @@ namespace SymCMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content")] PostViewModel postViewModel)
+        public ActionResult Create([Bind(Include = "Id,Title,Content,Visible")] PostViewModel postViewModel)
         {
             if (ModelState.IsValid)
             { 
@@ -69,7 +69,7 @@ namespace SymCMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PostModel postModel = _db.PostModels.Find(id);
+            PostViewModel postModel = _db.PostViewModels.Find(id);
             if (postModel == null)
             {
                 return HttpNotFound();
@@ -82,12 +82,11 @@ namespace SymCMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content")] PostModel postModel)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content")] PostViewModel postModel)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(postModel).State = EntityState.Modified;
-                _db.SaveChanges();
+                postModel = _postService.EditPost(postModel);
                 return RedirectToAction("Index");
             }
             return View(postModel);

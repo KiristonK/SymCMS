@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SymCMS.ViewModels.PostViewModel>
+
+@{
+    ViewBag.Title = "PostsView";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<h2>PostsView</h2>
+
+<form action="/Admin/CreatePost">
+    <button class="btn btn-primary rounded-pill m-3">Create new post</button>
+</form>
+<div class="justify-content-between">
+    <table class="table table-bordered table-hover table-success" id="posts">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width:150px;">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Visible)
+                </th>
+                <th  style="min-width:270px; max-width:270px;"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        <div class="switch_box box_1">
+                            <input type="checkbox" class="switch_1 post_visibility" data-postid="@item.Id" @if (item.Visible)
+                            {<text>checked</text> }/>
+                        </div>
+                    </td>
+                    <td>
+                    <div class="row mx-2">
+                                <form action="/Admin/Details/@item.Id">
+                                    <input type="submit" class="btn btn-outline-primary rounded mr-2" value="Details" />
+                                </form>
+                           
+                                <form action="/Admin/Edit/@item.Id">
+                                    <input type="submit" class="btn btn-outline-secondary rounded mr-2" value="Edit" />
+                                </form>
+                          
+                                <form action="/Admin/Delete/@item.Id">
+                                    <input type="submit" class="btn btn-outline-danger rounded mr-2" value="Delete" />
+                                </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

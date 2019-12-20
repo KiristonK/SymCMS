@@ -10,8 +10,10 @@ namespace SymCMS.Services.Interfaces
     interface IPostService
     {
         bool AddPost(PostViewModel postViewModel);
-        PostViewModel EditPost(int id);
+        PostViewModel EditPost(PostViewModel postViewModel);
         PostViewModel GetPost(int id);
         List<PostViewModel> GetPosts();
+
+        bool RemovePost(int id);
     }
 }

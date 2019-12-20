@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\PostModelsController.cs" />
     <Compile Include="DAL\SymDbContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -200,6 +201,14 @@
     <Compile Include="Migrations\201912181358585_roles.cs" />
     <Compile Include="Migrations\201912181358585_roles.designer.cs">
       <DependentUpon>201912181358585_roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912191019410_test.cs" />
+    <Compile Include="Migrations\201912191019410_test.designer.cs">
+      <DependentUpon>201912191019410_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912191027599_visible.cs" />
+    <Compile Include="Migrations\201912191027599_visible.designer.cs">
+      <DependentUpon>201912191027599_visible.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -260,6 +269,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\SiteScript.js" />
     <Content Include="Scripts\src\index.js" />
     <Content Include="Scripts\src\methods\defaults.js" />
     <Content Include="Scripts\src\methods\destroy.js" />
@@ -376,11 +386,17 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Shared\_LayoutNewPage.cshtml" />
-    <Content Include="Views\Admin\AdminPanel.cshtml" />
+    <Content Include="Views\Shared\_LayoutPanel.cshtml" />
+    <Content Include="Views\Admin\Panel.cshtml" />
+    <Content Include="Views\Admin\PostsView.cshtml" />
+    <Content Include="Views\Admin\CreatePost.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Panel\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -402,6 +418,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912181358585_roles.resx">
       <DependentUpon>201912181358585_roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912191019410_test.resx">
+      <DependentUpon>201912191019410_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912191027599_visible.resx">
+      <DependentUpon>201912191027599_visible.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

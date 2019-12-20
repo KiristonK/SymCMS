@@ -1,22 +1,19 @@
 ﻿@model SymCMS.ViewModels.PostViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "CreatePost";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Post creation</h2>
 
-
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>PostModel</h4>
+    <div class="form-group">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -26,27 +23,29 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control content_style", @rows = "3" } })
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
+            <div class="switch_box box_1 justify-content-start">
+                @Html.LabelFor(model => model.Visible, htmlAttributes: new { @class = "control-label col-md-1" })
+                @Html.EditorFor(model => model.Visible, new { htmlAttributes = new { @class = "switch_1 col-md-1" } })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-outline-primary" />
+                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    <form action="/Postmodels">
-        <input type="submit" value="Back to list" class="btn btn-outline-info" />
+    <form action="/Admin/PostsView/">
+        <input type="submit" class="btn btn-outline-dark" value="Back to list" />
     </form>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
