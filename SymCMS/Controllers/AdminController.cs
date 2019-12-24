@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Http;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 using SymCMS.Services;
 using SymCMS.ViewModels;
 
 namespace SymCMS.Controllers
 {
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class AdminController : Controller
     {
         private PostService _postService = new PostService();
@@ -48,7 +50,7 @@ namespace SymCMS.Controllers
             return View(_postService.GetPost(id));
         }
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible")] PostViewModel postViewModel)
         {
@@ -66,7 +68,7 @@ namespace SymCMS.Controllers
             return View();
         }
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreatePost([Bind(Include = "Id,Title,Content,Visible")] PostViewModel postViewModel)
         {
@@ -79,7 +81,7 @@ namespace SymCMS.Controllers
             return View(postViewModel);
         }
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Update(PostViewModel postViewModel)
         {
             _postService.UpdateVisibility(postViewModel);
@@ -100,7 +102,7 @@ namespace SymCMS.Controllers
             return View(postViewModel);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [System.Web.Mvc.HttpPost, System.Web.Mvc.ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -112,6 +114,19 @@ namespace SymCMS.Controllers
         {
             var categories = _postService.GetCategories();
             ViewData["Categories"] = categories;
+            return View("~/Views/Admin/CreatePost.cshtml");
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult CreateCategory(string name)
+        {
+            _postService.CreateCategory(name);
+            return View("~/Views/Admin/CreatePost.cshtml");
+        }
+
+        public ActionResult GetCategories()
+        {
+            ViewBag.ExCategories = new SelectList(_postService.GetCategories());
             return View("~/Views/Admin/CreatePost.cshtml");
         }
 

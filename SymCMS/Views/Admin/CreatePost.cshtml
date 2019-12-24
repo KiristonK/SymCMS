@@ -36,7 +36,6 @@
             </div>
         </div>
 
-
         <div class="input-group mb-2">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary run-modal-url" data-url="@Html.Raw(Url.Action("CategorySelectModal", "Admin" ))" type="button">
@@ -66,35 +65,44 @@
 
     <script>
 
+        var cat = '@ViewBag.ExCategories';
+        $(document).ready(function() {
 
-        $(document).ready(function () {
+            $('.run-modal-url').on('click',
+                function () {
+                    //window.location.href = '/Admin/GetCategories';
+                    cat = '@ViewBag.ExCategories';
+                    console.log(cat);
+                    var url = $(this).data('url');
+                    if (url) {
+                        if (!$(this).hasClass('run-modal-url-disabled')) {
+                            $(this).addClass('run-modal-url-disabled');
+                            $('.loading--fullscreen').show();
+                            $.ajax({
+                                url: url,
+                                success: function(data) {
+                                    $('.loading--fullscreen').hide();
+                                    $('#modalContainer').html(data);
+                                    $('#modal-url').modal('show');
+                                    $('.run-modal-url').removeClass('run-modal-url-disabled');
+                                },
+                                fail: function(xhr, textStatus, errorThrown) {
+                                    $('.loading--fullscreen').hide();
+                                    alert('Wystąpił błąd.');
+                                    $('.run-modal-url').removeClass('run-modal-url-disabled');
+                                }
+                            });
+                        }
 
-            $('.run-modal-url').on('click', function () {
-                var url = $(this).data('url');
-                if (url) {
-                    if (!$(this).hasClass('run-modal-url-disabled')) {
-                        $(this).addClass('run-modal-url-disabled');
-                        $('.loading--fullscreen').show();
-                        $.ajax({
-                            url: url,
-                            success: function (data) {
-                                $('.loading--fullscreen').hide();
-                                $('#modalContainer').html(data);
-                                $('#modal-url').modal('show');
-                                $('.run-modal-url').removeClass('run-modal-url-disabled');
-                            },
-                            fail: function (xhr, textStatus, errorThrown) {
-                                $('.loading--fullscreen').hide();
-                                alert('Wystąpił błąd.');
-                                $('.run-modal-url').removeClass('run-modal-url-disabled');
-                            }
-                        });
                     }
+                    
+                });
 
-                }
+            $('#createCategory').on('click', function() {
+               
             });
 
-        });
+    });
     </script>
 
 }

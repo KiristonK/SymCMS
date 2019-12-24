@@ -7,13 +7,13 @@ namespace SymCMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class Categories : IMigrationMetadata
+    public sealed partial class _13_init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Categories));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_13_init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912201212400_Categories"; }
+            get { return "201912231730342_1.3_init"; }
         }
         
         string IMigrationMetadata.Source

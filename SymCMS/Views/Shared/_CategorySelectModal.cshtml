@@ -1,23 +1,43 @@
 ﻿<!-- Modal -->
-
+   @* <a href="~/Views/Shared/_CategorySelectModal.cshtml">~/Views/Shared/_CategorySelectModal.cshtml</a>*@
 <div class="modal fade" id="modal-url" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <form class="selectionForm--Customer">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Wybierz klienta z bazy</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">choose your category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body" id="select2-modal-body">
-                    Jeżeli nie znajdziesz klienta na liście - możesz wpisać dane ręcznie w formularzu.
+                    If you can not find your category in the list you can create it by yourself.
                     <hr />
-                    @Html.DropDownList("ExCust", null, htmlAttributes: new { @class = "form-control select2-modal" })
+                    @*<div class="row">
+                        <input class="form-control ml-3" list='@Html.DropDownList("ExCategories", null, htmlAttributes: new {@class = "form-control select2-modal"})' name="categoryList"/>
+                        <button id="createCategory" type="button" class="btn btn-outline-success">Create category</button>
+                    </div>*@
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        @*<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</button>*@
+                        @Html.DropDownList("ExCategories", null, htmlAttributes: new { @class = "dropdown" })
+                        @*<div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div role="separator" class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>*@
+                    </div>
+                    <input type="text" class="form-control" aria-label="Category">
+
+                </div>
+                   
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                    <button type="submit" class="btn btn-success">Wybierz</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Choose</button>
                 </div>
             </div>
         </form>

@@ -8,25 +8,30 @@ using SymCMS.ViewModels;
 
 namespace SymCMS.Models
 {
-    public class PostCategory
+    public sealed class PostCategory
     {
         public PostCategory() { }
 
-        public PostCategory(CategoriesViewModel pageViewModel)
+        public PostCategory(CategoriesViewModel categoriesViewModel)
         {
-            CatrgoryId = pageViewModel.Id;
-            Name = pageViewModel.Name;
-            foreach (var postView in pageViewModel.Posts)
+            CategoryId = categoriesViewModel.Id;
+            Name = categoriesViewModel.Name;
+            foreach (var postView in categoriesViewModel.Posts)
             {
                 Posts.Add(new PostModel(postView));
             }
         }
 
+        public PostCategory(string name)
+        {
+            this.Name = name;
+        }
+
         [Key]
-        public int CatrgoryId { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
 
-        public virtual List<PostModel> Posts { get; set; }
+        public List<PostModel> Posts { get; set; }
 
     }
 }

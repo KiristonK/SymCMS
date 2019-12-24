@@ -84,5 +84,11 @@ namespace SymCMS.Services
         {
             return _db.PostCategories.ToList();
         }
+
+        public bool CreateCategory(string name)
+        {
+            _db.PostCategories.Add(new PostCategory(name));
+            return true;
+        }
     }
 }

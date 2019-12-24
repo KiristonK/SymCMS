@@ -10,11 +10,11 @@ namespace SymCMS.ViewModels
     {
         public CategoriesViewModel() { }
 
-        public CategoriesViewModel(PostCategory pageModel)
+        public CategoriesViewModel(PostCategory categoryModel)
         {
-            Id = pageModel.CatrgoryId;
-            Name = pageModel.Name;
-            foreach (var post in pageModel.Posts)
+            Id = categoryModel.CategoryId;
+            Name = categoryModel.Name;
+            foreach (var post in categoryModel.Posts)
             {
                 Posts.Add(new PostViewModel(post));
             }

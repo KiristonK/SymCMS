@@ -20,8 +20,9 @@ namespace SymCMS
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/SiteScript.js"));
+                        "~/Scripts/umd/popper.js",
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/SiteScript.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
