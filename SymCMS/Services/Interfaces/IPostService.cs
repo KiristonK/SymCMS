@@ -13,7 +13,7 @@ namespace SymCMS.Services.Interfaces
         PostViewModel EditPost(PostViewModel postViewModel);
         PostViewModel GetPost(int id);
         List<PostViewModel> GetPosts();
-
+        void UpdateVisibility(PostViewModel postViewModel);
         bool RemovePost(int id);
     }
 }

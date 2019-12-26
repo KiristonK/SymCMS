@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using SymCMS.DAL;
 using SymCMS.Models;
 using SymCMS.Services.Interfaces;
@@ -12,16 +13,20 @@ namespace SymCMS.Services
 {
     public class PostService : IPostService
     {
-        private SymDbContext _db = new SymDbContext();
+        private readonly SymDbContext _db = new SymDbContext();
 
         public bool AddPost(PostViewModel postViewModel)
         {
-            _db.PostModels.Add(new Models.PostModel()
+            var category = _db.PostCategories.Find(postViewModel.CategoryId);
+            var post = new Models.PostModel()
             {
                 Title = postViewModel.Title,
                 Content = postViewModel.Content,
-                Visible = postViewModel.Visible
-            });
+                Visible = postViewModel.Visible,
+                Category = category,
+                CategoryId = postViewModel.CategoryId
+            };
+            _db.PostModels.Add(post);
             _db.SaveChanges();
             return true;
         }
@@ -43,7 +48,9 @@ namespace SymCMS.Services
                     Id = post.Id,
                     Title = post.Title,
                     Content = post.Content,
-                    Visible = post.Visible
+                    Visible = post.Visible,
+                    CategoryId = post.CategoryId,
+                    Category = post.Category
                 };
             }
             return null;
@@ -51,21 +58,26 @@ namespace SymCMS.Services
 
         public void UpdateVisibility(PostViewModel postViewModel)
         {
-            _db.PostModels.Find(postViewModel.Id).Visible = postViewModel.Visible;
+            var post = _db.PostModels.Find(postViewModel.Id);
+            if (post != null)
+                post.Visible = postViewModel.Visible;
             _db.SaveChanges();
         }
 
         public List<PostViewModel> GetPosts()
         {
             List<PostViewModel> posts = new List<PostViewModel>();
-            foreach (var post in _db.PostModels.ToList())
+            var postList = _db.PostModels.ToList();
+            foreach (var post in postList)
             {
                 posts.Add(new PostViewModel()
                 {
                     Id = post.Id,
                     Title = post.Title,
                     Content = post.Content,
-                    Visible = post.Visible
+                    Visible = post.Visible,
+                    Category = _db.PostCategories.Find(post.CategoryId),
+                    CategoryId = post.CategoryId
                 });
             }
             return posts;
@@ -87,8 +99,13 @@ namespace SymCMS.Services
 
         public bool CreateCategory(string name)
         {
-            _db.PostCategories.Add(new PostCategory(name));
-            return true;
+            var cat = new PostCategory
+            {
+                Name = name
+            };
+            var newCat = _db.PostCategories.Add(cat);
+            _db.SaveChanges();
+            return newCat != null;
         }
     }
 }

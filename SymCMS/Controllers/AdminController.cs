@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.Mvc;
+using SymCMS.Models;
 using SymCMS.Services;
 using SymCMS.ViewModels;
 
@@ -52,7 +53,7 @@ namespace SymCMS.Controllers
 
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible")] PostViewModel postViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible, CategoryId")] PostViewModel postViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -70,9 +71,9 @@ namespace SymCMS.Controllers
 
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePost([Bind(Include = "Id,Title,Content,Visible")] PostViewModel postViewModel)
+        public ActionResult CreatePost([Bind(Include = "Id,Title,Content,Visible,CategoryId")] PostViewModel postViewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && postViewModel.CategoryId != 0)
             {
                 _postService.AddPost(postViewModel);
                 return RedirectToAction("PostsView");
@@ -110,30 +111,19 @@ namespace SymCMS.Controllers
             return RedirectToAction("PostsView");
         }
 
-        public ViewResult CreatePostData()
-        {
-            var categories = _postService.GetCategories();
-            ViewData["Categories"] = categories;
-            return View("~/Views/Admin/CreatePost.cshtml");
-        }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult CreateCategory(string name)
+       // [ValidateAntiForgeryToken]
+        public ActionResult CreateCategory(PostCategory category)
         {
-            _postService.CreateCategory(name);
-            return View("~/Views/Admin/CreatePost.cshtml");
-        }
-
-        public ActionResult GetCategories()
-        {
-            ViewBag.ExCategories = new SelectList(_postService.GetCategories());
-            return View("~/Views/Admin/CreatePost.cshtml");
+            return View(_postService.CreateCategory(category.Name) ? "~/Views/Admin/CreatePost.cshtml" : "~/Views/Admin/PostsView.cshtml");
         }
 
 
         public PartialViewResult CategorySelectModal()
         {
-            ViewBag.ExCategories = new SelectList(_postService.GetCategories());
+            List<PostCategory> exCategories = _postService.GetCategories();
+            ViewBag.ExCategories = exCategories;
             return PartialView("~/Views/Shared/_CategorySelectModal.cshtml");
         }
 

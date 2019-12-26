@@ -14,15 +14,10 @@ namespace SymCMS.ViewModels
         {
             Id = categoryModel.CategoryId;
             Name = categoryModel.Name;
-            foreach (var post in categoryModel.Posts)
-            {
-                Posts.Add(new PostViewModel(post));
-            }
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<PostViewModel> Posts { get; set; }
     }
 }

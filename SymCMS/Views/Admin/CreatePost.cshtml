@@ -39,8 +39,9 @@
         <div class="input-group mb-2">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary run-modal-url" data-url="@Html.Raw(Url.Action("CategorySelectModal", "Admin" ))" type="button">
-                    <i class="fa fa-search-plus" aria-hidden="true"></i>
+                    Category
                 </button>
+                @Html.EditorFor(model => model.CategoryId, new {  htmlAttributes = new { id = "categoryId", @class = "form-control" } })
             </div>
         </div>
 
@@ -64,15 +65,9 @@
 @section Scripts{
 
     <script>
-
-        var cat = '@ViewBag.ExCategories';
         $(document).ready(function() {
-
             $('.run-modal-url').on('click',
-                function () {
-                    //window.location.href = '/Admin/GetCategories';
-                    cat = '@ViewBag.ExCategories';
-                    console.log(cat);
+                function() {
                     var url = $(this).data('url');
                     if (url) {
                         if (!$(this).hasClass('run-modal-url-disabled')) {
@@ -88,21 +83,16 @@
                                 },
                                 fail: function(xhr, textStatus, errorThrown) {
                                     $('.loading--fullscreen').hide();
-                                    alert('Wystąpił błąd.');
+                                    alert('Error.');
                                     $('.run-modal-url').removeClass('run-modal-url-disabled');
                                 }
                             });
                         }
 
                     }
-                    
+
                 });
-
-            $('#createCategory').on('click', function() {
-               
-            });
-
-    });
+        });
     </script>
 
 }

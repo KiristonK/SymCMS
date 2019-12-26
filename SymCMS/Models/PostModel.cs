@@ -8,7 +8,7 @@ using SymCMS.ViewModels;
 
 namespace SymCMS.Models
 {
-    public class PostModel
+    public sealed class PostModel
     {
         public PostModel() { }
         public PostModel(PostViewModel postViewModel)
@@ -17,6 +17,8 @@ namespace SymCMS.Models
             Title = postViewModel.Title;
             Content = postViewModel.Content;
             Visible = postViewModel.Visible;
+            Category = postViewModel.Category;
+            CategoryId = postViewModel.CategoryId;
         }
 
         [Key]
@@ -24,11 +26,12 @@ namespace SymCMS.Models
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        public virtual PostCategory Category { get; set; }
+        public PostCategory Category { get; set; }
         
 
         public string Title { get; set; }
         public string Content { get; set; }
         public bool Visible { get; set; }
+       // public List<PostCategory> ExCategories { get; set; }
     }
 }

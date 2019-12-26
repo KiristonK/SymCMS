@@ -24,5 +24,7 @@ namespace SymCMS.DAL
         public System.Data.Entity.DbSet<SymCMS.Models.PostCategory> PostCategories { get; set; }
 
         public System.Data.Entity.DbSet<SymCMS.ViewModels.PostViewModel> PostViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<SymCMS.Models.PageModels> PageModels { get; set; }
     }
 }

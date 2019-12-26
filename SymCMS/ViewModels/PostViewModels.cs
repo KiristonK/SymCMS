@@ -19,6 +19,7 @@ namespace SymCMS.ViewModels
             this.Visible = postModel.Visible;
             this.CategoryId = postModel.CategoryId;
             this.Category = postModel.Category;
+          //  this.ExCategories = postModel.ExCategories;
         }
 
         public int Id { get; set; }
@@ -29,6 +30,8 @@ namespace SymCMS.ViewModels
         public bool Visible { get; set; }
         public int CategoryId { get; set; }
         public PostCategory Category { get; set; }
+
+       // public List<PostCategory> ExCategories { get; set; }
 
     }
 }
