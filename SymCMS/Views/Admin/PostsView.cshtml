@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "PostsView";
-    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 
 <h2>PostsView</h2>
@@ -38,7 +37,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                <td>
+                <td style="height: 5em" >
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>

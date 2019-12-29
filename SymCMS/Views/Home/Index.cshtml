@@ -1,31 +1,53 @@
-﻿@{
+﻿@model IEnumerable<SymCMS.ViewModels.PostViewModel>
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
     <h1>SymCMS</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p class="lead">This is a SymCMS blog.</p>
+    <p><a href="/Home/Index" class="btn btn-primary btn-lg">SymCMS</a></p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>coś</h2>
-        <p> 
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+<h1 class="text-capitalize text-primary">Latest posts</h1>
+
+<div id="carouselExampleControls" class="carousel slide shadow shadow-lg" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <h2>@Model.First().Title</h2>
+            <hr />
+            <div>
+                <h3 class="bg-light rounded w-50">@Model.First().Category.Name</h3>
+            </div>
+            <hr />
+            <textarea class="form-control rounded overflow-hidden" rows="5" readonly="readonly">
+                @Model.First().Content.Trim(' ')
+            </textarea>
+            <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@Model.First().Id">Details &raquo;</a></p>
+        </div>
+        @foreach (var post in Model.Where(m => m.Id != Model.First().Id))
+        {
+            <div class="carousel-item">
+                <h2>@post.Title</h2>
+                <hr />
+                <div>
+                    <h3 class="bg-light rounded w-50">@post.Category.Name</h3>
+                </div>
+                <hr />
+                <textarea class="form-control rounded overflow-hidden" rows="5" readonly="readonly">
+                @post.Content.Trim(' ')
+            </textarea>
+                <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@post.Id">Details &raquo;</a></p>
+            </div>
+        }
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>

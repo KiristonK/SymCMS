@@ -107,5 +107,17 @@ namespace SymCMS.Services
             _db.SaveChanges();
             return newCat != null;
         }
+
+        public void DeletePost(int id)
+        {
+            PostModel postModel = _db.PostModels.Find(id);
+            if (postModel != null) _db.PostModels.Remove(postModel);
+            _db.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _db.Dispose();
+        }
     }
 }

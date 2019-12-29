@@ -73,12 +73,25 @@
                                 {
                                     <text>Administator</text>
                                 }
-                                else
+                                else if (User.IsInRole("Editor"))
                                 {
                                     <text>Editor</text>
                                 }
                             </p>
                         </div>
+                    </div>
+                    <div class="col justify-content-start mt-3">
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+
+
+                            <form id="logoutForm" action="javascript:document.getElementById('logoutForm').submit()">
+                                <input type="submit" class="btn btn-outline-danger w-100 ml-0" value="Log off" />
+                            </form>
+
+                        }
                     </div>
                 </div>
 
@@ -140,7 +153,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link text-dark font-italic bg-light">
+                                <a href="/Admin/PostsView" class="nav-link text-dark font-italic bg-light">
                                     <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
                                     Edit posts
                                 </a>
@@ -158,19 +171,19 @@
                     <div class="collapse" id="navbarTogglePages">
                         <ul class="nav flex-column bg-white mb-0">
                             <li class="nav-item">
-                                <a href="#" class="nav-link text-dark font-italic bg-light">
+                                <a href="/PageModels/Create" class="nav-link text-dark font-italic bg-light">
                                     <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
                                     New page
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link text-dark font-italic bg-light">
+                                <a href="/PageModels/PagesView" class="nav-link text-dark font-italic bg-light">
                                     <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
                                     All pages
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link text-dark font-italic bg-light">
+                                <a href="/PageModels/PagesView" class="nav-link text-dark font-italic bg-light">
                                     <i class="fa fa-pie-chart mr-3 text-primary fa-fw"></i>
                                     Edit pages
                                 </a>

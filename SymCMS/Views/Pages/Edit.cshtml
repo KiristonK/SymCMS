@@ -1,8 +1,8 @@
-﻿@model SymCMS.Models.PageModels
+﻿@model SymCMS.ViewModels.PageViewModels
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+    //Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 
 <h2>Edit</h2>
@@ -16,7 +16,7 @@
         <h4>PageModels</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.PageId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })

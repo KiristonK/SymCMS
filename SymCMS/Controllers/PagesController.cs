@@ -13,108 +13,111 @@ using SymCMS.ViewModels;
 
 namespace SymCMS.Controllers
 {
-    public class PostModelsController : Controller
+    public class PagesController : Controller
     {
-        private SymDbContext _db = new SymDbContext();
+       private  readonly  PageService _pS = new PageService();
 
-        private PostService _postService = new PostService();
-
-        // GET: PostModels
-        public ActionResult Index()
+       public ActionResult Index()
+       {
+           return RedirectToAction("PagesView");
+       }
+        // GET: PageModels
+        public ActionResult PagesView()
         {
-            return View(_postService.GetPosts());
+            return View(_pS.GetAllPages() );
         }
 
-        // GET: PostModels/Details/5
+        // GET: PageModels/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PostViewModel postViewModel = _postService.GetPost(id.Value);
-            if (postViewModel == null)
+            PageViewModels pageViewModels = _pS.GetPage(id);
+            if (pageViewModels == null)
             {
                 return HttpNotFound();
             }
-            return View(postViewModel);
+            return View(pageViewModels);
         }
 
-        // GET: PostModels/Create
+        // GET: PageModels/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PostModels/Create
+        // POST: PageModels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content,Visible,CategoryId")] PostViewModel postViewModel)
+        public ActionResult Create([Bind(Include = "Id,Title,Content")] PageViewModels pageViewModels)
         {
             if (ModelState.IsValid)
-            { 
-                _postService.AddPost(postViewModel);
+            {
+                _pS.AddPage(pageViewModels);
                 return RedirectToAction("Index");
             }
 
-            return View(postViewModel);
+            return View(pageViewModels);
         }
 
-        // GET: PostModels/Edit/5
+        // GET: PageModels/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PostViewModel postModel = _db.PostViewModels.Find(id);
-            if (postModel == null)
+            PageViewModels pageViewModels = _pS.GetPage(id);
+            if (pageViewModels == null)
             {
                 return HttpNotFound();
             }
-            return View(postModel);
+            return View(pageViewModels);
         }
 
-        // POST: PostModels/Edit/5
+        // POST: PageModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible,CategoryId")] PostViewModel postViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content")] PageViewModels pageViewModels)
         {
             if (ModelState.IsValid)
             {
-                _postService.EditPost(postViewModel);
+                _pS.EditPage(pageViewModels);
                 return RedirectToAction("Index");
             }
-            return View(postViewModel);
+            return View(pageViewModels);
         }
 
-        // GET: PostModels/Delete/5
+        // GET: PageModels/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PostModel postModel = _db.PostModels.Find(id);
-            if (postModel == null)
+            PageViewModels pageViewModels = _pS.GetPage(id);
+            if (pageViewModels == null)
             {
                 return HttpNotFound();
             }
-            return View(postModel);
+            return View(pageViewModels);
         }
 
-        // POST: PostModels/Delete/5
+        // POST: PageModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PostModel postModel = _db.PostModels.Find(id);
-            _db.PostModels.Remove(postModel);
-            _db.SaveChanges();
+            //PageModels pageModels = _db.PageModels.Find(id);
+            //_db.PageModels.Remove(pageModels);
+            //_db.SaveChanges();
+            _pS.DeletePage(id);
             return RedirectToAction("Index");
         }
 
@@ -122,7 +125,7 @@ namespace SymCMS.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _pS.Dispose();
             }
             base.Dispose(disposing);
         }
