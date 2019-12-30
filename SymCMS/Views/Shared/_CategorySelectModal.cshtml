@@ -16,12 +16,12 @@
                     <hr />
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <select id="categorySelector"  class="btn btn-outline-secondary dropdown-toggle">
+                            <select id="categorySelector" class="btn btn-outline-secondary dropdown-toggle">
                                 @foreach (var category in ViewBag.ExCategories)
                                 {
                                     <option class="dropdown-item" value="@category.CategoryId" href="#">@category.Name</option>
                                 }
-                                <separator/>
+                                <separator />
                                 <option class="dropdown-item" id="CategoryCreate" value="0">Create category</option>
                             </select>
                         </div>
@@ -63,6 +63,26 @@
                // this.hide();
             }
         });
+        //var pickr1 = new Pickr({
+        //    el: '#color-picker-1',
+        //    default: "303030",
+        //    components: {
+        //        preview: true,
+        //        opacity: true,
+        //        hue: true,
+
+        //        interaction: {
+        //            hex: true,
+        //            rgba: true,
+        //            hsla: false,
+        //            hsva: false,
+        //            cmyk: false,
+        //            input: true,
+        //            clear: true,
+        //            save: true
+        //        }
+        //    }
+        //});
+       
     });
-   
 </script>

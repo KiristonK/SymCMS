@@ -5,13 +5,9 @@
    // Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 <div class="mt-5">
-    <h4>@Model.Title</h4>
+    <h3>@Model.Title</h3>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Content)
         </dd>

@@ -5,38 +5,45 @@
     //Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 
-<h2>Index</h2>
+<h2>All pages</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new {@class="btn btn-outline-primary"})
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th></th>
-    </tr>
+<div class="table-responsive overflow-hidden">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th class="justify-content-end"></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            <div class="row">
-                @Html.ActionLink("Edit", "Edit", new { id = item.PageId }, new { @class = "btn btn-primary mr-2" })
-                @Html.ActionLink("Details", "Details", new { id = item.PageId }, new { @class = "btn btn-primary mr-2" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.PageId }, new { @class = "btn btn-primary mr-2" })
-            </div>
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @if (item.Content.Length >= 100)
+                    {
+                        item.Content = item.Content.Substring(0, 100) + "...";
+                    }
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    <div class="row justify-content-end">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.PageId }, new { @class = "btn btn-outline-secondary rounded mr-2" })
+                        @Html.ActionLink("Details", "Details", new { id = item.PageId }, new { @class = "btn btn-outline-primary rounded mr-2" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.PageId }, new { @class = "btn btn-outline-danger rounded mr-2" })
+                    </div>
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
+</div>

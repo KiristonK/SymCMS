@@ -1,7 +1,7 @@
 ﻿
 $(document).ready(function () {
     $('textarea').autoResize();
-});
+    });
 
 $('.post_visibility').change(function () {
     console.log($(this).data('postid'));

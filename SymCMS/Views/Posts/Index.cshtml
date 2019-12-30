@@ -5,7 +5,7 @@
 }
 
     <div class="container">
-        <h2>PagesView</h2>
+        <h2>Blog</h2>
 
         <form action="/PostModels/Create">
             <button class="btn btn-outline-primary">Create New</button>
@@ -18,13 +18,22 @@
 
                     <div class="card-body bg-light shadow-lg">
 
-                        <h2 class="border-bottom border-dark card-title">@Html.DisplayFor(modelItem => item.Title)</h2>
-                        <div class="form-text rounded border border-primary card-text mb-3"> @Html.DisplayFor(modelItem => item.Content)</div>
+                        <h2 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h2>
+                        <hr/>
+                        <div class="form-text rounded card-text mb-3">
+                            @if (item.Content.Length >= 100)
+                            {
+                                item.Content = item.Content.Substring(0, 100) + "...";
+                                @Html.DisplayFor(modelItem => item.Content)
+                            }
+                            else
+                            {@Html.DisplayFor(modelItem => item.Content)}
+                        </div>
 
                         <p>
-                            <a class="btn btn-primary" href="PostModels/Edit/@item.Id">Edit</a>
-                            <a class="btn btn-primary" href="PostModels/Details/@item.Id">Details</a>
-                            <a class="btn btn-primary" href="PostModels/Delete/@item.Id">Delete</a>
+                            <a class="btn btn-primary" href="Posts/Edit/@item.Id">Edit</a>
+                            <a class="btn btn-primary" href="Posts/Details/@item.Id">Details</a>
+                            <a class="btn btn-primary" href="Posts/Delete/@item.Id">Delete</a>
                         </p>
 
                     </div>
