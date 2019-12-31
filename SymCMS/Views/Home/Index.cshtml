@@ -13,33 +13,26 @@
 <h1 class="text-capitalize text-primary">Latest posts</h1>
 
 <div id="carouselExampleControls" class="carousel slide shadow shadow-lg" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <h2>@Model.First().Title</h2>
+    <div class="carousel-inner p-2">
+       
+        @foreach (var post in Model.Reverse())
+        {
+        <div class="carousel-item @if (post.Equals(Model.Last())) { <text>active</text>} }">
+            <h2>@post.Title</h2>
             <hr />
             <div>
-                <h3 class="bg-light rounded w-50">@Model.First().Category.Name</h3>
+                <h3 class="text-warning rounded w-50">@post.Category.Name</h3>
             </div>
             <hr />
-            <textarea class="form-control rounded overflow-hidden" rows="5" readonly="readonly">
-                @Model.First().Content.Trim(' ')
-            </textarea>
-            <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@Model.First().Id">Details &raquo;</a></p>
-        </div>
-        @foreach (var post in Model.Where(m => m.Id != Model.First().Id))
-        {
-            <div class="carousel-item">
-                <h2>@post.Title</h2>
-                <hr />
-                <div>
-                    <h3 class="bg-light rounded w-50">@post.Category.Name</h3>
-                </div>
-                <hr />
-                <textarea class="form-control rounded overflow-hidden" rows="5" readonly="readonly">
-                @post.Content.Trim(' ')
-            </textarea>
-                <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@post.Id">Details &raquo;</a></p>
+            <div style="height: 10rem; margin: 1rem">
+                @if (post.Content.Length >= 1000)
+                {
+                    post.Content = post.Content.Substring(0, 1000) + "...";
+                }
+                @Html.DisplayFor(modelItem => post.Content)
             </div>
+        <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@post.Id">Details &raquo;</a></p>
+        </div>
         }
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
