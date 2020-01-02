@@ -34,16 +34,27 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" id="createBtn" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", null, new {@class="btn btn-outline-secondary"})
 </div>
 
 @section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#createBtn").click(function () {
+                if ($("#Title").val() === "" || $("#Content").val() === "") {
+                    alert("Field's can not be empty !");
+                    return;
+                } 
+            });
+            
+        });
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

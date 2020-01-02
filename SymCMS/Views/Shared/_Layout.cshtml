@@ -13,22 +13,6 @@
 </head>
 <body>
     <header>
-        @*<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="/Home/Index/">Home</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="/Home/About/">About</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="/Home/Contact/">Contact</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="/PostModels/">Blog</a></li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </nav>*@
         <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
                 <a class="navbar-brand" href="#"><strong>SymCMS</strong></a>
@@ -39,23 +23,38 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Home/Index/">Home <span class="sr-only">(current)</span></a>
+                            <a class="btn btn-primary" href="/Home/Index/">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Admin/PostsView">Blog</a>
+                            <a class="btn btn-primary" href="/Admin/PostsView">Blog</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">Pages </a>
-                            <div class="dropdown-menu dropdown-pink" aria-labelledby="navbarDropdownMenuLink-7">
-                                @foreach (var page in new PageService().GetAllPages())
-                                {
-                                    <a class="dropdown-item" href="/Pages/Details/@page.PageId">@page.Title</a>
-                                }
+                        <li class="nav-item">
+                            <div class="btn-group">
+                                <form action="/Pages/PagesView/">
+                                    <button type="submit" class="btn btn-primary">Pages</button>
+                                </form>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                                </button>
+                                <div class="dropdown-menu dropdown-pink" aria-labelledby="navbarDropdownMenuLink-7">
+                                    @foreach (var page in new PageService().GetAllPages())
+                                    {
+                                        <a class="dropdown-item" href="/Pages/Details/@page.PageId">@page.Title</a>
+                                    }
+                                </div>
                             </div>
                         </li>
+                        @*<li class="nav-item">
+                            <div class="row ml-1 mr-1">
+                                <a class="nav-link" href="/Pages/pagesView/">Pages</a>
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-7" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false"></a>
+                                    
+                                </div>
+                            </div>
+                        </li>*@
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="btn btn-primary" href="#">Link</a>
                         </li>
                     </ul>
                     <form class="form-inline">

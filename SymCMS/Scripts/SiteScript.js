@@ -1,16 +1,16 @@
 ﻿
 $(document).ready(function () {
-    $('textarea').autoResize();
+    $("textarea").autoResize();
     });
 
-$('.post_visibility').change(function () {
-    console.log($(this).data('postid'));
+$(".post_visibility").change(function () {
+    console.log($(this).data("postid"));
     $.ajax({
         url: "/Admin/Update/",
         method: "POST",
-        data: { id: $(this).data('postid'), visible: $(this).prop('checked') }
+        data: { id: $(this).data("postid"), visible: $(this).prop("checked") }
     }).fail(function () {
-        $(this).prop('checked', false);
+        $(this).prop("checked", false);
     });
 });
 
