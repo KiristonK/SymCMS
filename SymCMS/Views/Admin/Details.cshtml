@@ -1,4 +1,5 @@
-﻿@model SymCMS.ViewModels.PostViewModel
+﻿@using SymCMS.ViewModels
+@model SymCMS.ViewModels.PostViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -20,6 +21,10 @@
         </div>
 
     </div>
+</div>
+
+<div>
+    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>())
 </div>
 <div class="row mx-3">
     <form action="/Admin/Edit/@Model.Id">

@@ -15,16 +15,11 @@ namespace SymCMS.Controllers
     [System.Web.Mvc.Authorize]
     public class AdminController : Controller
     {
-        private PostService _postService = new PostService();
+        private readonly PostService _postService = new PostService();
 
         public ActionResult Index()
         {
-            return RedirectToAction("Panel");
-        }
-        // GET: Panel
-        public ActionResult Panel()
-        {
-            return View();
+            return Redirect("~/Views/Home/Index");
         }
 
         public ActionResult PostsView()
