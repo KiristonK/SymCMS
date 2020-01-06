@@ -25,9 +25,12 @@ namespace SymCMS.Services
             throw new System.NotImplementedException();
         }
 
-        public bool EditComment(int? id)
+        public CommentViewModel EditComment(CommentViewModel comment)
         {
-            throw new System.NotImplementedException();
+            var commentModel = new CommentModel(comment);
+            _db.Entry(commentModel).State = EntityState.Modified;
+            _db.SaveChanges();
+            return new CommentViewModel(commentModel);
         }
 
         public IEnumerable<CommentViewModel> GetAllComments()

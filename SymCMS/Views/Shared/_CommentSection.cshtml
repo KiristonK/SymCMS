@@ -36,18 +36,18 @@
                         <div class="col-4 justify-content-end">
                             @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
                             {
-                                <button class="btn btn-secondary float-right" onclick="$('#' + @item.CommentId).toggleClass('d-none'); $('.commentData').toggleClass('disabled');">Edit</button>
+                                <button class="btn btn-secondary float-right" onclick="$('#' + @item.CommentId).toggleClass('d-none'); document.getElementById(@item.CommentId+'name').toggleAttribute('readonly'); document.getElementById(@item.CommentId+'text').toggleAttribute('readonly');">Edit</button>
                             }
                         </div>
                     </div>
                     <div class="row justify-content-start">
                         @using (Html.BeginForm("Edit", "Comment"))
                         {
-                            @Html.HiddenFor( m=>item.CommentId)
-                            @Html.EditorFor(m=> item.AuthorName, new {htmlAttributes = new {@class="form-control mb-4 disabled commentData", id="AuthorName"}})
+                            @Html.HiddenFor( m=>item.CommentId, new {id=item.CommentId+"ID"})
+                            @Html.EditorFor(m=> item.AuthorName, new {htmlAttributes = new {@class="form-control mb-4 ", @readonly="readonly", id=item.CommentId+"name"}})
                             @*<input class="form-control mb-4 " id="AuthorName" readonly="readonly" value="@item.AuthorName"/>*@
                             <label for="CommentText">Comment</label>
-                            @Html.EditorFor(m=> item.CommentText, new {htmlAttributes = new {@class="form-control commentData", id="CommentText"}})
+                            @Html.EditorFor(m=> item.CommentText, new {htmlAttributes = new {@class="form-control ", @readonly="readonly", id=item.CommentId+"text"}})
                             @*<textarea class="form-control" id="CommentText" readonly="readonly" name="text">@item.CommentText</textarea>*@
                             <button type="submit" class="btn btn-warning d-none float-right mt-2" id=@item.CommentId>Save</button>
                         }

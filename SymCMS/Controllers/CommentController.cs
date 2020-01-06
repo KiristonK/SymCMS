@@ -50,23 +50,21 @@ namespace SymCMS.Controllers
         // GET: Comment/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.ExComments = _cs.GetAllComments();
+            return PartialView("~/Views/Shared/_CommentSection.cshtml");
         }
 
         // POST: Comment/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Include = "CommentId, AuthorName, CommentText, PostId")] CommentViewModel comment)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                _cs.EditComment(comment);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            ViewBag.ExComments = _cs.GetAllComments();
+            return View("~/Views/Admin/Details.cshtml", _ps.GetPost(comment.PostId));
         }
 
         // GET: Comment/Delete/5
