@@ -16,19 +16,23 @@ namespace SymCMS.Controllers
     public class AdminController : Controller
     {
         private readonly PostService _postService = new PostService();
+        private readonly CommentService _commentService = new CommentService();
 
         public ActionResult Index()
         {
+            ViewBag.ExComments = _commentService.GetAllComments();
             return Redirect("~/Views/Home/Index");
         }
 
         public ActionResult PostsView()
         {
+            ViewBag.ExComments = _commentService.GetAllComments();
             return View(_postService.GetPosts());
         }
 
         public ActionResult Details(int? id)
         {
+            ViewBag.ExComments = _commentService.GetAllComments();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -43,6 +47,7 @@ namespace SymCMS.Controllers
 
         public ActionResult Edit(int id)
         {
+            ViewBag.ExComments = _commentService.GetAllComments();
             return View(_postService.GetPost(id));
         }
 

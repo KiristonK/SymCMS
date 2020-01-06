@@ -5,16 +5,19 @@ using System.Security.AccessControl;
 using System.Web;
 using System.Web.Mvc;
 using SymCMS.Services;
+using SymCMS.ViewModels;
 
 namespace SymCMS.Controllers
 {
     public class CommentController : Controller
     {
+        private readonly PostService _ps = new PostService();
         private readonly CommentService _cs = new CommentService();
         // GET: Comment
         public ActionResult Index()
         {
-            return View();
+            ViewBag.ExComments = _cs.GetAllComments();
+            return PartialView("~/Views/Shared/_CommentSection.cshtml", model: _cs.GetAllComments());
         }
 
         // GET: Comment/Details/5
@@ -26,23 +29,22 @@ namespace SymCMS.Controllers
         // GET: Comment/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.ExComments = _cs.GetAllComments();
+            return PartialView("~/Views/Shared/_CommentSection.cshtml");
         }
 
         // POST: Comment/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create([Bind(Include = "AuthorName, CommentText, PostId")] CommentViewModel comment)
         {
-            try
+            if (!_cs.CreateComment(comment))
             {
-                // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.ExComments = _cs.GetAllComments();
+            return View("~/Views/Admin/Details.cshtml", _ps.GetPost(comment.PostId));
+            
         }
 
         // GET: Comment/Edit/5
@@ -88,5 +90,12 @@ namespace SymCMS.Controllers
                 return View();
             }
         }
+
+        //[HttpPost]
+        //public ActionResult CreateComment(CommentViewModel comment)
+        //{
+        //    _cs.CreateComment(comment);
+        //    return PartialView("~/Views/Shared/_CommentSection.cshtml");
+        //}
     }
 }

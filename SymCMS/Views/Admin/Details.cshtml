@@ -4,6 +4,14 @@
 @{
     ViewBag.Title = "Details";
     //Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+    if (!ViewData.ContainsKey("postId"))
+    {
+        ViewData.Add("postId", Model.Id);
+    }
+    else
+    {
+        ViewData["postId"] = Model.Id;
+    }
 }
 
 <h2>Details</h2>
@@ -24,7 +32,7 @@
 </div>
 
 <div>
-    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>())
+    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
 </div>
 <div class="row mx-3">
     <form action="/Admin/Edit/@Model.Id">
@@ -34,3 +42,20 @@
         <input type="submit" value="Back to List" class="btn btn-outline-dark" />
     </form>
 </div>
+
+@*@section Scripts{
+        <script>
+            $(document).ready(function () {
+                $("#addComment").click(function () {
+                    alert("Click : " + $('#name').val() + " " + $('#comment').val());
+                    $.ajax({
+                        type: "POST",
+                        url: "/Comment/CreateComment/",
+                        data: { AuthorName: $('#name').val(), CommentText: $('#comment').val() },
+                        dataType: typeof (string)
+                    }).fail(alert('Fail'));
+                });
+            });
+        </script>
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

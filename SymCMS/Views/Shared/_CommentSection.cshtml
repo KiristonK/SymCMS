@@ -1,6 +1,78 @@
-﻿@model IEnumerable<SymCMS.ViewModels.CommentViewModel>
+﻿@using System.Activities.Expressions
+@using System.Collections.Specialized
+@using SymCMS.ViewModels
+@model IEnumerable<SymCMS.ViewModels.CommentViewModel>
+<div>
+    @using (@Html.BeginForm("Create", "Comment"))
+    {
+        CommentViewModel model = new CommentViewModel();
+        <div class="form-group">
+            <p class="text-lg-left display-4 text-secondary">New comment</p>
+            @{
+                model.PostId = int.Parse(ViewData["postId"].ToString());
+            } 
+            @Html.HiddenFor(m=>model.PostId)
+            @Html.EditorFor(m => model.AuthorName, new {htmlAttributes = new {@class = "form-control mb-4", id = "name", placeholder = "Enter your name or email"}})
+            @*<input class="form-control mb-4" id="name" placeholder="Enter your name or email"/>*@
+            <label class="h3 font-weight-light" for="comment">Comment</label>
+            @Html.EditorFor(m => model.CommentText, new {htmlattributes = new {@class = "form-control", rows = "5", id = "comment", name = "text"}})
+            @*<textarea class="form-control" rows="5" id="comment" name="text"></textarea>*@
+            <input type="submit" class="btn btn-primary mt-2 mb-2" id="addComment" value="Add comment"/>
+        </div>
+    }
+<div>
+    @if (Model.Count() != 0)
+    {
+        int.TryParse(ViewData["postId"].ToString(), out var id);
+        <p class="text-lg-left display-4">All comments</p>
+        <div class="form-group">
+            @foreach (var item in Model.Where(m => m.PostId == id))
+            {
+                <div class="form-group position-relative">
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <label for="name">Author</label>
+                        </div>
+                        <div class="col-4 justify-content-end">
+                            @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                            {
+                                <button class="btn btn-secondary float-right" onclick="$('#' + @item.CommentId).toggleClass('d-none'); $('.commentData').toggleClass('disabled');">Edit</button>
+                            }
+                        </div>
+                    </div>
+                    <div class="row justify-content-start">
+                        @using (Html.BeginForm("Edit", "Comment"))
+                        {
+                            @Html.HiddenFor( m=>item.CommentId)
+                            @Html.EditorFor(m=> item.AuthorName, new {htmlAttributes = new {@class="form-control mb-4 disabled commentData", id="AuthorName"}})
+                            @*<input class="form-control mb-4 " id="AuthorName" readonly="readonly" value="@item.AuthorName"/>*@
+                            <label for="CommentText">Comment</label>
+                            @Html.EditorFor(m=> item.CommentText, new {htmlAttributes = new {@class="form-control commentData", id="CommentText"}})
+                            @*<textarea class="form-control" id="CommentText" readonly="readonly" name="text">@item.CommentText</textarea>*@
+                            <button type="submit" class="btn btn-warning d-none float-right mt-2" id=@item.CommentId>Save</button>
+                        }
+                    </div> 
+                </div>
+                <hr/>
+            }
+        </div>
+    }
+</div>
 
-<p class="text-lg-right text-secondary">Comments</p>
-@foreach (var item in Model) {
-   
-}
+</div>
+@*@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#addComment").click(function () {
+                alert("Click : " + $('#name').val() + " " + $('#comment').val());
+                $.ajax({
+                    type: "POST",
+                    url: "/Comment/CreateComment/",
+                    data: { AuthorName: $('#name').val(), CommentText: $('#comment').val() },
+                    dataType: typeof (string)
+                }).fail(alert('Fail'));
+            });
+        });
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

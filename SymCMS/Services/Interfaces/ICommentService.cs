@@ -1,8 +1,10 @@
-﻿namespace SymCMS.Services.Interfaces
+﻿using SymCMS.ViewModels;
+
+namespace SymCMS.Services.Interfaces
 {
     public interface ICommentService
     {
-        bool CreateComment();
+        bool CreateComment(CommentViewModel comment);
         bool DeleteComment(int? id);
         bool EditComment(int? id);
     }

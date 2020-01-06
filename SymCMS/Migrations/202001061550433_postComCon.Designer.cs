@@ -7,13 +7,13 @@ namespace SymCMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class colors : IMigrationMetadata
+    public sealed partial class postComCon : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(colors));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(postComCon));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912291655531_colors"; }
+            get { return "202001061550433_postComCon"; }
         }
         
         string IMigrationMetadata.Source

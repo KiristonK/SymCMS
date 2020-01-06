@@ -218,6 +218,10 @@
     <Compile Include="Migrations\201912191027599_visible.designer.cs">
       <DependentUpon>201912191027599_visible.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912231730342_1.3_init.cs" />
+    <Compile Include="Migrations\201912231730342_1.3_init.Designer.cs">
+      <DependentUpon>201912231730342_1.3_init.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912261552246_pages.cs" />
     <Compile Include="Migrations\201912261552246_pages.designer.cs">
       <DependentUpon>201912261552246_pages.cs</DependentUpon>
@@ -225,10 +229,6 @@
     <Compile Include="Migrations\201912290803580_test2.cs" />
     <Compile Include="Migrations\201912290803580_test2.designer.cs">
       <DependentUpon>201912290803580_test2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912291655531_colors.cs" />
-    <Compile Include="Migrations\201912291655531_colors.designer.cs">
-      <DependentUpon>201912291655531_colors.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201912291701199_colors1.cs" />
     <Compile Include="Migrations\201912291701199_colors1.designer.cs">
@@ -238,9 +238,9 @@
     <Compile Include="Migrations\201912291804393_back.designer.cs">
       <DependentUpon>201912291804393_back.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001031716126_comments.cs" />
-    <Compile Include="Migrations\202001031716126_comments.designer.cs">
-      <DependentUpon>202001031716126_comments.cs</DependentUpon>
+    <Compile Include="Migrations\202001061550433_postComCon.cs" />
+    <Compile Include="Migrations\202001061550433_postComCon.designer.cs">
+      <DependentUpon>202001061550433_postComCon.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -473,14 +473,14 @@
     <EmbeddedResource Include="Migrations\201912191027599_visible.resx">
       <DependentUpon>201912191027599_visible.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912231730342_1.3_init.resx">
+      <DependentUpon>201912231730342_1.3_init.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912261552246_pages.resx">
       <DependentUpon>201912261552246_pages.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912290803580_test2.resx">
       <DependentUpon>201912290803580_test2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912291655531_colors.resx">
-      <DependentUpon>201912291655531_colors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912291701199_colors1.resx">
       <DependentUpon>201912291701199_colors1.cs</DependentUpon>
@@ -488,8 +488,8 @@
     <EmbeddedResource Include="Migrations\201912291804393_back.resx">
       <DependentUpon>201912291804393_back.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001031716126_comments.resx">
-      <DependentUpon>202001031716126_comments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001061550433_postComCon.resx">
+      <DependentUpon>202001061550433_postComCon.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

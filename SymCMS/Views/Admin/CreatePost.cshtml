@@ -41,8 +41,8 @@
                 <button class="btn btn-outline-secondary run-modal-url" data-url="@Html.Raw(Url.Action("CategorySelectModal", "Admin" ))" type="button">
                     Category
                 </button>
-                @Html.HiddenFor(model => model.CategoryId, new { htmlAttributes = new { id="categoryId"}})
-                <input class="form-control" disabled id="categoryName"/>            
+                @Html.HiddenFor(model => model.CategoryId, new { htmlAttributes = new { id = "categoryId" } })
+                <input class="form-control" disabled id="categoryName" />
             </div>
         </div>
 
@@ -64,7 +64,6 @@
 </div>
 
 @section Scripts{
-
     <script>
         $(document).ready(function () {
             $('.run-modal-url').on('click',
