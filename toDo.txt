@@ -1,0 +1,40 @@
+dodac columne data obowiaxywania 
+
+
+obrazki (posty i pagy)
+
+dodawanie pol (galerii )
+
+
+post: 
+obrazek
+trzeszc 
+zdjecia w treszci
+
+
+posty {
+
+jezyk polski
+
+autor 
+data utw
+data onowiaz
+
+opcja wylaczenia komentarze
+
+
+krotki opis (do wyboru)
+
+
+strony {
+
+po kategoriach
+
+panel admina dodanie striny n.p. contact
+}
+
+}
+
+linki do postow i pagow
+
+tlymaczenie (EN\PL)
