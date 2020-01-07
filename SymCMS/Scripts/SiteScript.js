@@ -60,6 +60,8 @@ function createCategory() {
 }
 
 
+
+
 (function ($) {
 
     $.fn.autoResize = function (options) {

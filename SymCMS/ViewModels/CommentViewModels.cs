@@ -16,14 +16,18 @@ namespace SymCMS.ViewModels
             this.CommentText = comment.CommentText;
             this.AuthorName = comment.AuthorName;
             this.PostId = comment.PostId;
-            //this.Post = new PostViewModel(comment.Post);
+            this.PageId = comment.PageId;
+           
         }
         public int CommentId { get; set; }
         [DataType(DataType.MultilineText)]
         public string CommentText { get; set; }
         public string AuthorName { get; set; }
-        public int PostId { get; set; }
-        public virtual PostViewModel Post { get; set; }
+        public int? PostId { get; set; }
+        public virtual PostModel Post { get; set; }
+
+        public int? PageId { get; set; }
+        public virtual PostModel Page { get; set; }
     }
 
 }

@@ -16,8 +16,8 @@ namespace SymCMS.Controllers
     public class PagesController : Controller
     {
        private  readonly  PageService _pS = new PageService();
-
-       public ActionResult Index()
+        private readonly CommentService _commentService = new CommentService();
+        public ActionResult Index()
        {
            return RedirectToAction("PagesView");
        }
@@ -34,6 +34,7 @@ namespace SymCMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PageId == id);
             PageViewModels pageViewModels = _pS.GetPage(id);
             if (pageViewModels == null)
             {
@@ -71,6 +72,7 @@ namespace SymCMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PageId == id);
             PageViewModels pageViewModels = _pS.GetPage(id);
             if (pageViewModels == null)
             {

@@ -238,9 +238,13 @@
     <Compile Include="Migrations\201912291804393_back.designer.cs">
       <DependentUpon>201912291804393_back.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001061550433_postComCon.cs" />
-    <Compile Include="Migrations\202001061550433_postComCon.designer.cs">
-      <DependentUpon>202001061550433_postComCon.cs</DependentUpon>
+    <Compile Include="Migrations\202001070707348_test1.cs" />
+    <Compile Include="Migrations\202001070707348_test1.designer.cs">
+      <DependentUpon>202001070707348_test1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001070830279_commentChange.cs" />
+    <Compile Include="Migrations\202001070830279_commentChange.designer.cs">
+      <DependentUpon>202001070830279_commentChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -441,6 +445,7 @@
     <Content Include="Views\Pages\Edit.cshtml" />
     <Content Include="Views\Pages\PagesView.cshtml" />
     <Content Include="Views\Shared\_CommentSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CommentViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -488,8 +493,11 @@
     <EmbeddedResource Include="Migrations\201912291804393_back.resx">
       <DependentUpon>201912291804393_back.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001061550433_postComCon.resx">
-      <DependentUpon>202001061550433_postComCon.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001070707348_test1.resx">
+      <DependentUpon>202001070707348_test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001070830279_commentChange.resx">
+      <DependentUpon>202001070830279_commentChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

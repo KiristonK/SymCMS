@@ -14,7 +14,7 @@ namespace SymCMS.Models
             this.CommentText = commentView.CommentText;
             this.AuthorName = commentView.AuthorName;
             this.PostId = commentView.PostId;
-            //this.Post = new PostModel(commentView.Post);
+            this.PageId = commentView.PageId;
         }
 
         [Key]
@@ -23,8 +23,13 @@ namespace SymCMS.Models
         public string CommentText { get; set; }
         public string AuthorName { get; set; }
         public string AuthorContact { get; set; }
+
         [ForeignKey("Post")]
-        public int PostId { get; set; }
+        public int? PostId { get; set; }
         public virtual PostModel Post { get; set; }
+
+        [ForeignKey("Page")]
+        public int? PageId { get; set; }
+        public virtual PostModel Page { get; set; }
     }
 }

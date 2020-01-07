@@ -7,5 +7,6 @@ namespace SymCMS.Services.Interfaces
         bool CreateComment(CommentViewModel comment);
         bool DeleteComment(int? id);
         CommentViewModel EditComment(CommentViewModel comment);
+        CommentViewModel GetComment(int? id);
     }
 }

@@ -1,0 +1,43 @@
+﻿@model SymCMS.ViewModels.CommentViewModel
+
+@{
+    Layout = null;
+}
+<div class="row justify-content-between">
+    <div class="col-4">
+        <label for="name">Author</label>
+    </div>
+    <div class="col-4 justify-content-end">
+        @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+        {
+            <input type="button" class="btn btn-secondary float-right" onclick="
+            $('#' + @Model.CommentId).toggleClass('d-none');
+            document.getElementById(@Model.CommentId + ' del').classList.toggle('d-none');
+            document.getElementById(@Model.CommentId + ' name').toggleAttribute('readonly');
+            document.getElementById(@Model.CommentId + ' text').toggleAttribute('readonly');" value="Edit"/>
+        }
+    </div>
+</div>
+<div class="row justify-content-start">
+    <div class="col-12">
+        @using (Html.BeginForm("Edit", "Comment"))
+        {
+            <input hidden value=@Model.CommentId name="CommentId" />
+            <input hidden value="@Model.PostId" name="PostId" />
+            <input hidden value="@Model.PageId" name="PageId" />
+            <input class="form-control mb-4" readonly="readonly" id="@Model.CommentId name" name="AuthorName" value="@Model.AuthorName" />
+            <label for="CommentText">Comment</label>
+            <textarea class="form-control" readonly="readonly" name="CommentText" id="@Model.CommentId text">@Model.CommentText</textarea>
+            <button type="submit" class="btn btn-warning d-none position-sticky mt-2" id="@Model.CommentId">Save</button>
+
+        }
+        @using (Html.BeginForm("Delete", "Comment", FormMethod.Post))
+        {
+            <input hidden value="@Model.CommentId" name="id" />
+            <input hidden value="@Model.PostId" name="idPost" />
+            <input hidden value="@Model.PageId" name="idPage" />
+            <button type="submit" class="btn btn-danger d-none position-sticky float-right mt-2" id="@Model.CommentId del">Delete</button>
+        }
+
+    </div>
+</div>

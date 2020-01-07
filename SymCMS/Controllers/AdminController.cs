@@ -32,11 +32,11 @@ namespace SymCMS.Controllers
 
         public ActionResult Details(int? id)
         {
-            ViewBag.ExComments = _commentService.GetAllComments();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PostId == id);
             PostViewModel postViewModel = _postService.GetPost(id.Value);
             if (postViewModel == null)
             {

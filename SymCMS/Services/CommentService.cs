@@ -22,7 +22,11 @@ namespace SymCMS.Services
 
         public bool DeleteComment(int? id)
         {
-            throw new System.NotImplementedException();
+            if (id == null) return false;
+            var comment = _db.CommentModels.Find(id);
+            _db.CommentModels.Remove(comment);
+            _db.SaveChanges();
+            return true;
         }
 
         public CommentViewModel EditComment(CommentViewModel comment)
@@ -31,6 +35,11 @@ namespace SymCMS.Services
             _db.Entry(commentModel).State = EntityState.Modified;
             _db.SaveChanges();
             return new CommentViewModel(commentModel);
+        }
+
+        public CommentViewModel GetComment(int? id)
+        {
+            return new CommentViewModel(_db.CommentModels.Find(id));
         }
 
         public IEnumerable<CommentViewModel> GetAllComments()

@@ -1,8 +1,17 @@
-﻿@model SymCMS.ViewModels.PageViewModels
+﻿@using SymCMS.ViewModels
+@model SymCMS.ViewModels.PageViewModels
 
 @{
     ViewBag.Title = "Details";
-   // Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+    if (!ViewData.ContainsKey("pageId"))
+    {
+        ViewData.Add("pageId", Model.PageId);
+    }
+    else
+    {
+        ViewData["pageId"] = Model.PageId;
+    }
+    // Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 <div class="mt-5">
     <h3>@Model.Title</h3>
@@ -13,4 +22,7 @@
         </dd>
 
     </dl>
+</div>
+<div>
+    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
 </div>
