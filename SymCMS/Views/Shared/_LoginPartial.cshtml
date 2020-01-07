@@ -30,10 +30,10 @@
             @Html.AntiForgeryToken()
 
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <li class="form-control w-auto  mr-1">
                    Hello @User.Identity.GetUserName()
                 </li>
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                <li><a class="btn btn-danger" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
             </ul>
         }
     }

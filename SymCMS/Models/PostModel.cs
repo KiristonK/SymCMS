@@ -19,7 +19,13 @@ namespace SymCMS.Models
             Visible = postViewModel.Visible;
             Category = postViewModel.Category;
             CategoryId = postViewModel.CategoryId;
-        }
+            HeadImageBase64 = postViewModel.HeadImageBase64;
+
+
+            Author = postViewModel.Author;
+            CreationDate = postViewModel.CreationDate;
+            Livetime = postViewModel.Livetime;
+    }
 
         [Key]
         public int Id { get; set; }
@@ -28,6 +34,11 @@ namespace SymCMS.Models
         public int CategoryId { get; set; }
         public PostCategory Category { get; set; }
         
+        public string Author { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime Livetime { get; set; }
+
+        public string HeadImageBase64 { get; set; }
 
         public string Title { get; set; }
         public string Content { get; set; }

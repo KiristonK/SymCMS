@@ -66,7 +66,7 @@ namespace SymCMS.Controllers
 
         public ActionResult CreatePost()
         {
-            return View();
+                return View();
         }
 
         [System.Web.Mvc.HttpPost]
@@ -76,7 +76,9 @@ namespace SymCMS.Controllers
             if (ModelState.IsValid && postViewModel.CategoryId != 0)
             {
                 _postService.AddPost(postViewModel);
-                return RedirectToAction("PostsView");
+                if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                    return RedirectToAction("PostsView");
+                return View("~/Views/Posts/Index.cshtml", _postService.GetPosts());
             }
    
             return View(postViewModel);

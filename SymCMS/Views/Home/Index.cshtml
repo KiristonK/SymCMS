@@ -15,7 +15,7 @@
 <div id="carouselExampleControls" class="carousel slide shadow shadow-lg" data-ride="carousel">
     <div class="carousel-inner p-2">
        
-        @foreach (var post in Model.Reverse())
+        @foreach (var post in Model.Reverse().Where(m=>m.Visible))
         {
         <div class="carousel-item @if (post.Equals(Model.Last())) { <text>active</text>} }">
             <h2>@post.Title</h2>

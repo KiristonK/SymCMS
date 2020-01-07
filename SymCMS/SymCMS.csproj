@@ -246,6 +246,14 @@
     <Compile Include="Migrations\202001070830279_commentChange.designer.cs">
       <DependentUpon>202001070830279_commentChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001071436507_images.cs" />
+    <Compile Include="Migrations\202001071436507_images.designer.cs">
+      <DependentUpon>202001071436507_images.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001071442107_datesAndAuthorPosts.cs" />
+    <Compile Include="Migrations\202001071442107_datesAndAuthorPosts.designer.cs">
+      <DependentUpon>202001071442107_datesAndAuthorPosts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommentModels.cs" />
@@ -498,6 +506,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001070830279_commentChange.resx">
       <DependentUpon>202001070830279_commentChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001071436507_images.resx">
+      <DependentUpon>202001071436507_images.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001071442107_datesAndAuthorPosts.resx">
+      <DependentUpon>202001071442107_datesAndAuthorPosts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

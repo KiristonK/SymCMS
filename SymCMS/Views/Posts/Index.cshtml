@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<SymCMS.ViewModels.PostViewModel>
 
 @{
-    ViewBag.Title = "PagesView";
+    ViewBag.Title = "PostssView";
 }
 
     <div class="container">
         <h2>Blog</h2>
 
-        <form action="/PostModels/Create">
+        <form action="/Admin/CreatePost">
             <button class="btn btn-outline-primary">Create New</button>
         </form>
 
         <div class="row">
             @foreach (var item in Model)
             {
-                <div class="card m-3" style="width:18rem;">
+                <div class="card m-3 w-100">
 
-                    <div class="card-body bg-light shadow-lg">
+                    <div class="card-body bg-light shadow-lg" style="background-image: @item.HeadImageBase64;">
 
                         <h2 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h2>
                         <hr/>
@@ -31,9 +31,7 @@
                         </div>
 
                         <p>
-                            <a class="btn btn-primary" href="Posts/Edit/@item.Id">Edit</a>
-                            <a class="btn btn-primary" href="Posts/Details/@item.Id">Details</a>
-                            <a class="btn btn-primary" href="Posts/Delete/@item.Id">Delete</a>
+                            <a class="btn btn-primary" href="/Admin/Details/@item.Id">Details</a>
                         </p>
 
                     </div>

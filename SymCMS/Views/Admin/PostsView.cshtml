@@ -20,15 +20,18 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Content)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Visible)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th style="min-width:270px; max-width:270px;"></th>
+                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Visible)
+                    </th>
+                }
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+                    <th style="min-width:270px; max-width:270px;"></th>
 
-            </tr>
+                </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
@@ -44,30 +47,36 @@
                     }
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
-                <td>
-                    <div class="switch_box box_1">
-                        <input type="checkbox" class="switch_1 post_visibility" data-postid="@item.Id" @if (item.Visible) { <text>checked</text> } />
-                    </div>
-                </td>
-                <td>
-                     @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    <div class="row mx-2">
-                        <form action="/Admin/Details/@item.Id">
-                            <input type="submit" class="btn btn-outline-primary rounded mr-2" value="Details" />
-                        </form>
+                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                {
+                    <td>
+                        <div class="switch_box box_1">
+                            <input type="checkbox" class="switch_1 post_visibility" data-postid="@item.Id" @if (item.Visible)
+                            { <text> checked</text> } />
+                        </div>
+                    </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        <div class="row mx-2">
+                            <form action="/Admin/Details/@item.Id">
+                                <input type="submit" class="btn btn-outline-primary rounded mr-2" value="Details" />
+                            </form>
+                            @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                            {
+                                <form action="/Admin/Edit/@item.Id">
+                                    <input type="submit" class="btn btn-outline-secondary rounded mr-2" value="Edit" />
+                                </form>
 
-                        <form action="/Admin/Edit/@item.Id">
-                            <input type="submit" class="btn btn-outline-secondary rounded mr-2" value="Edit" />
-                        </form>
-
-                        <form action="/Admin/Delete/@item.Id">
-                            <input type="submit" class="btn btn-outline-danger rounded mr-2" value="Delete" />
-                        </form>
-                    </div>
-                </td>
-            </tr>
+                                <form action="/Admin/Delete/@item.Id">
+                                    <input type="submit" class="btn btn-outline-danger rounded mr-2" value="Delete" />
+                                </form>
+                            }
+                        </div>
+                    </td>
+                </tr>
             }
         </tbody>
 

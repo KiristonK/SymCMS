@@ -31,7 +31,12 @@ namespace SymCMS.ViewModels
         public int CategoryId { get; set; }
         public PostCategory Category { get; set; }
 
-       // public List<PostCategory> ExCategories { get; set; }
+        public string HeadImageBase64 { get;  set; }
+        public string Author { get;  set; }
+        public DateTime CreationDate { get;  set; }
+        public DateTime Livetime { get;  set; }
+
+        // public List<PostCategory> ExCategories { get; set; }
 
     }
 }

@@ -7,7 +7,7 @@ namespace SymCMS.Services.Interfaces
     public interface IPageService
     {
         bool EditPage(PageViewModels pageViewModels);
-        List<PageViewModels> GetAllPages();
+        IEnumerable<PageViewModels> GetAllPages();
         PageViewModels GetPage(int? id);
         void AddPage(PageViewModels pageViewModels);
         void DeletePage(int id);

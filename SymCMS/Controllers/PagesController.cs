@@ -19,12 +19,12 @@ namespace SymCMS.Controllers
         private readonly CommentService _commentService = new CommentService();
         public ActionResult Index()
        {
-           return RedirectToAction("PagesView");
+           return RedirectToAction("PagesView", _pS.GetAllPages());
        }
         // GET: PageModels
         public ActionResult PagesView()
         {
-            return View(_pS.GetAllPages() );
+            return View(_pS.GetAllPages());
         }
 
         // GET: PageModels/Details/5

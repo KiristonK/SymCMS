@@ -19,7 +19,7 @@ namespace SymCMS.Services
             return true;
         }
 
-        public List<PageViewModels> GetAllPages()
+        public IEnumerable<PageViewModels> GetAllPages()
         {
             var pageViewModels = new List<PageViewModels>();
             foreach (var page in _db.PageModels.ToList())
