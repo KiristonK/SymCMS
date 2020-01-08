@@ -37,8 +37,11 @@
     @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
     }
 </div>
+@if (!ViewData.ContainsKey("partial"))
+{
 <div class="row mx-3">
-   @
+    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+    {
         <form action="/Admin/Edit/@Model.Id">
             <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
         </form>
@@ -47,3 +50,4 @@
         <input type="submit" value="Back to List" class="btn btn-outline-dark" />
     </form>
 </div>
+}
