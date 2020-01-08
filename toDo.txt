@@ -17,6 +17,8 @@ data obowiaz (got)
 
 TODO:
 -------------------------------------------------
+visibility off on expiration date
+
 
 obray page'y
 
@@ -31,7 +33,7 @@ strony {
 
 po kategoriach
 
-panel admina dodanie striny n.p. contact
+panel admina dodanie strony n.p. contact
 }
 
 }

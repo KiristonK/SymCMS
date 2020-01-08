@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using SymCMS.Models;
@@ -41,7 +42,11 @@ namespace SymCMS.ViewModels
 
         public string HeadImageBase64 { get;  set; }
         public string Author { get;  set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime CreationDate { get;  set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime Livetime { get;  set; }
 
     }
