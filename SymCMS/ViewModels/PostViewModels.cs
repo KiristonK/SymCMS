@@ -9,7 +9,7 @@ namespace SymCMS.ViewModels
 {
     public class PostViewModel
     {
-        public PostViewModel() { }
+        public PostViewModel() {}
 
         public PostViewModel(PostModel postModel)
         {
@@ -19,7 +19,12 @@ namespace SymCMS.ViewModels
             this.Visible = postModel.Visible;
             this.CategoryId = postModel.CategoryId;
             this.Category = postModel.Category;
-          //  this.ExCategories = postModel.ExCategories;
+
+            this.HeadImageBase64 = postModel.HeadImageBase64;
+            this.Author = postModel.Author;
+            this.CreationDate = postModel.CreationDate;
+            this.Livetime = postModel.Livetime;
+            this.CommentsEnabled = postModel.CommentsEnabled;
         }
 
         public int Id { get; set; }
@@ -28,6 +33,9 @@ namespace SymCMS.ViewModels
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public bool Visible { get; set; }
+
+        public bool CommentsEnabled { get; set; }
+
         public int CategoryId { get; set; }
         public PostCategory Category { get; set; }
 
@@ -35,8 +43,6 @@ namespace SymCMS.ViewModels
         public string Author { get;  set; }
         public DateTime CreationDate { get;  set; }
         public DateTime Livetime { get;  set; }
-
-        // public List<PostCategory> ExCategories { get; set; }
 
     }
 }

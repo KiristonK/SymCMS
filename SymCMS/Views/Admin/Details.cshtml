@@ -14,24 +14,36 @@
     }
 }
 
-<div>
-    <h3 class="font-weight-light">@Html.DisplayFor(model => model.Title)</h3>
-    <hr />
-    <div class="card m-3 bg-transparent" style="width:auto;">
+    <div>
+        <div class="img-container">
+            <img src="@Html.ValueFor(model => model.HeadImageBase64)" alt="..." class="img-head">
+            <div class="w3-hide-small text-block" >
+                <h4 class="display-2">@Html.DisplayFor(model => model.Title)</h4>
+            </div>
+        </div>
+        <hr />
+        <div class="card bg-transparent" style="width:auto;">
 
-        <div class="card-body bg-transparent w-auto">
-
-            <p class="border-bottom border-dark card-title display-4">@Html.DisplayNameFor(model => model.Content)</p>
-            <div class="form-text rounded border border-primary card-text mb-3"> @Html.DisplayFor(model => model.Content)</div>
+            <div class="card-body bg-transparent w-auto">
+               @Html.Raw(Model.Content)
+            </div>
 
         </div>
-
     </div>
-</div>
 <hr />
-<div>
-    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
-</div>
+<div class="mb-2">
+        <div class="col-md-12 justify-content-end ml-0">
+            <div class="switch_box box_1" style="justify-content:flex-end; right: 0%; position: absolute;">
+                <p class="text-lg-left display-4 text-secondary">Comments</p>
+                <input type="checkbox" class="switch_1 comment_switch" data-postid="@Model.Id" @if (Model.CommentsEnabled)
+                { <text> checked</text> } />
+            </div>
+        </div>
+        @if (Model.CommentsEnabled)
+        {
+            @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+        }
+    </div>
 <div class="row mx-3">
     @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
     {
@@ -43,20 +55,3 @@
             <input type="submit" value="Back to List" class="btn btn-outline-dark" />
         </form>
     </div>
-
-@*@section Scripts{
-        <script>
-            $(document).ready(function () {
-                $("#addComment").click(function () {
-                    alert("Click : " + $('#name').val() + " " + $('#comment').val());
-                    $.ajax({
-                        type: "POST",
-                        url: "/Comment/CreateComment/",
-                        data: { AuthorName: $('#name').val(), CommentText: $('#comment').val() },
-                        dataType: typeof (string)
-                    }).fail(alert('Fail'));
-                });
-            });
-        </script>
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@

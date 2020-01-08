@@ -254,6 +254,14 @@
     <Compile Include="Migrations\202001071442107_datesAndAuthorPosts.designer.cs">
       <DependentUpon>202001071442107_datesAndAuthorPosts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001081016384_dateUpdate.cs" />
+    <Compile Include="Migrations\202001081016384_dateUpdate.designer.cs">
+      <DependentUpon>202001081016384_dateUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001081355070_commentsSwitch.cs" />
+    <Compile Include="Migrations\202001081355070_commentsSwitch.designer.cs">
+      <DependentUpon>202001081355070_commentsSwitch.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommentModels.cs" />
@@ -512,6 +520,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001071442107_datesAndAuthorPosts.resx">
       <DependentUpon>202001071442107_datesAndAuthorPosts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081016384_dateUpdate.resx">
+      <DependentUpon>202001081016384_dateUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081355070_commentsSwitch.resx">
+      <DependentUpon>202001081355070_commentsSwitch.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

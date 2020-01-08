@@ -26,7 +26,17 @@ namespace SymCMS
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css"
+                      ));
+
+    
+
+            /*
+             "https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
+
+             "https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"
+             "https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
+             */
         }
     }
 }

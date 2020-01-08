@@ -53,7 +53,8 @@ namespace SymCMS.Controllers
 
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible, CategoryId")] PostViewModel postViewModel)
+        [ValidateInput(false)]
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime")] PostViewModel postViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +72,8 @@ namespace SymCMS.Controllers
 
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePost([Bind(Include = "Id,Title,Content,Visible,CategoryId")] PostViewModel postViewModel)
+        [ValidateInput(false)]
+        public ActionResult CreatePost([Bind(Include = "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime")] PostViewModel postViewModel)
         {
             if (ModelState.IsValid && postViewModel.CategoryId != 0)
             {
@@ -89,6 +91,13 @@ namespace SymCMS.Controllers
         {
             _postService.UpdateVisibility(postViewModel);
             return RedirectToAction("PostsView");
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult UpdateCommenting(PostViewModel postViewModel)
+        {
+            _postService.UpdateCommenting(postViewModel);
+            return RedirectToAction("Details", _postService.GetPost(postViewModel.Id));
         }
 
         public ActionResult Delete(int? id)

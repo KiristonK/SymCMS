@@ -1,50 +1,49 @@
-﻿@model SymCMS.ViewModels.PostViewModel
+﻿@using SymCMS.ViewModels
+@model SymCMS.ViewModels.PostViewModel
 
 @{
     ViewBag.Title = "Details";
+    //Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+    if (!ViewData.ContainsKey("postId"))
+    {
+        ViewData.Add("postId", Model.Id);
+    }
+    else
+    {
+        ViewData["postId"] = Model.Id;
+    }
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>PostModel</h4>
-    <hr />
-    @*<dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-    </dl>*@
-    <div class="card">
-        <div class="card-header">
-            <div class="form-inline col-4">
-                @Html.DisplayFor(model => model.Title)
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="form-inline col-4">
-                @Html.DisplayFor(model => model.Content)
-            </div>
+    <div class="img-container">
+        <img src="@Html.ValueFor(model => model.HeadImageBase64)" alt="..." class="img-head">
+        <div class="w3-hide-small text-block">
+            <h4 class="display-1">@Html.DisplayFor(model => model.Title)</h4>
         </div>
     </div>
+    <hr />
+    <div class="card bg-transparent" style="width:auto;">
+
+        <div class="card-body bg-transparent w-auto">
+            @Html.Raw(Model.Content)
+        </div>
+
+    </div>
 </div>
-<div class="row m-0 mt-2">
-    <form action="/PostModels/Edit/@Model.Id">
-        <input class="btn btn-outline-secondary mr-3" type="submit"  value="Edit"/>
-    </form>
-    <form action="/PostModels">
-        <input class="btn btn-outline-secondary" type="submit" value="Back to List" />
+<hr />
+<div>
+    @if (Model.CommentsEnabled)
+    {
+    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+    }
+</div>
+<div class="row mx-3">
+   @
+        <form action="/Admin/Edit/@Model.Id">
+            <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
+        </form>
+    }
+    <form action="/Admin/PostsView/">
+        <input type="submit" value="Back to List" class="btn btn-outline-dark" />
     </form>
 </div>

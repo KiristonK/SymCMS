@@ -216,6 +216,29 @@ input[type="checkbox"].switch_1 {
         text-decoration: none;
     }
 
-img {
-    width: 150px;
+
+.img-head {
+    width: 100%;
+    height: auto;
+}
+.img-container{
+    position:relative;
+}
+
+.left-bottom {
+    position: absolute;
+    top: 90%;
+    left: 10%;
+    transform: translate(-10%, -90%);
+    color: #ffffff;
+}
+
+.text-block {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0,0,0,.5);
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
 }

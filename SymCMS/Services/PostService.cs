@@ -24,7 +24,11 @@ namespace SymCMS.Services
                 Content = postViewModel.Content,
                 Visible = postViewModel.Visible,
                 Category = category,
-                CategoryId = postViewModel.CategoryId
+                CategoryId = postViewModel.CategoryId,
+                HeadImageBase64 = postViewModel.HeadImageBase64,
+                Author = postViewModel.Author,
+                CreationDate = DateTime.Now.Date,
+                Livetime = postViewModel.Livetime
             };
             _db.PostModels.Add(post);
             _db.SaveChanges();
@@ -50,7 +54,12 @@ namespace SymCMS.Services
                     Content = post.Content,
                     Visible = post.Visible,
                     CategoryId = post.CategoryId,
-                    Category = post.Category
+                    Category = post.Category,
+                    HeadImageBase64 = post.HeadImageBase64,
+                    Author = post.Author,
+                    CreationDate = post.CreationDate,
+                    Livetime = post.Livetime,
+                    CommentsEnabled = post.CommentsEnabled
                 };
             }
             return null;
@@ -77,16 +86,32 @@ namespace SymCMS.Services
                     Content = post.Content,
                     Visible = post.Visible,
                     Category = _db.PostCategories.Find(post.CategoryId),
-                    CategoryId = post.CategoryId
-                });
+                    CategoryId = post.CategoryId,
+                    HeadImageBase64 = post.HeadImageBase64,
+                    Author = post.Author,
+                    CreationDate = post.CreationDate,
+                    Livetime = post.Livetime,
+                    CommentsEnabled = post.CommentsEnabled
+                }) ;
             }
             return posts;
+        }
+
+        public void UpdateCommenting(PostViewModel postViewModel)
+        {
+            var post = _db.PostModels.Find(postViewModel.Id);
+            if (post != null)
+                post.CommentsEnabled = postViewModel.CommentsEnabled;
+            _db.SaveChanges();
         }
 
         public bool RemovePost(int id)
         {
             var postModel = _db.PostModels.Find(id);
             _db.PostModels.Remove(postModel);
+            var comments = _db.CommentModels.Where(c => c.PostId == id);
+            if (comments.Count() != 0)
+                _db.CommentModels.RemoveRange(comments);
             _db.SaveChanges();
             return true;
         }

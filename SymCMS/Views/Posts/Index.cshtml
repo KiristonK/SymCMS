@@ -1,42 +1,47 @@
-﻿@model IEnumerable<SymCMS.ViewModels.PostViewModel>
+﻿@using System.Text.RegularExpressions
+@model IEnumerable<SymCMS.ViewModels.PostViewModel>
 
 @{
     ViewBag.Title = "PostssView";
 }
 
-    <div class="container">
-        <h2>Blog</h2>
+<div class="container">
+    <h2>Blog</h2>
 
-        <form action="/Admin/CreatePost">
-            <button class="btn btn-outline-primary">Create New</button>
-        </form>
+    @if (User.IsInRole("Administartor") || User.IsInRole("Editor")) {
+    <form action="/Admin/CreatePost">
+        <button class="btn btn-outline-primary">Create New</button>
+    </form>
+    }
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card m-3 w-100">
 
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="card m-3 w-100">
-
-                    <div class="card-body bg-light shadow-lg" style="background-image: @item.HeadImageBase64;">
-
-                        <h2 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h2>
-                        <hr/>
-                        <div class="form-text rounded card-text mb-3">
-                            @if (item.Content.Length >= 100)
+                <div class="card-body bg-light shadow-lg">
+                    <img class="card-header card-img-top" src="@item.HeadImageBase64" />
+                    <h2 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h2>
+                    <hr />
+                    <div class="form-text rounded card-text mb-3">
+                        @{ 
+                            item.Content = Regex.Replace(item.Content, "<.*?>", String.Empty);
+                            if (item.Content.Length >= 100)
                             {
                                 item.Content = item.Content.Substring(0, 100) + "...";
-                                @Html.DisplayFor(modelItem => item.Content)
+                            @Html.DisplayFor(model => item.Content)
                             }
                             else
-                            {@Html.DisplayFor(modelItem => item.Content)}
-                        </div>
-
-                        <p>
-                            <a class="btn btn-primary" href="/Admin/Details/@item.Id">Details</a>
-                        </p>
-
+                            {@Html.Raw(item.Content)}
+                         }
                     </div>
-
+                    <div>
+                        <p>
+                            <a class="btn btn-primary" href="/Posts/Details/@item.Id">Details</a>
+                        </p>
+                    </div>
                 </div>
-            }
-        </div>
+
+            </div>
+        }
     </div>
+</div>

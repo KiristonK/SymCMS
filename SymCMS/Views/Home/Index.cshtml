@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SymCMS.ViewModels.PostViewModel>
+﻿@using System.Text.RegularExpressions
+@model IEnumerable<SymCMS.ViewModels.PostViewModel>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -14,25 +15,33 @@
 
 <div id="carouselExampleControls" class="carousel slide shadow shadow-lg" data-ride="carousel">
     <div class="carousel-inner p-2">
-       
-        @foreach (var post in Model.Reverse().Where(m=>m.Visible))
+
+        @foreach (var post in Model.Reverse().Where(m => m.Visible))
         {
-        <div class="carousel-item @if (post.Equals(Model.Last())) { <text>active</text>} }">
-            <h2>@post.Title</h2>
-            <hr />
-            <div>
-                <h3 class="text-warning rounded w-50">@post.Category.Name</h3>
+            <div class="carousel-item @if (post.Equals(Model.Last()))
+        { <text>active</text>} }"><div class="img-container">
+    <img src="@post.HeadImageBase64" alt="..." class="img-head" style="max-height: 400px;">
+    <div class="w3-hide-small text-block">
+        <h4 class="display-1">@post.Title</h4>
+    </div>
+</div>
+                <hr />
+                <div>
+                    <h3 class="text-warning rounded w-50">@post.Category.Name</h3>
+                </div>
+                <hr />
+                <div style="height: 10rem; margin: 1rem">
+                    @{
+                        post.Content = Regex.Replace(post.Content, "<.*?>", String.Empty);
+                        if (post.Content.Length >= 1000)
+                        {
+                            post.Content = post.Content.Substring(0, 1000) + "...";
+                        }
+                    }
+                    @Html.DisplayFor(modelItem => post.Content)
+                </div>
+                <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@post.Id">Details &raquo;</a></p>
             </div>
-            <hr />
-            <div style="height: 10rem; margin: 1rem">
-                @if (post.Content.Length >= 1000)
-                {
-                    post.Content = post.Content.Substring(0, 1000) + "...";
-                }
-                @Html.DisplayFor(modelItem => post.Content)
-            </div>
-        <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@post.Id">Details &raquo;</a></p>
-        </div>
         }
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

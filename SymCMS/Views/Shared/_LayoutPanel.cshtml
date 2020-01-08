@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using SymCMS.Services
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,6 +20,7 @@
             left: 0;
             box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.4s;
+            overflow-y:auto;
         }
 
         .page-content {
@@ -38,9 +41,7 @@
         }
 
         body {
-            background: #599fd9;
-            background: -webkit-linear-gradient(to right, #599fd9, #c2e59c);
-            background: linear-gradient(to right, #599fd9, #c2e59c);
+            background: #fff;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -63,7 +64,7 @@
     <div class="container-fluid">
         <div class="col-12">
             <div class="vertical-nav bg-white" id="sidebar">
-                <div class="py-4 px-3 mb-4 bg-light">
+                <div class="py-4 px-3 mb-4 bg-light sticky-top">
                     <div class="media d-flex align-items-center">
                         <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
                         <div class="media-body">
@@ -95,7 +96,7 @@
                     </div>
                 </div>
 
-                <div class="col ">
+                <div class="col">
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleSitemap" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                         <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Site map</p>
@@ -111,7 +112,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="/Home/About/" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                                    <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
                                     About
                                 </a>
                             </li>
@@ -127,13 +128,26 @@
                                     Blog
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <h5 class="text-gray font-weight-bold text-uppercase ml-4 mb-0">Additional pages</h5>
+                            </li>
+                            @foreach (var page in new PageService().GetAllPages())
+                            {
+                                <li class="nav-item">
+                                    <a href="/Pages/Details/@page.PageId" class="nav-link text-dark font-italic bg-light">
+                                        <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                                        @page.Title
+                                    </a>
+                                </li>
+                                @*<a class="dropdown-item" href="/Pages/Details/@@page.PageId">@page.Title</a>*@
+                            }
                         </ul>
                     </div>
 
-
-                    <br/>
-                    <br/>
-
+                    <br />
+                    <hr />
+                        <h4 class="text-gray font-weight-bold text-uppercase  mb-0">Admin options</h4>
+                    <hr />
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePosts" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                         <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Posts</p>
                     </button>
@@ -162,7 +176,7 @@
                     </div>
 
 
-                    <br/>
+                    <br />
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePages" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                         <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0" style="width: inherit;">Pages</p>
@@ -190,21 +204,23 @@
                             </li>
                         </ul>
                     </div>
+                    <br />
+                    <br />
                 </div>
             </div>
             <div class="row">
-                <div class="page-content p-5" id="content">
+                <div class="page-content p-5 position-relative" id="content">
                     <!-- Toggle button -->
                     <button id="sidebarCollapse" type="button" onclick=" $('#sidebar, #content').toggleClass('active')" class="btn btn-light bg-white rounded-pill shadow-sm mb-4"><small class="text-uppercase font-weight-bold">Menu</small></button>
 
                     @RenderBody()
                     <hr />
                     <footer class="justify-content-center">
-                          <p>&copy; @DateTime.Now.Year - SymCMS</p>
+                        <p>&copy; @DateTime.Now.Year - SymCMS</p>
                     </footer>
-                    </div>
                 </div>
             </div>
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

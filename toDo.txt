@@ -1,26 +1,27 @@
-dodac columne data obowiaxywania 
+DONE:
+-----------------------------------------------
+dodac columne data obowiaxywania (gotowe)
 
 
-obrazki (posty i pagy)
+
+opcja wylaczenia komentarze (got)
+
+post: 
+obrazek (got)
+trzeszc (got)
+zdjecia w treszci (got)
+
+autor (got)
+data utw (got)
+data obowiaz (got)
+
+TODO:
+-------------------------------------------------
+
+obray page'y
 
 dodawanie pol (galerii )
 
-
-post: 
-obrazek
-trzeszc 
-zdjecia w treszci
-
-
-posty {
-
-jezyk polski
-
-autor 
-data utw
-data onowiaz
-
-opcja wylaczenia komentarze
 
 
 krotki opis (do wyboru)
@@ -37,4 +38,5 @@ panel admina dodanie striny n.p. contact
 
 linki do postow i pagow
 
+jezyk polski
 tlymaczenie (EN\PL)

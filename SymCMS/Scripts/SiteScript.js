@@ -15,6 +15,18 @@ $(".post_visibility").change(function () {
 });
 
 
+$(".comment_switch").change(function () {
+    console.log($(this).data("postid"));
+    $.ajax({
+        url: "/Admin/UpdateCommenting/",
+        method: "POST",
+        data: { id: $(this).data("postid"), CommentsEnabled: $(this).prop("checked") }
+    }).fail(function () {
+        $(this).prop("checked", false);
+    });
+    setTimeout("location.reload(true);", 1000);
+});
+
 function createCategory() {
     var e = document.getElementById("selectCategory");
     if (e.options[e.selectedIndex].value == 0) {
