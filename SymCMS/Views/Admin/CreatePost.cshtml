@@ -63,6 +63,10 @@
             @Html.LabelFor(model => model.Visible, htmlAttributes: new { @class = "control-label col-md-1" })
             @Html.EditorFor(model => model.Visible, new { htmlAttributes = new { @class = "switch_1 col-md-1 justify-content-start" } })
         </div>
+        <div class="switch_box box_1 justify-content-start">
+            @Html.LabelFor(model => model.CommentsEnabled, htmlAttributes: new { @class = "control-label col-md-1" })
+            @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 justify-content-start" } })
+        </div>
     </div>
 
     <div class="input-group mb-2">
