@@ -8,7 +8,7 @@
 <div class="container">
     <h2>Blog</h2>
 
-    @if (User.IsInRole("Administartor") || User.IsInRole("Editor")) {
+    @if (User.Identity.IsAuthenticated) {
     <form action="/Admin/CreatePost">
         <button class="btn btn-outline-primary">Create New</button>
     </form>
@@ -35,9 +35,19 @@
                          }
                     </div>
                     <div>
-                        <p>
-                            <a class="btn btn-primary" href="/Posts/Details/@item.Id">Details</a>
-                        </p>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <p>
+                                <a class="btn btn-primary" href="/Admin/Details/@item.Id">Details</a>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <a class="btn btn-primary" href="/Posts/Details/@item.Id">Details</a>
+                            </p>
+                        }
                     </div>
                 </div>
 
