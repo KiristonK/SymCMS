@@ -12,6 +12,7 @@
     {
         ViewData["postId"] = Model.Id;
     }
+    ViewData.Add("Post", Model);
 }
 
     <div>
@@ -32,20 +33,10 @@
     </div>
 <hr />
 <div class="mb-2">
-        <div class="col-md-12 justify-content-end ml-0">
-            <div class="switch_box box_1" style="justify-content:flex-end; right: 0%; position: absolute;">
-                <p class="text-lg-left display-4 text-secondary">Comments</p>
-                <input type="checkbox" class="switch_1 comment_switch" data-postid="@Model.Id" @if (Model.CommentsEnabled)
-                { <text> checked</text> } />
-            </div>
-        </div>
-        @if (Model.CommentsEnabled)
-        {
-            @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
-        }
-    </div>
+    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+</div>
 <div class="row mx-3">
-    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+    @if (User.Identity.IsAuthenticated)
     {
         <form action="/Admin/Edit/@Model.Id">
             <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />

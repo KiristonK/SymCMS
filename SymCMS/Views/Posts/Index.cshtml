@@ -17,35 +17,41 @@
         @foreach (var item in Model)
         {
             <div class="card m-3 w-100">
+                <div class=" bg-secondary shadow-lg" style="max-height:700px; height:700px;">
+                    <div class="img-container">
+                        <img src="@Html.ValueFor(model => item.HeadImageBase64)" alt="..." class="img-head" style="max-height:700px; ">
+                        <div class="w3-hide-small text-block-index">
+                            <h4 class="display-2">@Html.DisplayFor(model => item.Title)</h4>
+                        </div>
 
-                <div class="card-body bg-light shadow-lg">
-                    <img class="card-header card-img-top" src="@item.HeadImageBase64" />
-                    <h2 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h2>
-                    <hr />
-                    <div class="form-text rounded card-text mb-3">
-                        @{ 
+                    </div>
+                    <div @*class="form-text rounded card-text mb-3"*@ class="text-index-blog">
+                        @if (item.ContentPreview == string.Empty || item.ContentPreview == null)
+                        {
                             item.Content = Regex.Replace(item.Content, "<.*?>", String.Empty);
-                            if (item.Content.Length >= 100)
+                            if (item.Content.Length >= 1000)
                             {
-                                item.Content = item.Content.Substring(0, 100) + "...";
-                            @Html.DisplayFor(model => item.Content)
+                                item.Content = item.Content.Substring(0, 1000) + "...";
                             }
-                            else
-                            {@Html.Raw(item.Content)}
-                         }
+                            @Html.Raw(item.Content)
+                        }
+                        else
+                        {
+                            @Html.Raw(item.ContentPreview)
+                        }
                     </div>
                     <div>
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <p>
-                                <a class="btn btn-primary" href="/Admin/Details/@item.Id">Details</a>
+                            <p class="position-absolute" style="right:30px; bottom:10px;z-index: 3">
+                                <a class="btn btn-info" href="/Admin/Details/@item.Id">Details &raquo;</a>
                             </p>
                         }
                         else
                         {
-                            <p>
-                                <a class="btn btn-primary" href="/Posts/Details/@item.Id">Details</a>
+                            <p class="mt-1 position-absolute" style="right:30px; bottom:10px;z-index: 3">
+                                <a class="btn btn-info" href="/Posts/Details/@item.Id">Details &raquo;</a>
                             </p>
                         }
                     </div>

@@ -22,21 +22,16 @@ namespace SymCMS
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/umd/popper.js",
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/SiteScript.js"));
+                        "~/Scripts/SiteScript.js",
+                        "~/Scripts/bootstrap-datepicker.js",
+                        "~/Scripts/ckeditor/ckeditor.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"
+                      "~/Content/site.css",
+                      "~/Content/bootstrap-datepicker.css",
+                      "~/Content/bootstrap-datepicker.standalone.css"
                       ));
-
-    
-
-            /*
-             "https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
-
-             "https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"
-             "https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
-             */
         }
     }
 }

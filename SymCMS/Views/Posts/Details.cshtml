@@ -40,7 +40,7 @@
 @if (!ViewData.ContainsKey("partial"))
 {
 <div class="row mx-3">
-    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+    @if (User.Identity.IsAuthenticated)
     {
         <form action="/Admin/Edit/@Model.Id">
             <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />

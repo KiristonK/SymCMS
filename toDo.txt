@@ -2,7 +2,11 @@ DONE:
 -----------------------------------------------
 dodac columne data obowiaxywania (gotowe)
 
+visibility off on expiration date (got)
 
+content preview text limit (got)
+
+krotki opis (do wyboru) (gotowe)
 
 opcja wylaczenia komentarze (got)
 
@@ -17,17 +21,11 @@ data obowiaz (got)
 
 TODO:
 -------------------------------------------------
-visibility off on expiration date
 
 
-obray page'y
+obrazy page'y
 
 dodawanie pol (galerii )
-
-
-
-krotki opis (do wyboru)
-
 
 strony {
 

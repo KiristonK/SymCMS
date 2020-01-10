@@ -13,31 +13,44 @@ namespace SymCMS.Services
 {
     public class PostService : IPostService
     {
+        public PostService()
+        {
+            foreach (var post in GetPosts())
+            {
+                if (post.Livetime < DateTime.Now)
+                {
+                    DeletePost(post.Id);
+                }
+            }
+        }
         private readonly SymDbContext _db = new SymDbContext();
 
         public bool AddPost(PostViewModel postViewModel)
         {
-            var category = _db.PostCategories.Find(postViewModel.CategoryId);
-            var post = new Models.PostModel()
-            {
-                Title = postViewModel.Title,
-                Content = postViewModel.Content,
-                Visible = postViewModel.Visible,
-                Category = category,
-                CategoryId = postViewModel.CategoryId,
-                HeadImageBase64 = postViewModel.HeadImageBase64,
-                Author = postViewModel.Author,
-                CreationDate = DateTime.Now.Date,
-                Livetime = postViewModel.Livetime
-            };
-            _db.PostModels.Add(post);
+            postViewModel.Category = _db.PostCategories.Find(postViewModel.CategoryId);
+            _db.PostModels.Add(new PostModel(postViewModel));
             _db.SaveChanges();
             return true;
         }
 
         public PostViewModel EditPost(PostViewModel postViewModel)
         {
-            var postModel = new PostModel(postViewModel);
+            var postModel = _db.PostModels.Find(postViewModel.Id);
+
+            postModel.Id = postViewModel.Id;
+            postModel.Title = postViewModel.Title;
+            postModel.Content = postViewModel.Content;
+            postModel.Visible = postViewModel.Visible;
+            postModel.Category = _db.PostCategories.Find(postViewModel.CategoryId);
+            postModel.CategoryId = postViewModel.CategoryId;
+
+            postModel.HeadImageBase64 = postViewModel.HeadImageBase64;
+            postModel.Author = postViewModel.Author;
+            postModel.CreationDate = postViewModel.CreationDate;
+            postModel.Livetime = postViewModel.Livetime;
+            postModel.CommentsEnabled = postViewModel.CommentsEnabled;
+            postModel.ContentPreview = postViewModel.ContentPreview;
+
             _db.Entry(postModel).State = EntityState.Modified;
             _db.SaveChanges();
             return new PostViewModel(postModel);
@@ -48,19 +61,7 @@ namespace SymCMS.Services
             var post = _db.PostModels.Find(id);
             if (post != null)
             {
-                return new PostViewModel() {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Content = post.Content,
-                    Visible = post.Visible,
-                    CategoryId = post.CategoryId,
-                    Category = post.Category,
-                    HeadImageBase64 = post.HeadImageBase64,
-                    Author = post.Author,
-                    CreationDate = post.CreationDate,
-                    Livetime = post.Livetime,
-                    CommentsEnabled = post.CommentsEnabled
-                };
+                return new PostViewModel(post);
             }
             return null;
         }
@@ -79,20 +80,8 @@ namespace SymCMS.Services
             var postList = _db.PostModels.ToList();
             foreach (var post in postList)
             {
-                posts.Add(new PostViewModel()
-                {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Content = post.Content,
-                    Visible = post.Visible,
-                    Category = _db.PostCategories.Find(post.CategoryId),
-                    CategoryId = post.CategoryId,
-                    HeadImageBase64 = post.HeadImageBase64,
-                    Author = post.Author,
-                    CreationDate = post.CreationDate,
-                    Livetime = post.Livetime,
-                    CommentsEnabled = post.CommentsEnabled
-                }) ;
+                post.Category = _db.PostCategories.Find(post.CategoryId);
+                posts.Add(new PostViewModel(post));
             }
             return posts;
         }

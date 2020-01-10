@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
@@ -25,6 +26,18 @@ namespace SymCMS.ViewModels
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
         public int PageId { get; set; }
+
+        [Required]
+        public string HeadImageBase64 { get; set; }
+        [Required]
+        public string Author { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime CreationDate { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime Livetime { get; set; }
+
 
     }
 }

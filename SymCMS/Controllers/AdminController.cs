@@ -54,7 +54,7 @@ namespace SymCMS.Controllers
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime")] PostViewModel postViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime,CommentsEnabled,ContentPreview")] PostViewModel postViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace SymCMS.Controllers
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult CreatePost([Bind(Include = "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime")] PostViewModel postViewModel)
+        public ActionResult CreatePost([Bind(Include = "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime,CommentsEnabled,ContentPreview")] PostViewModel postViewModel)
         {
             if (ModelState.IsValid && postViewModel.CategoryId != 0)
             {

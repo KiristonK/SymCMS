@@ -1,4 +1,4 @@
-﻿@using System.Data
+﻿@using System.Text.RegularExpressions
 @model IEnumerable<SymCMS.ViewModels.PostViewModel>
 
 @{
@@ -26,35 +26,39 @@
                         @Html.DisplayNameFor(model => model.Visible)
                     </th>
                 }
-                    <th>
-                        @Html.DisplayNameFor(model => model.Category)
-                    </th>
-                    <th style="min-width:270px; max-width:270px;"></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th style="min-width:270px; max-width:270px;"></th>
 
-                </tr>
+            </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @if (item.Content.Length >= 100)
-                    {
-                        item.Content = item.Content.Substring(0, 100) + "...";
-                    }
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
-                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
-                {
+                <tr>
                     <td>
-                        <div class="switch_box box_1">
-                            <input type="checkbox" class="switch_1 post_visibility" data-postid="@item.Id" @if (item.Visible)
-                            { <text> checked</text> } />
-                        </div>
+                        @Html.DisplayFor(modelItem => item.Title)
                     </td>
+                    <td>
+                    
+                        @if (item.ContentPreview == string.Empty || item.ContentPreview == null){
+                            item.Content = Regex.Replace(item.Content, "<.*?>", String.Empty);
+                            if (item.Content.Length >= 100){
+                                item.Content = item.Content.Substring(0, 100) + "...";
+                            }
+                            @Html.Raw(item.Content)
+                        } else {
+                            @Html.Raw(item.ContentPreview)
+                        }
+                    </td>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                    {
+                        <td>
+                            <div class="switch_box box_1">
+                                <input type="checkbox" class="switch_1 post_visibility" data-postid="@item.Id" @if (item.Visible) { <text> checked</text> } />
+                            </div>
+                        </td>
                     }
                     <td>
                         @Html.DisplayFor(modelItem => item.Category.Name)
@@ -69,10 +73,11 @@
                                 <form action="/Admin/Edit/@item.Id">
                                     <input type="submit" class="btn btn-outline-secondary rounded mr-2" value="Edit" />
                                 </form>
-
-                                <form action="/Admin/Delete/@item.Id">
-                                    <input type="submit" class="btn btn-outline-danger rounded mr-2" value="Delete" />
-                                </form>
+                                if (User.IsInRole("Administrator")) { 
+                                    <form action="/Admin/Delete/@item.Id">
+                                        <input type="submit" class="btn btn-outline-danger rounded mr-2" value="Delete" />
+                                    </form>
+                                }
                             }
                         </div>
                     </td>

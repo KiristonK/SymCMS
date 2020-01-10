@@ -13,42 +13,51 @@
 
 <h1 class="text-capitalize text-primary">Latest posts</h1>
 
-<div id="carouselExampleControls" class="carousel slide shadow shadow-lg" data-ride="carousel">
+<div id="carouselControls" class="carousel slide shadow shadow-lg" data-ride="carousel">
     <div class="carousel-inner p-2">
 
         @foreach (var post in Model.Reverse().Where(m => m.Visible))
         {
-            <div class="carousel-item @if (post.Equals(Model.Last()))
-        { <text>active</text>} }"><div class="img-container">
-    <img src="@post.HeadImageBase64" alt="..." class="img-head" style="max-height: 400px;">
-    <div class="w3-hide-small text-block">
-        <h4 class="display-1">@post.Title</h4>
-    </div>
-</div>
-                <hr />
+            <div class="carousel-item @if (post.Equals(Model.Last())){ <text>active</text>} } bg-secondary" style="max-height:700px; height:700px;">
+                <div class="img-container">
+                    <img src="@Html.ValueFor(model => post.HeadImageBase64)"  alt="..." class="img-head">
+                    <div class="w3-hide-small text-block-index">
+                        <h4 class="display-2">@Html.DisplayFor(model => post.Title)</h4>
+                    </div>
+                </div>
+                @*<hr />
                 <div>
                     <h3 class="text-warning rounded w-50">@post.Category.Name</h3>
                 </div>
-                <hr />
-                <div style="height: 10rem; margin: 1rem">
-                    @{
+                <hr />*@
+                <div @*style="height: 10rem; max-height:10rem; margin: 1rem"*@ class="text-index-post">
+                    @if (post.ContentPreview == string.Empty || post.ContentPreview == null)
+                    {
                         post.Content = Regex.Replace(post.Content, "<.*?>", String.Empty);
                         if (post.Content.Length >= 1000)
                         {
                             post.Content = post.Content.Substring(0, 1000) + "...";
                         }
+                        @Html.Raw(post.Content)
                     }
-                    @Html.DisplayFor(modelItem => post.Content)
+                    else
+                    {
+                        //post.ContentPreview = Regex.Replace(post.ContentPreview, "<.*?>", String.Empty);
+                        @Html.Raw(post.ContentPreview)
+                    }
+
                 </div>
-                <p class="mt-1"><a class="btn btn-info" href="/Admin/Details/@post.Id">Details &raquo;</a></p>
+                <p class="mt-1 position-absolute" style="right:20px; bottom:10px;z-index: 3">
+                     <a class="btn btn-info" href="/Admin/Details/@post.Id">Details &raquo;</a>
+                </p>
             </div>
         }
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <a class="carousel-control-next"  href="#carouselControls" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>

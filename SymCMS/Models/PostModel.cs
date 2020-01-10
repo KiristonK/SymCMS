@@ -24,7 +24,8 @@ namespace SymCMS.Models
             Author = postViewModel.Author;
             CreationDate = postViewModel.CreationDate;
             Livetime = postViewModel.Livetime;
-            this.CommentsEnabled = postViewModel.CommentsEnabled;
+            CommentsEnabled = postViewModel.CommentsEnabled;
+            ContentPreview = postViewModel.ContentPreview;
         }
 
         [Key]
@@ -43,7 +44,12 @@ namespace SymCMS.Models
         public string HeadImageBase64 { get; set; }
 
         public string Title { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string ContentPreview { get; set; }
+
         public bool Visible { get; set; }
         public bool CommentsEnabled { get; set; }
     }

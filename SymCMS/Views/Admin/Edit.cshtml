@@ -12,38 +12,6 @@
 
     <div class="form-horizontal">
         <hr />
-        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.CategoryId)
-
-            <div class="form-group">
-                <h4>@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })</h4>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <h4>@Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })</h4>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control d-block" }, @style = "overflow:hidden" })
-                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-10">
-                    <div class="switch_box box_1 justify-content-start">
-                        <h4>@Html.LabelFor(model => model.Visible, htmlAttributes: new { @class = "control-label col-md-2" })</h4>
-
-                        @Html.EditorFor(model => model.Visible, new { htmlAttributes = new { @class = "switch_1" } })
-                        @Html.ValidationMessageFor(model => model.Visible, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>*@
-
-
 
         <div class="form-group">
             <hr />
@@ -55,7 +23,7 @@
                 </div>
             </div>
             <div class="ml-2 col-md-10">
-                <img src="@Html.ValueFor(model => model.HeadImageBase64)" id="previewImage" class="d-none w-100 h-25">
+                <img src="@Html.ValueFor(model => model.HeadImageBase64)" id="previewImage" class="w-100 h-25">
             </div>
             @Html.HiddenFor(model => model.HeadImageBase64)
         </div>
@@ -77,14 +45,21 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-10">
-                <textarea name="Content"></textarea>
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            <div class="col-md-10 mb-3">
+                @Html.LabelFor(model => model.ContentPreview)
+                <textarea name="ContentPreview" onchange="textLimit()">@Html.ValueFor(model => model.ContentPreview)</textarea>
+                @Html.ValidationMessageFor(model => model.ContentPreview, "", new { @class = "text-danger" })
 
+            </div>
+            <div class="col-md-10">
+
+                @Html.LabelFor(model => model.Content)
+                <textarea name="Content">@Html.ValueFor(model => model.Content)</textarea>
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
 
             </div>
             <div class="input-group date m-3">
-                <input class="form-control datepicker" id="datePicker" type="text">
+                <input class="form-control datepicker" id="datePicker" type="text" value="@Html.ValueFor(model => model.Livetime.Date)">
                 @Html.HiddenFor(model => model.Livetime)
                 @Html.ValidationMessageFor(model => model.Livetime, "", new { @class = "text-danger" })
             </div>
@@ -94,8 +69,14 @@
             <div class="switch_box box_1 justify-content-start">
                 @Html.LabelFor(model => model.Visible, htmlAttributes: new { @class = "control-label col-md-1" })
                 @Html.EditorFor(model => model.Visible, new { htmlAttributes = new { @class = "switch_1 col-md-1 justify-content-start" } })
+
+                <div class="switch_box box_1 justify-content-start">
+                    @Html.LabelFor(model => model.CommentsEnabled, htmlAttributes: new { @class = "control-label mr-5 col-md-1" })
+                    @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 ml-5 justify-content-start" } })
+                </div>
             </div>
         </div>
+
 
         <div class="input-group mb-2">
             <div class="input-group-prepend">
@@ -103,7 +84,7 @@
                     Category
                 </button>
                 @Html.HiddenFor(model => model.CategoryId, new { htmlAttributes = new { id = "categoryId" } })
-                <input class="form-control" disabled id="categoryName" value="@Html.ValueFor(model => model.Category.Name)"/>
+                <input class="form-control" disabled id="categoryName" value="@Html.ValueFor(model => model.Category.Name)" />
             </div>
         </div>
 
@@ -126,25 +107,84 @@
 
 @section Scripts{
 
-
-    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-
-    <script src="~/Scripts/bootstrap-datepicker.js"></script>
-
-    <link href="~/Content/bootstrap-datepicker.css" />
-    <link href="~/Content/bootstrap-datepicker.standalone.css" />
-
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
     <script>
 
         $(document).ready(function () {
-            CKEDITOR.replace('Content');
+
+            CKEDITOR.replace('Content', {
+                wordcount: {
+                    showParagraphs: false,
+                    showWordCount: true,
+                    showCharCount: true,
+                    countSpacesAsChars: false,
+                    countHTML: false,
+                    maxWordCount: -1,
+                    maxCharCount: -1
+                }
+            });
+            CKEDITOR.replace('ContentPreview', {
+                height: 400, 
+                wordcount: {
+                    showParagraphs: false,
+                    showWordCount: true,
+                    showCharCount: true,
+                    countSpacesAsChars: false,
+                    countHTML: false,
+                    maxWordCount: -1,
+                    maxCharCount: 1000
+                },
+                toolbar: [
+                    { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
+                    { name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'] },
+                    { name: 'forms', items: ['TextField', 'Textarea', 'Select', 'HiddenField'] },
+                    '/',
+                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat'] },
+                    { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language'] },
+                    { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+                    { name: 'insert', items: ['Smiley', 'SpecialChar'] },
+                    '/',
+                    { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
+                    { name: 'colors', items: ['TextColor', 'BGColor'] },
+                    { name: 'tools', items: ['Maximize', 'ShowBlocks'] },
+                    { name: 'about', items: ['About'] }
+                ]
+                });
+
+            //CKEDITOR.instances.ContentPreview.editorConfig = function (config) {
+            //    config.toolbarGroups = [
+            //        { name: 'document', groups: ['mode', 'document', 'doctools'] },
+            //        { name: 'clipboard', groups: ['clipboard', 'undo'] },
+            //        { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
+            //        { name: 'forms', groups: ['forms'] },
+            //        '/',
+            //        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+            //        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
+            //        { name: 'links', groups: ['links'] },
+            //        { name: 'insert', groups: ['insert'] },
+            //        '/',
+            //        { name: 'styles', groups: ['styles'] },
+            //        { name: 'colors', groups: ['colors'] },
+            //        { name: 'tools', groups: ['tools'] },
+            //        { name: 'others', groups: ['others'] },
+            //        { name: 'about', groups: ['about'] }
+            //    ];
+
+            //    config.removeButtons = 'Source,Save,NewPage,Preview,Print,Templates,Form,Button,Select,Radio,Checkbox,Image,Table,PageBreak,Iframe,ImageButton,Maximize,About,Flash';
+            //};
+
+            function textLimit() {
+                console.log($(this).text.length);
+                if ($(this).text.length >= 1000) {
+                    document.getElementById('ContentPreview').toggleAttribute('readonly');
+                }
+            }
 
             $('.datepicker').datepicker({
                 uiLibrary: 'bootstrap4',
-                format: 'yy-mm-dd'
+                format: 'dd.mm.yyyy',
             });
 
             $('.datepicker').change(function () {
