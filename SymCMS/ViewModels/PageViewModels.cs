@@ -19,6 +19,8 @@ namespace SymCMS.ViewModels
             this.PageId = pageModel.Id;
             this.Title = pageModel.Title;
             this.Content = pageModel.Content;
+            this.AdditionalContent = pageModel.AditionalContent;
+            this.HeadImageBase64 = pageModel.Headimagebase64;
         }
 
         public string Title { get; set; }
@@ -35,9 +37,6 @@ namespace SymCMS.ViewModels
         [Column(TypeName = "datetime2")]
         public DateTime CreationDate { get; set; }
 
-        [Column(TypeName = "datetime2")]
-        public DateTime Livetime { get; set; }
-
-
+        public string AdditionalContent { get;  set; }
     }
 }
