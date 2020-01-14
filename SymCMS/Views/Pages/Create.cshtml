@@ -18,10 +18,10 @@
 
     <div class="form-group">
         <hr />
-        <div id="msg"></div>
+        <div id="msg1"></div>
         <input type="file" id="headfile" name="HeadImage" hidden class="file" accept="image/*">
         <div class="input-group my-3">
-            <input type="text" class="form-control" disabled placeholder="Click browse to upload image" id="file">
+            <input type="text" class="form-control" disabled placeholder="Click browse to upload image" id="fileName">
             <div class="input-group-append">
                 <button type="button" class="browse btn btn-primary">Browse...</button>
             </div>
@@ -72,52 +72,12 @@
     </div>
 
     <div class="m-3" id="modules">
-        <div class="row d-none" id="">
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/62307/air-bubbles-diving-underwater-blow-62307.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/62307/air-bubbles-diving-underwater-blow-62307.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="zoom img-fluid " alt="">
-
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/38238/maldives-ile-beach-sun-38238.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/38238/maldives-ile-beach-sun-38238.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="zoom img-fluid" alt="">
-                </a>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/158827/field-corn-air-frisch-158827.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/158827/field-corn-air-frisch-158827.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="zoom img-fluid " alt="">
-                </a>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/302804/pexels-photo-302804.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/302804/pexels-photo-302804.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="zoom img-fluid " alt="">
-                </a>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/1038914/pexels-photo-1038914.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/1038914/pexels-photo-1038914.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="zoom img-fluid " alt="">
-                </a>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/414645/pexels-photo-414645.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/414645/pexels-photo-414645.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="zoom img-fluid " alt="">
-                </a>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/56005/fiji-beach-sand-palm-trees-56005.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/56005/fiji-beach-sand-palm-trees-56005.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="zoom img-fluid " alt="">
-                </a>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="https://images.pexels.com/photos/1038002/pexels-photo-1038002.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="fancybox" rel="ligthbox">
-                    <img src="https://images.pexels.com/photos/1038002/pexels-photo-1038002.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="zoom img-fluid " alt="">
+        <div class="row d-none" id="gallery">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb shadow shadow-lg">
+                <div id="msg"></div>
+                <input type="file" class="addImage" hidden @*accept="image/*"*@>
+                <a href="javascript:void(0)" class="addImageHref" rel="ligthbox">
+                    <img src="https://static.thenounproject.com/png/558475-200.png" style="width: 100%; height: 100%;" alt=""/>
                 </a>
             </div>
         </div>
@@ -203,7 +163,34 @@
 
 
         $(document).ready(function () {
-            $('#addGallery').click(function );
+            $('#addGallery').click(function () {
+                document.getElementById('gallery').classList.toggle('d-none');
+            });
+
+            $(".addImageHref").on('click', function () {
+                var file = $(this).parents().find(".addImage");
+                file.trigger("click");
+            });
+
+            $('#addImage').change(function (e) {
+                alert('in func');
+                if (e.target.files[0] == undefined) { return }
+                var fileName = e.target.files[0].name;
+                var img;
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // get loaded data and render thumbnail.
+                    img = e.target.result;
+
+                };
+                var tmp = document.getElementById('gallery').innerHTML;
+                document.getElementById('gallery').innerHTML = '<div class="col-lg-3 col-md-4 col-xs-6 thumb shadow shadow-lg"><a href="' + fileName + '" rel="ligthbox"><img src="'+ img +'" class="zoom img-fluid " alt=""></a></div>';
+                document.getElementById('gallery').innerHTML += tmp;
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            });
+
+
             $(".fancybox").fancybox({
                 openEffect: "none",
                 closeEffect: "none"
@@ -263,7 +250,7 @@
             $('#headfile').change(function (e) {
                 if (e.target.files[0] == undefined) { return }
                 var fileName = e.target.files[0].name;
-                $("#file").val(fileName);
+                $("#fileName").val(fileName);
 
                 var reader = new FileReader();
                 reader.onload = function (e) {
@@ -271,7 +258,6 @@
                     $('#HeadImageBase64').val(reader.result);
                     $('#previewImage').removeClass('d-none');
                     document.getElementById("previewImage").src = e.target.result;
-
                 };
                 // read the image file as a data URL.
                 reader.readAsDataURL(this.files[0]);
