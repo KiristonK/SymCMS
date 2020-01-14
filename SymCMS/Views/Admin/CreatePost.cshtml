@@ -68,11 +68,9 @@
         <div class="switch_box box_1 justify-content-start">
             @Html.LabelFor(model => model.Visible, htmlAttributes: new { @class = "control-label col-md-1" })
             @Html.EditorFor(model => model.Visible, new { htmlAttributes = new { @class = "switch_1 col-md-1 justify-content-start" } })
-
-            <div class="switch_box box_1 justify-content-start">
-                @Html.LabelFor(model => model.CommentsEnabled, htmlAttributes: new { @class = "control-label mr-5 col-md-1" })
-                @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 ml-5 justify-content-start" } })
-            </div>
+        
+            @Html.LabelFor(model => model.CommentsEnabled, htmlAttributes: new { @class = "control-label mr-5 col-md-1" })
+            @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 ml-5 justify-content-start" } })
         </div>
     </div>
 
@@ -110,35 +108,14 @@
     <script>
 
         $(document).ready(function () {
-            CKEDITOR.replace('Content');
-            CKEDITOR.replace('ContentPreview');
-
-
-            CKEDITOR.instances.ContentPreview.editorConfig = function (config) {
-                config.toolbarGroups = [
-                    { name: 'document', groups: ['mode', 'document', 'doctools'] },
-                    { name: 'clipboard', groups: ['clipboard', 'undo'] },
-                    { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-                    { name: 'forms', groups: ['forms'] },
-                    '/',
-                    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-                    { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-                    { name: 'links', groups: ['links'] },
-                    { name: 'insert', groups: ['insert'] },
-                    '/',
-                    { name: 'styles', groups: ['styles'] },
-                    { name: 'colors', groups: ['colors'] },
-                    { name: 'tools', groups: ['tools'] },
-                    { name: 'others', groups: ['others'] },
-                    { name: 'about', groups: ['about'] }
-                ];
-
-                config.removeButtons = 'Source,Save,NewPage,Preview,Print,Templates,Form,Button,Select,Radio,Checkbox,Image,Table,PageBreak,Iframe,ImageButton,Maximize,About,Flash';
-            };
+            window.CKEDITOR.replace('Content');
+            window.CKEDITOR.replace('ContentPreview', {
+                customConfig: '/Scripts/ckeditor/config_preview.js'
+            });
 
             $('.datepicker').datepicker({
                 uiLibrary: 'bootstrap4',
-                format: 'dd.mm.yyyy'
+                format: 'mm/dd/yyyy'
             });
 
             $('.datepicker').change(function () {

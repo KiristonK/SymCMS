@@ -102,6 +102,7 @@ namespace SymCMS.Controllers
 
         public ActionResult Delete(int? id)
         {
+            ViewBag.ExComments = _commentService.GetAllComments();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

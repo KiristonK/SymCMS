@@ -29,5 +29,5 @@ countHTML: false,
 maxWordCount: 200,
 
 // Maximum allowed Char Count, -1 is default for unlimited
-maxCharCount: 1000};
+maxCharCount: 4000};
 };
