@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $("textarea").autoResize();
     });
 
@@ -26,6 +25,9 @@ $(".comment_switch").change(function () {
     });
     setTimeout("location.reload(true);", 1000);
 });
+
+
+
 
 function createCategory() {
     var e = document.getElementById("selectCategory");

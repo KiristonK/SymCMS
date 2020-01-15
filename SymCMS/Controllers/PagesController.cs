@@ -13,7 +13,7 @@ using SymCMS.ViewModels;
 
 namespace SymCMS.Controllers
 {
-    [System.Web.Mvc.Authorize]
+   // [System.Web.Mvc.Authorize]
     public class PagesController : Controller
     {
        private  readonly  PageService _pS = new PageService();
@@ -22,6 +22,8 @@ namespace SymCMS.Controllers
        {
            return RedirectToAction("PagesView", _pS.GetAllPages());
        }
+
+
         // GET: PageModels
         public ActionResult PagesView()
         {
@@ -55,7 +57,8 @@ namespace SymCMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content,AdditionalContent,HeadImageBase64")] PageViewModels pageViewModels)
+        [ValidateInput(false)]
+        public ActionResult Create([Bind(Include = "Id,Title,Author,Content,AdditionalContent,HeadImageBase64,CommentsEnabled")] PageViewModels pageViewModels)
         {
             if (ModelState.IsValid)
             {

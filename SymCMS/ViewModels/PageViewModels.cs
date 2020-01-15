@@ -21,6 +21,7 @@ namespace SymCMS.ViewModels
             this.Content = pageModel.Content;
             this.AdditionalContent = pageModel.AditionalContent;
             this.HeadImageBase64 = pageModel.Headimagebase64;
+            this.CommentsEnabled = pageModel.CommentsEnabled;
         }
 
         public string Title { get; set; }
@@ -38,5 +39,6 @@ namespace SymCMS.ViewModels
         public DateTime CreationDate { get; set; }
 
         public string AdditionalContent { get;  set; }
+        public bool CommentsEnabled { get; set; }
     }
 }

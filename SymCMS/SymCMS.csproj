@@ -270,6 +270,10 @@
     <Compile Include="Migrations\202001141113277_pagesChange.designer.cs">
       <DependentUpon>202001141113277_pagesChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001151014272_commentControlPage.cs" />
+    <Compile Include="Migrations\202001151014272_commentControlPage.designer.cs">
+      <DependentUpon>202001151014272_commentControlPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommentModels.cs" />
@@ -540,6 +544,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001141113277_pagesChange.resx">
       <DependentUpon>202001141113277_pagesChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001151014272_commentControlPage.resx">
+      <DependentUpon>202001151014272_commentControlPage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

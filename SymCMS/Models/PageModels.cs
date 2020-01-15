@@ -18,12 +18,15 @@ namespace SymCMS.Models
             Content = pageViewModels.Content;
             Headimagebase64 = pageViewModels.HeadImageBase64;
             AditionalContent = pageViewModels.AdditionalContent;
+            CommentsEnabled = pageViewModels.CommentsEnabled;
         }
 
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+
+        public bool CommentsEnabled { get; set; }
 
         public string AditionalContent { get; set; }
         public string Headimagebase64 { get; set; }

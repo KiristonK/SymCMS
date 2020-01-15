@@ -11,17 +11,22 @@
     {
         ViewData["pageId"] = Model.PageId;
     }
+
+    ViewData.Add("Page", Model);
     // Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 <div class="mt-5">
-    <h3>@Model.Title</h3>
+    <h3 class="display-2">@Model.Title</h3>
     <hr />
     <dl class="dl-horizontal">
         <dd>
-            @Html.DisplayFor(model => model.Content)
+            @Html.Raw(Model.Content)
+            @Html.Raw(Model.AdditionalContent)
         </dd>
-
     </dl>
+    <div class ="justify-content-end">
+        <h5 class="font-weight-light">@Model.Author</h5>
+</div>
 </div>
 <hr />
 <div>

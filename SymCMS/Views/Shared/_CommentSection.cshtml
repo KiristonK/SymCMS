@@ -7,8 +7,8 @@
         @using (@Html.BeginForm("Create", "Comment"))
         {
             CommentViewModel model = new CommentViewModel();
-
-            if (!((PostViewModel)ViewData["Post"]).CommentsEnabled)
+            if (User.Identity.IsAuthenticated) { 
+            if (ViewData.ContainsKey("Post") && !((PostViewModel)ViewData["Post"]).CommentsEnabled)
             {
                 <div class="form-group">
                     <div class="row justify-content-between">
@@ -23,20 +23,27 @@
                     </div>
                 </div>
             }
-            else
+            else if (!((PageViewModels)ViewData["Page"]).CommentsEnabled)
             {
                 <div class="form-group">
+                    <div class="row justify-content-between">
+                        <div class="col-4"></div>
+                        <div class="col-4">
+                            <div class="switch_box box_1" style="justify-content:flex-end; right: 0%; position: absolute;">
+                                <p class="text-lg-left display-4 text-secondary mr-2">Comments</p>
+                                <input type="checkbox" class="switch_1 comment_switch" data-pageid=@ViewData["pageId"] @if (((PageViewModels)ViewData["Page"]).CommentsEnabled){ <text> checked</text> } />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            }
+            <div class="form-group">
                     <div class="row justify-content-between">
                         <div class="col-4">
                             <p class="text-lg-left display-4 text-secondary">New comment</p>
                         </div>
-                        <div class="col-4">
-                            <div class="switch_box box_1" style="justify-content:flex-end; right: 0%; position: absolute;">
-                                <p class="text-lg-left display-4 text-secondary mr-2">Comments</p>
-                                <input type="checkbox" class="switch_1 comment_switch" data-postid=@ViewData["postId"] @if (((PostViewModel)ViewData["Post"]).CommentsEnabled)
-                                { <text> checked</text> } />
-                            </div>
-                        </div>
+                        
                     </div>
                     
                     @if (ViewData.ContainsKey("postId"))
@@ -55,7 +62,6 @@
                     @Html.EditorFor(m => model.CommentText, new { htmlattributes = new { @class = "form-control", rows = "5", id = "comment", name = "text" } })
                     <input type="submit" class="btn btn-primary mt-2 mb-2" id="addComment" value="Add comment" />
                 </div>
-                        }
             <div>
                 @if (Model.Count() != 0)
                 {

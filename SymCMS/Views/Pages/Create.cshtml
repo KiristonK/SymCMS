@@ -18,8 +18,8 @@
 
     <div class="form-group">
         <hr />
-        <div id="msg1"></div>
-        <input type="file" id="headfile" name="HeadImage" hidden class="file" accept="image/*">
+        <div id="msg"></div>
+        <input type="file" id="headFile" name="HeadImage" hidden class="file" accept="image/*">
         <div class="input-group my-3">
             <input type="text" class="form-control" disabled placeholder="Click browse to upload image" id="fileName">
             <div class="input-group-append">
@@ -58,10 +58,10 @@
     </div>
     <div id="mainMenu" class="mainMenuOverlay floating2">
         <div class="navire floating3"></div>
-        <div class="itemMenuBox editorAdd"><a href="javascript:void(0)" onclick="addEditor(null)" class="itemMenu "><i class="fas fa-file-alt" aria-hidden="true"></i></a></div>
+        <div class="itemMenuBox editorAdd"><a href="javascript:void(0)" id="addEditor" class="itemMenu "><i class="fas fa-file-alt" aria-hidden="true"></i></a></div>
         <div class="itemMenuBox galleryAdd"><a href="javascript:void(0)" id="addGallery" class="itemMenu "><i class="fas fa-images" aria-hidden="true"></i></a></div>
         <div class="itemMenuBox crouselAdd">
-            <a href="javascript:void(0)" onclick="addCarousel(null)" class="itemMenu ">
+            <a href="javascript:void(0)" id="addCarousel" class="itemMenu ">
                 <i class="fas fa-angle-left small"></i>
                 <i class="far fa-image small"></i>
                 <i class="fas fa-angle-right small"></i>
@@ -71,18 +71,17 @@
         <a href="javascript:void(0)" class="toggleMenu floating"><i class="fas fa-bars" aria-hidden="true"></i></a>
     </div>
 
-    <div class="m-3" id="modules">
-        <div class="row d-none" id="gallery">
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb shadow shadow-lg">
-                <div id="msg"></div>
-                <input type="file" class="addImage" hidden accept="image/*">
-                <a href="javascript:void(0)" class="addImageHref" rel="ligthbox">
-                    <img src="https://static.thenounproject.com/png/558475-200.png" class="zoom" style="width: 100%; height: 100%;" alt=""/>
-                </a>
-            </div>
-        </div>
+    <div class="m-3" id="modules" class="modules">
     </div>
     @Html.HiddenFor(model => model.AdditionalContent);
+
+
+    <div class="form-group">
+        <div class="switch_box box_1 justify-content-start">
+            @Html.LabelFor(model => model.CommentsEnabled, htmlAttributes: new { @class = "control-label mr-5 col-md-1" })
+            @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 ml-5 justify-content-start" } })
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -104,166 +103,183 @@
     <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all" rel="stylesheet" id="font-awesome-5-kit-css">
     <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all" rel="stylesheet" id="font-awesome-5-kit-css">
     <link href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all" rel="stylesheet" id="font-awesome-5-kit-css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 
     <script>
-        function addCarousel(parameters) {
-            var modules = document.getElementById("modules");
-            modules.innerHTML +=
-                '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">' +
-                '<div class="carousel-inner"><div class="carousel-item active">' +
-                '<img class="d-block w-100" src="..." alt="First slide">' +
-                '</div>' +
-                '<div class="carousel-item">' +
-                '<img class="d-block w-100" src="..." alt="Second slide">' +
-                '</div>' +
-                '<div class="carousel-item">' +
-                '<img class="d-block w-100" src="..." alt="Third slide">' +
-                '</div>' +
-                '</div>' +
-                '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">' +
-                '<span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
-                '<span class="sr-only">Previous</span>' +
-                '</a>' +
-                '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">' +
-                '<span class="carousel-control-next-icon" aria-hidden="true"></span>' +
-                '<span class="sr-only">Next</span>' +
-                '</a>' +
-                '</div>';
+        function addImageCarousel(imgSource, id) {
+            var $carousel = $('.additionalCarousel' + id.toString());
+            var active;
+            if ($carousel.find('.active').index() < 0)
+                active = $carousel.find('.item').length - 1;
+            else
+                active = 1;
+            if (active <= 0) {
+                document.getElementById('carouselImages' + id.toString()).innerHTML = '<div class="carousel-item active">' +
+                    '<img class="d-block w-100" src="' +
+                    imgSource +
+                    '" alt="">' +
+                    '</div>';
+            } else {
+                document.getElementById('carouselImages' + id.toString()).innerHTML += '<div class="carousel-item">' +
+                    '<img class="d-block w-100" src="' +
+                    imgSource +
+                    '" alt="">' +
+                    '</div>';
+            }
+
         }
 
+        var galleryId = 0;
+        var carouselId = 0;
+        var editorId = 0;
 
-        function addEditor(parameters) {
-            var modules = document.getElementById("modules");
-            modules.innerHTML +=
-                '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">' +
-                '<div class="carousel-inner"><div class="carousel-item active">' +
-                '<img class="d-block w-100" src="..." alt="First slide">' +
-                '</div>' +
-                '<div class="carousel-item">' +
-                '<img class="d-block w-100" src="..." alt="Second slide">' +
-                '</div>' +
-                '<div class="carousel-item">' +
-                '<img class="d-block w-100" src="..." alt="Third slide">' +
-                '</div>' +
-                '</div>' +
-                '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">' +
-                '<span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
-                '<span class="sr-only">Previous</span>' +
-                '</a>' +
-                '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">' +
-                '<span class="carousel-control-next-icon" aria-hidden="true"></span>' +
-                '<span class="sr-only">Next</span>' +
-                '</a>' +
-                '</div>';
-        }
+        $(document).ready(function() {
 
-
-
-        $(document).ready(function () {
             $('#addGallery').click(function () {
-                document.getElementById('gallery').classList.toggle('d-none');
+                var modules = document.getElementById('modules');
+                modules.insertAdjacentHTML('beforeend', '<div class="row" id="' +
+                    galleryId.toString() +
+                    '"></div>' + '<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
+                    '<div id="msg"></div>' +
+                    '<input type="file" id="galleryImages' +
+                    galleryId.toString() +
+                    '" name="'+galleryId.toString()+'" hidden class="galleryImage" accept="image/*">' +
+                    '<div class="input-group my-3">' +
+                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameGallery'+galleryId.toString()+'">' +
+                    '<div class="input-group-append">' +
+                    '<input type="button" id="' +
+                    galleryId.toString() +
+                    '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages'+galleryId.toString()+'\').trigger(\'click\');" value="Add image" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+                galleryId++;
             });
 
-            $(".addImageHref").on('click', function () {
-                var file = $(this).parents().find(".addImage");
-                file.trigger("click");
+            $('#addCarousel').click(function () {
+                var modules = document.getElementById('modules');
+                modules.insertAdjacentHTML('beforeend',
+                    '<div id="carousel'+carouselId.toString()+'" class="carousel slide mt-2 mb-2 additionalCarousel'+carouselId.toString()+'" style="background: darkgray" data-ride="carousel">' +
+                    '<div class="carousel-inner" style="height: 700px; max-height: 700px;" id="carouselImages'+carouselId.toString()+'"></div>'+
+                    '<a class="carousel-control-prev" href="#carousel' + carouselId.toString() +'" role="button" data-slide="prev">'+
+                    '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
+                    '<span class="sr-only">Previous</span>'+
+                    '</a>'+
+                    '<a class="carousel-control-next" href="#carousel' + carouselId.toString() +'" role="button" data-slide="next">'+
+                    '<span class="carousel-control-next-icon" aria-hidden="true"></span>'+
+                    '<span class="sr-only">Next</span>'+
+                    '</a>'+
+                    '</div>'+
+                    '<div class="col-md-4 adminControl" id="addImageCarBtn'+carouselId.toString()+'">'+
+                    '<div id="msg"></div>'+
+                    '<input type="file" id="carouselImages' + carouselId.toString() + '" name="' + carouselId.toString() + '" hidden class="carouselImages' + carouselId.toString() +'" accept="image/*">'+
+                    '<div class="input-group my-3">'+
+                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameCarousel' + carouselId.toString() +'">'+
+                    '<div class="input-group-append">'+
+                    '<input type="button" class="btn btn-primary" onclick="$(this).parents().find(\'#carouselImages' + carouselId.toString() +'\').trigger(\'click\');" value="Add image" />'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>');
+                carouselId++;
             });
 
-            $('.addImage').change(function (e) {
-                alert('in func');
-                if (e.target.files[0] == undefined) { return }
-                var fileName = e.target.files[0].name;
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    // get loaded data and render thumbnail.
-                    alert(e.target.result);
-                    var tmp = document.getElementById('gallery').innerHTML;
-                    document.getElementById('gallery').innerHTML = '<div class="col-lg-3 col-md-4 col-xs-6 thumb shadow shadow-lg"><a href="' + e.target.result + '" rel="ligthbox"><img src="'+ e.target.result +'"style="width: 100%; height: 100%;" class="zoom img-fluid " alt=""></a></div>';
-                    document.getElementById('gallery').innerHTML += tmp;
-
-                };
-                
-                // read the image file as a data URL.
-                reader.readAsDataURL(this.files[0]);
+            $('#addEditor').click(function() {
+                var modules = document.getElementById("modules");
+                modules.insertAdjacentHTML('beforeend', '<div class="mt-2 mb-2"><textarea name="additionalEditor'+editorId.toString()+'"></textarea></div>');
+                CKEDITOR.replace('additionalEditor' + editorId.toString());
+                editorId++;
+                if (editorId == 10) {
+                    $(this).hide();
+                }
             });
 
 
-            $(".fancybox").fancybox({
-                openEffect: "none",
-                closeEffect: "none"
-            });
-    
-            $(".zoom").hover(function(){
-		
-                $(this).addClass('transition');
-            }, function(){
-        
-                $(this).removeClass('transition');
-            });
-
-            //$(".fancybox").fancybox({
-            //    openEffect: "none",
-            //    closeEffect: "none"
-            //});
-    
-            //$(".zoom").hover(function(){
-		
-            //    $(this).addClass('transition');
-            //}, function(){
-        
-            //    $(this).removeClass('transition');
-            //});
-
-            $(".toggleMenu").on('click', function () {
-                $("#mainMenu").toggleClass('open');
-            });
+            $(".toggleMenu").on('click',
+                function() {
+                    $("#mainMenu").toggleClass('open');
+                });
 
             CKEDITOR.replace('Content');
 
-            $('.datepicker').datepicker({
-                uiLibrary: 'bootstrap4',
-                format: 'dd.mm.yyyy'
-            });
 
-            $('.datepicker').change(function () {
-                $('#Livetime').val($('#datePicker').val());
-            });
-
-
-            $("#createBtn").click(function () {
+            $("#createBtn").click(function() {
                 if ($("#Title").val() === "" || $("#Content").val() === "") {
                     alert("Field's can not be empty !");
                     return;
                 }
-                document.getElementsByName('AdditionalContent').value = $('#modules').html();
+                $("div").remove(".adminControl");
+
+                $("div#modules").find('.cke').replaceWith(function () {
+                    var id = 'additionalEditor' + $(this).attr('id').substr(-1);
+                    alert(id);
+                    var editor = CKEDITOR.instances[id];
+                    alert(editor);
+                    return editor.getData();
+                });
+                    //var editor = CKEDITOR.instances.additionalEditor;
+                //if (editor != null || editor != undefined) {
+                //    var data = editor.getData();
+                //    $("#cke_additionalEditor").replaceWith(data);
+                //    //document.getElementById('AdditionalContent').value += editor.getData();
+                //} 
+                document.getElementById('AdditionalContent').value += document.getElementById('modules').innerHTML;
+                
             });
 
+            $(document).on("click",
+                ".browse",
+                function() {
+                    var file = $(this).parents().find(".file");
+                    file.trigger("click");
+                });
 
-            $(document).on("click", ".browse", function () {
-                var file = $(this).parents().find(".file");
-                file.trigger("click");
-            });
-
-            $('#headfile').change(function (e) {
-                if (e.target.files[0] == undefined) { return }
+            $(document).on('change', 'input[type="file"]' ,function (e) {
+                if (e.target.files[0] == undefined) {
+                    return;
+                }
                 var fileName = e.target.files[0].name;
-                $("#fileName").val(fileName);
-
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    // get loaded data and render thumbnail.
-                    $('#HeadImageBase64').val(reader.result);
-                    $('#previewImage').removeClass('d-none');
-                    document.getElementById("previewImage").src = e.target.result;
-                };
-                // read the image file as a data URL.
-                reader.readAsDataURL(this.files[0]);
+                var idEl = $(this).attr('id');
+                var idParent = $(this).attr('name');
+                var reader;
+                switch (idEl) {
+                    case 'headFile':
+                        $("#fileName").val(fileName);
+                        reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('#HeadImageBase64').val(reader.result);
+                            $('#previewImage').removeClass('d-none');
+                            document.getElementById("previewImage").src = e.target.result;
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                        break;
+                    case 'carouselImages'+idParent:
+                        $("#fileNameCarousel"+idParent).val(fileName);
+                        reader = new FileReader();
+                        reader.onload = function (e) {
+                            addImageCarousel(e.target.result, idParent);
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                        break;
+                    case 'galleryImages'+idParent:
+                        $("#fileNameGallery"+$(this).attr('name')).val(fileName);
+                        reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById(idParent.toString()).innerHTML +=
+                                '<div class="col-lg-3 col-md-4 col-xs-6 thumb galleryItem"><img src="' +
+                                e.target.result +
+                                '"style="width: 100%; height: 100%;" class="zoom img-fluid " alt=""></a></div>';
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                        return;
+                    default:
+                        alert("None");
+                        break;
+                }
             });
-
         });
+
     </script>
 
     @Scripts.Render("~/bundles/jqueryval")
