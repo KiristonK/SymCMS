@@ -162,7 +162,7 @@
                 var modules = document.getElementById('modules');
                 modules.insertAdjacentHTML('beforeend',
                     '<div id="carousel'+carouselId.toString()+'" class="carousel slide mt-2 mb-2 additionalCarousel'+carouselId.toString()+'" style="background: darkgray" data-ride="carousel">' +
-                    '<div class="carousel-inner" style="height: 700px; max-height: 700px;" id="carouselImages'+carouselId.toString()+'"></div>'+
+                    '<div class="carousel-inner" style="height: 600px; max-height: 700px;" id="carouselImages'+carouselId.toString()+'"></div>'+
                     '<a class="carousel-control-prev" href="#carousel' + carouselId.toString() +'" role="button" data-slide="prev">'+
                     '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
                     '<span class="sr-only">Previous</span>'+
@@ -218,12 +218,7 @@
                     alert(editor);
                     return editor.getData();
                 });
-                    //var editor = CKEDITOR.instances.additionalEditor;
-                //if (editor != null || editor != undefined) {
-                //    var data = editor.getData();
-                //    $("#cke_additionalEditor").replaceWith(data);
-                //    //document.getElementById('AdditionalContent').value += editor.getData();
-                //} 
+                  
                 document.getElementById('AdditionalContent').value += document.getElementById('modules').innerHTML;
                 
             });
