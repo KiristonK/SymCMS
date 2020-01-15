@@ -75,9 +75,9 @@
         <div class="row d-none" id="gallery">
             <div class="col-lg-3 col-md-4 col-xs-6 thumb shadow shadow-lg">
                 <div id="msg"></div>
-                <input type="file" class="addImage" hidden @*accept="image/*"*@>
+                <input type="file" class="addImage" hidden accept="image/*">
                 <a href="javascript:void(0)" class="addImageHref" rel="ligthbox">
-                    <img src="https://static.thenounproject.com/png/558475-200.png" style="width: 100%; height: 100%;" alt=""/>
+                    <img src="https://static.thenounproject.com/png/558475-200.png" class="zoom" style="width: 100%; height: 100%;" alt=""/>
                 </a>
             </div>
         </div>
@@ -172,20 +172,20 @@
                 file.trigger("click");
             });
 
-            $('#addImage').change(function (e) {
+            $('.addImage').change(function (e) {
                 alert('in func');
                 if (e.target.files[0] == undefined) { return }
                 var fileName = e.target.files[0].name;
-                var img;
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     // get loaded data and render thumbnail.
-                    img = e.target.result;
+                    alert(e.target.result);
+                    var tmp = document.getElementById('gallery').innerHTML;
+                    document.getElementById('gallery').innerHTML = '<div class="col-lg-3 col-md-4 col-xs-6 thumb shadow shadow-lg"><a href="' + e.target.result + '" rel="ligthbox"><img src="'+ e.target.result +'"style="width: 100%; height: 100%;" class="zoom img-fluid " alt=""></a></div>';
+                    document.getElementById('gallery').innerHTML += tmp;
 
                 };
-                var tmp = document.getElementById('gallery').innerHTML;
-                document.getElementById('gallery').innerHTML = '<div class="col-lg-3 col-md-4 col-xs-6 thumb shadow shadow-lg"><a href="' + fileName + '" rel="ligthbox"><img src="'+ img +'" class="zoom img-fluid " alt=""></a></div>';
-                document.getElementById('gallery').innerHTML += tmp;
+                
                 // read the image file as a data URL.
                 reader.readAsDataURL(this.files[0]);
             });
