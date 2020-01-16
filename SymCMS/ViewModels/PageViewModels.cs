@@ -17,11 +17,12 @@ namespace SymCMS.ViewModels
         public PageViewModels(PageModels pageModel)
         {
             this.PageId = pageModel.Id;
+            this.Author = pageModel.Author;
             this.Title = pageModel.Title;
             this.Content = pageModel.Content;
-            this.AdditionalContent = pageModel.AditionalContent;
-            this.HeadImageBase64 = pageModel.Headimagebase64;
+            this.AdditionalContent = pageModel.AdditionalContent;
             this.CommentsEnabled = pageModel.CommentsEnabled;
+            this.CreationDate = pageModel.CreationDate;
         }
 
         public string Title { get; set; }
@@ -30,8 +31,6 @@ namespace SymCMS.ViewModels
         public string Content { get; set; }
         public int PageId { get; set; }
 
-        [Required]
-        public string HeadImageBase64 { get; set; }
         [Required]
         public string Author { get; set; }
 

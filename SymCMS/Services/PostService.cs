@@ -56,7 +56,7 @@ namespace SymCMS.Services
             return new PostViewModel(postModel);
         }
 
-        public PostViewModel GetPost(int id)
+        public PostViewModel GetPost(int? id)
         {
             var post = _db.PostModels.Find(id);
             if (post != null)

@@ -16,23 +16,6 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        <hr />
-        <div id="msg"></div>
-        <input type="file" id="headFile" name="HeadImage" hidden class="file" accept="image/*">
-        <div class="input-group my-3">
-            <input type="text" class="form-control" disabled placeholder="Click browse to upload image" id="fileName">
-            <div class="input-group-append">
-                <button type="button" class="browse btn btn-primary">Browse...</button>
-            </div>
-        </div>
-        <div class="ml-2 col-md-10">
-            <img src="https://placehold.it/80x80" id="previewImage" class="d-none w-100 h-25">
-        </div>
-        @Html.HiddenFor(model => model.HeadImageBase64)
-        @Html.ValidationMessageFor(model => model.HeadImageBase64, "", new { @class = "text-danger" })
-    </div>
-
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -139,7 +122,7 @@
 
             $('#addGallery').click(function () {
                 var modules = document.getElementById('modules');
-                modules.insertAdjacentHTML('beforeend', '<div class="row" id="' +
+                modules.insertAdjacentHTML('beforeend', '<div class="row gallery" id="' +
                     galleryId.toString() +
                     '"></div>' + '<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
                     '<div id="msg"></div>' +
@@ -187,7 +170,7 @@
 
             $('#addEditor').click(function() {
                 var modules = document.getElementById("modules");
-                modules.insertAdjacentHTML('beforeend', '<div class="mt-2 mb-2"><textarea name="additionalEditor'+editorId.toString()+'"></textarea></div>');
+                modules.insertAdjacentHTML('beforeend', '<div class="mt-2 mb-2 editor"><textarea name="additionalEditor'+editorId.toString()+'"></textarea></div>');
                 CKEDITOR.replace('additionalEditor' + editorId.toString());
                 editorId++;
                 if (editorId == 10) {
@@ -213,9 +196,7 @@
 
                 $("div#modules").find('.cke').replaceWith(function () {
                     var id = 'additionalEditor' + $(this).attr('id').substr(-1);
-                    alert(id);
                     var editor = CKEDITOR.instances[id];
-                    alert(editor);
                     return editor.getData();
                 });
                   
@@ -239,17 +220,7 @@
                 var idParent = $(this).attr('name');
                 var reader;
                 switch (idEl) {
-                    case 'headFile':
-                        $("#fileName").val(fileName);
-                        reader = new FileReader();
-                        reader.onload = function (e) {
-                            $('#HeadImageBase64').val(reader.result);
-                            $('#previewImage').removeClass('d-none');
-                            document.getElementById("previewImage").src = e.target.result;
-                        };
-                        reader.readAsDataURL(this.files[0]);
-                        break;
-                    case 'carouselImages'+idParent:
+                case 'carouselImages'+idParent:
                         $("#fileNameCarousel"+idParent).val(fileName);
                         reader = new FileReader();
                         reader.onload = function (e) {

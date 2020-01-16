@@ -11,37 +11,51 @@
     {
         ViewData["postId"] = Model.Id;
     }
-    ViewData.Add("Post", Model);
+
+    if (!ViewData.ContainsKey("PostComments"))
+    {
+        ViewData.Add("PostComments", Model.CommentsEnabled);
+    }
+    else
+    {
+        ViewData["PostComments"] = Model.CommentsEnabled;
+    }
 }
 
-    <div>
-        <div class="img-container">
-            <img src="@Html.ValueFor(model => model.HeadImageBase64)" alt="..." class="img-head">
-            <div class="w3-hide-small text-block" >
-                <h4 class="display-2">@Html.DisplayFor(model => model.Title)</h4>
-            </div>
-        </div>
-        <hr />
-        <div class="card bg-transparent" style="width:auto;">
-
-            <div class="card-body bg-transparent w-auto">
-               @Html.Raw(Model.Content)
-            </div>
-
+<div>
+    <div class="img-container">
+        <img src="@Html.ValueFor(model => model.HeadImageBase64)" alt="..." class="img-head">
+        <div class="w3-hide-small text-block">
+            <h4 class="display-1">@Html.DisplayFor(model => model.Title)</h4>
         </div>
     </div>
-<hr />
-<div class="mb-2">
-    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+    <hr />
+    <div class="card bg-transparent" style="width:auto;">
+
+        <div class="card-body bg-transparent w-auto">
+            @Html.Raw(Model.Content)
+        </div>
+
+    </div>
 </div>
-<div class="row mx-3">
-    @if (User.Identity.IsAuthenticated)
+<hr />
+<div>
+    @if (Model.CommentsEnabled)
     {
-        <form action="/Admin/Edit/@Model.Id">
-            <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
-        </form>
+        @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+    }
+</div>
+@if (!ViewData.ContainsKey("partial"))
+{
+    <div class="row mx-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form action="/Admin/Edit/@Model.Id">
+                <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
+            </form>
         }
         <form action="/Admin/PostsView/">
             <input type="submit" value="Back to List" class="btn btn-outline-dark" />
         </form>
     </div>
+}

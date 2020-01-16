@@ -15,11 +15,20 @@ $(".post_visibility").change(function () {
 
 
 $(".comment_switch").change(function () {
-    console.log($(this).data("postid"));
+    var id, url, data;
+    if ($(this).data("postid") == undefined) {
+        id = $(this).data("pageid");
+        url = "/Admin/UpdateCommentingPage/";
+        data = { PageId: id, CommentsEnabled: $(this).prop("checked") };
+    } else {
+        url = "/Admin/UpdateCommentingPost/";
+        id = $(this).data("postid");
+        data = { id: id, CommentsEnabled: $(this).prop("checked") };
+    }
     $.ajax({
-        url: "/Admin/UpdateCommenting/",
+        url: url,
         method: "POST",
-        data: { id: $(this).data("postid"), CommentsEnabled: $(this).prop("checked") }
+        data: data,
     }).fail(function () {
         $(this).prop("checked", false);
     });

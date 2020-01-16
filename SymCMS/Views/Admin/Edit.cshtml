@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
+    ViewData.Add("PostComments", Model.CommentsEnabled);
 }
 
 <h2>Edit</h2>
@@ -153,35 +154,6 @@
                 ]
                 });
 
-            //CKEDITOR.instances.ContentPreview.editorConfig = function (config) {
-            //    config.toolbarGroups = [
-            //        { name: 'document', groups: ['mode', 'document', 'doctools'] },
-            //        { name: 'clipboard', groups: ['clipboard', 'undo'] },
-            //        { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-            //        { name: 'forms', groups: ['forms'] },
-            //        '/',
-            //        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-            //        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-            //        { name: 'links', groups: ['links'] },
-            //        { name: 'insert', groups: ['insert'] },
-            //        '/',
-            //        { name: 'styles', groups: ['styles'] },
-            //        { name: 'colors', groups: ['colors'] },
-            //        { name: 'tools', groups: ['tools'] },
-            //        { name: 'others', groups: ['others'] },
-            //        { name: 'about', groups: ['about'] }
-            //    ];
-
-            //    config.removeButtons = 'Source,Save,NewPage,Preview,Print,Templates,Form,Button,Select,Radio,Checkbox,Image,Table,PageBreak,Iframe,ImageButton,Maximize,About,Flash';
-            //};
-
-            function textLimit() {
-                console.log($(this).text.length);
-                if ($(this).text.length >= 1000) {
-                    document.getElementById('ContentPreview').toggleAttribute('readonly');
-                }
-            }
-
             $('.datepicker').datepicker({
                 uiLibrary: 'bootstrap4',
                 format: 'dd.mm.yyyy',
@@ -190,12 +162,6 @@
             $('.datepicker').change(function () {
                 $('#Livetime').val($('#datePicker').val());
             });
-            //$("#datepicker").datepicker("option", "dateFormat", 'yy-mm-dd');
-
-
-            //$('#sandbox-container .input-group.date').pickadate({
-            //    todayHighlight: true
-            //});
 
             $('.run-modal-url').on('click',
                 function () {
@@ -244,13 +210,11 @@
 
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    // get loaded data and render thumbnail.
                     $('#HeadImageBase64').val(reader.result);
                     $('#previewImage').removeClass('d-none');
                     document.getElementById("previewImage").src = e.target.result;
 
                 };
-                // read the image file as a data URL.
                 reader.readAsDataURL(this.files[0]);
             });
         });

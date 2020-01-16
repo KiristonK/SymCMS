@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class back : DbMigration
+    public partial class commentsChange : DbMigration
     {
         public override void Up()
         {
-            DropColumn("dbo.PostCategories", "Color");
+            DropColumn("dbo.CommentModels", "AuthorContact");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.PostCategories", "Color", c => c.String());
+            AddColumn("dbo.CommentModels", "AuthorContact", c => c.String());
         }
     }
 }

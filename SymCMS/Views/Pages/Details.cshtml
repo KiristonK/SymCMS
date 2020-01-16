@@ -11,9 +11,14 @@
     {
         ViewData["pageId"] = Model.PageId;
     }
-
-    ViewData.Add("Page", Model);
-    // Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+    if (!ViewData.ContainsKey("PageComments"))
+    {
+        ViewData.Add("PageComments", Model.CommentsEnabled);
+    }
+    else
+    {
+        ViewData["PageComments"] = Model.CommentsEnabled;
+    }
 }
 <div class="mt-5">
     <h3 class="display-2">@Model.Title</h3>
@@ -25,10 +30,24 @@
         </dd>
     </dl>
     <div class ="justify-content-end">
-        <h5 class="font-weight-light">@Model.Author</h5>
-</div>
+        <h5 class="font-weight-light">By @Model.Author</h5>
+    </div>
 </div>
 <hr />
 <div>
     @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
 </div>
+@if (!ViewData.ContainsKey("partial"))
+{
+    <div class="row mx-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form action="/Pages/Edit/@Model.PageId">
+                <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
+            </form>
+            <form action="/Pages/PagesView/">
+                <input type="submit" value="Back to List" class="btn btn-outline-dark" />
+            </form>
+        }
+    </div>
+}

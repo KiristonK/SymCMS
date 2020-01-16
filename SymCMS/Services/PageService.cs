@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using SymCMS.DAL;
@@ -14,7 +15,16 @@ namespace SymCMS.Services
 
         public bool EditPage(PageViewModels pageViewModels)
         {
-            _db.Entry(pageViewModels).State = EntityState.Modified;
+            var pageModel = _db.PageModels.Find(pageViewModels.PageId);
+            if (pageModel == null) return false;
+            pageModel.Id = pageViewModels.PageId;
+            pageModel.Title = pageViewModels.Title;
+            pageModel.Author = pageViewModels.Author;
+            pageModel.Content = pageViewModels.Content;
+            pageModel.AdditionalContent = pageViewModels.AdditionalContent;
+            pageModel.CommentsEnabled = pageViewModels.CommentsEnabled;
+            pageModel.CreationDate = pageViewModels.CreationDate;
+            _db.Entry(pageModel).State = EntityState.Modified;
             _db.SaveChanges();
             return true;
         }
@@ -38,20 +48,35 @@ namespace SymCMS.Services
 
         public void AddPage(PageViewModels pageViewModel)
         {
+            pageViewModel.CreationDate = DateTime.Now.Date;
             _db.PageModels.Add(new PageModels(pageViewModel));
             _db.SaveChanges();
         }
 
         public void DeletePage(int id)
         {
-            PageModels pageModel = _db.PageModels.Find(id);
-            if (pageModel != null) _db.PageModels.Remove(pageModel);
+            var pageModel = _db.PageModels.Find(id);
+            if (pageModel != null)
+            {
+                _db.PageModels.Remove(pageModel);
+                var comments = _db.CommentModels.Where(c => c.PageId == id);
+                if (comments.Count() != 0)
+                    _db.CommentModels.RemoveRange(comments);
+            }
             _db.SaveChanges();
         }
 
         public void Dispose()
         {
             _db.Dispose();
+        }
+
+        public void UpdateCommenting(PageViewModels pageViewModels)
+        {
+            var page = _db.PageModels.Find(pageViewModels.PageId);
+            if (page != null)
+                page.CommentsEnabled = pageViewModels.CommentsEnabled;
+            _db.SaveChanges();
         }
     }
 }

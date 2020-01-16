@@ -11,7 +11,7 @@ namespace SymCMS.Services.Interfaces
     {
         bool AddPost(PostViewModel postViewModel);
         PostViewModel EditPost(PostViewModel postViewModel);
-        PostViewModel GetPost(int id);
+        PostViewModel GetPost(int? id);
         List<PostViewModel> GetPosts();
         void UpdateVisibility(PostViewModel postViewModel);
         bool RemovePost(int id);

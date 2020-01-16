@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Details";
-    //Layout = "~/Views/Shared/_LayoutPanel.cshtml";
     if (!ViewData.ContainsKey("postId"))
     {
         ViewData.Add("postId", Model.Id);
@@ -11,6 +10,14 @@
     else
     {
         ViewData["postId"] = Model.Id;
+    }
+    if (!ViewData.ContainsKey("PostComments"))
+    {
+        ViewData.Add("PostComments", Model.CommentsEnabled);
+    }
+    else
+    {
+        ViewData["PostComments"] = Model.CommentsEnabled;
     }
 }
 
@@ -45,9 +52,15 @@
         <form action="/Admin/Edit/@Model.Id">
             <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
         </form>
+        <form action="/Admin/PostsView/">
+            <input type="submit" value="Back to List" class="btn btn-outline-dark" />
+        </form>
     }
-    <form action="/Admin/PostsView/">
-        <input type="submit" value="Back to List" class="btn btn-outline-dark" />
-    </form>
+    else
+    {
+        <form action="/Posts/Index/">
+            <input type="submit" value="Back" class="btn btn-outline-dark" />
+        </form>
+    }
 </div>
 }

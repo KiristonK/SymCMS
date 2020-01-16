@@ -27,7 +27,7 @@ namespace SymCMS.ViewModels
         public virtual PostModel Post { get; set; }
 
         public int? PageId { get; set; }
-        public virtual PostModel Page { get; set; }
+        public virtual PageModels Page { get; set; }
     }
 
 }

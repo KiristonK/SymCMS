@@ -2,7 +2,7 @@
 @model IEnumerable<SymCMS.ViewModels.PostViewModel>
 
 @{
-    ViewBag.Title = "PostssView";
+    ViewBag.Title = "PostsView";
 }
 
 <div class="container">
@@ -25,8 +25,8 @@
                         </div>
 
                     </div>
-                    <div @*class="form-text rounded card-text mb-3"*@ class="text-index-blog">
-                        @if (item.ContentPreview == string.Empty || item.ContentPreview == null)
+                    <div class="text-index-blog">
+                        @if (string.IsNullOrEmpty(item.ContentPreview))
                         {
                             item.Content = Regex.Replace(item.Content, "<.*?>", String.Empty);
                             if (item.Content.Length >= 1000)

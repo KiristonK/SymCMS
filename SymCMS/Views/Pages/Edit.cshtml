@@ -5,31 +5,15 @@
     //Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
 
-<h2>Edit</h2>
+<h2 class="display-2">Edit</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+    @Html.HiddenFor(model => model.PageId)
     <div class="form-horizontal">
-        <div class="form-group">
-            <hr />
-            <div id="msg"></div>
-            <input type="file" id="headFile" name="HeadImage" hidden class="file" accept="image/*">
-            <div class="input-group my-3">
-                <input type="text" class="form-control" disabled placeholder="Click browse to upload image" id="fileName">
-                <div class="input-group-append">
-                    <button type="button" class="browse btn btn-primary">Browse...</button>
-                </div>
-            </div>
-            <div class="ml-2 col-md-10">
-                <img src="@Model.HeadImageBase64" id="previewImage" class="d-none w-100 h-25">
-            </div>
-            @Html.HiddenFor(model => model.HeadImageBase64)
-            @Html.ValidationMessageFor(model => model.HeadImageBase64, "", new { @class = "text-danger" })
-        </div>
-
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -49,7 +33,7 @@
         <div class="form-group">
             <div class="col-md-10">
                 <label for="Content">Content</label>
-                <textarea name="Content"></textarea>
+                <textarea name="Content">@Html.ValueFor(model => model.Content)</textarea>
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -69,9 +53,9 @@
         </div>
 
         <div class="m-3" id="modules" class="modules">
+            @Html.Raw(Model.AdditionalContent)
         </div>
-
-        @Html.Raw(Model.AdditionalContent)
+        @Html.HiddenFor(model => model.AdditionalContent)
 
 
         <div class="form-group">
@@ -80,15 +64,9 @@
                 @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 ml-5 justify-content-start" } })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" id="createBtn" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" id="saveBtn" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -136,207 +114,254 @@
         var carouselId = 0;
         var editorId = 0;
 
+        $(window).on("load",
+            function() {
+                $("div#modules").find(".gallery").each(function() {
+                    galleryId = $(this).attr('id');
+                    var removeBtn = '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#' + galleryId.toString() + '\').remove(); $(\'#addImageGalleryBtn\').remove(); $(this).remove()" value="Remove gallery"/></div>';
+                    $('<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
+                            '<div id="msg"></div>' +
+                            '<input type="file" id="galleryImages' +
+                            galleryId.toString() +
+                            '" name="' +
+                            galleryId.toString() +
+                            '" hidden class="galleryImage" accept="image/*">' +
+                            '<div class="input-group my-3">' +
+                            '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameGallery' +
+                            galleryId.toString() +
+                            '">' +
+                            '<div class="input-group-append">' +
+                            '<input type="button" id="' +
+                            galleryId.toString() +
+                            '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages' +
+                            galleryId.toString() +
+                            '\').trigger(\'click\');" value="Add image" />' +
+                            '</div>' +
+                            '</div>' +
+                        '</div>' + removeBtn).insertAfter($(this));
+                });
+                galleryId++;
+
+                $("div#modules").find("div.editor").each(
+                    function() {
+                        $(this).replaceWith(function () {
+                            $(this).find("textarea").remove();
+                            var removeBtn = '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="CKEDITOR.instances[\'additionalEditor' + editorId.toString() + '\'].destroy(); $(\'#additionalEditor' + editorId.toString() + '\').remove(); $(this).remove()" value="Remove editor"/></div>';
+                            var html = $(this).html();
+                            return '<textarea id="additionalEditor' +
+                                editorId.toString() +
+                                '" class="editor">' +
+                                html +
+                                '</textarea>' + removeBtn;
+                        });
+                        $("div#modules").find("textarea.editor").each(
+                            function () {
+                                 CKEDITOR.replace($(this).attr('id'));
+                                //$(removeBtn).insertAfter($(this));
+                            }
+                        );
+                        editorId++;
+                    });
+
+                $("div#modules").find(".carousel").each(
+                    function () {
+                        var removeBtn = '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#carousel' + carouselId.toString() + '\').remove(); $(\'#addImageCarBtn' + carouselId.toString()+'\').remove(); $(this).remove()" value="Remove carousel"/></div>';
+                        $('<div class="col-md-4 adminControl" id="addImageCarBtn' +
+                            carouselId.toString() +
+                            '">' +
+                            '<div id="msg"></div>' +
+                            '<input type="file" id="carouselImages' +
+                            carouselId.toString() +
+                            '" name="' +
+                            carouselId.toString() +
+                            '" hidden class="carouselImages' +
+                            carouselId.toString() +
+                            '" accept="image/*">' +
+                            '<div class="input-group my-3">' +
+                            '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameCarousel' +
+                            carouselId.toString() +
+                            '">' +
+                            '<div class="input-group-append">' +
+                            '<input type="button" class="btn btn-primary" onclick="$(this).parents().find(\'#carouselImages' +
+                            carouselId.toString() +
+                            '\').trigger(\'click\');" value="Add image" />' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' + removeBtn).insertAfter($(this));
+                        carouselId++;
+                    });
+
+            });
+
         $(document).ready(function() {
 
-            $("div").find(".gallery").replaceWith(
-                function () {
-                    galleryId = $(this).attr('id');
-                    var html = document.getElementById(galleryId.toString()).outerHTML;
-                    return html+'<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
-                        '<div id="msg"></div>' +
-                        '<input type="file" id="galleryImages' +
-                        $(this).attr('id').toString() +
-                        '" name="' +
-                        $(this).attr('id').toString() +
-                        '" hidden class="galleryImage" accept="image/*">' +
-                        '<div class="input-group my-3">' +
-                        '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameGallery' +
-                        $(this).attr('id').toString() +
-                        '">' +
-                        '<div class="input-group-append">' +
-                        '<input type="button" id="' +
-                        $(this).attr('id').toString() +
-                        '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages' +
-                        g$(this).attr('id').toString() +
-                        '\').trigger(\'click\');" value="Add image" />' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
+            $('#addGallery').click(function() {
+                var modules = document.getElementById('modules');
+                var removeBtn = '<div class="ml-2 adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#' + galleryId.toString() + '\').remove(); $(#addImageGalleryBtn").remove(); $(this).remove()" value="Remove gallery"/></div>';
+                modules.insertAdjacentHTML('beforeend', '<div class="row gallery" id="' +
+                    galleryId.toString() +
+                    '"></div>' + '<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
+                    '<div id="msg"></div>' +
+                    '<input type="file" id="galleryImages' +
+                    galleryId.toString() +
+                    '" name="' +
+                    galleryId.toString() +
+                    '" hidden class="galleryImage" accept="image/*">' +
+                    '<div class="input-group my-3">' +
+                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameGallery' +
+                    galleryId.toString() +
+                    '">' +
+                    '<div class="input-group-append">' +
+                    '<input type="button" id="' +
+                    galleryId.toString() +
+                    '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages' + galleryId.toString() + '\').trigger(\'click\');" value="Add image" />' + removeBtn +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+                galleryId++;
+            });
+
+            $('#addCarousel').click(function () {
+                var removeBtn = '<div class="ml-2 adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#carousel' + carouselId.toString() + '\').remove(); $("#addImageCarBtn").remove(); $(this).remove()" value="Remove carousel"/></div>';
+                var modules = document.getElementById('modules');
+                modules.insertAdjacentHTML('beforeend',
+                    '<div id="carousel' +
+                    carouselId.toString() +
+                    '" class="carousel slide mt-2 mb-2 additionalCarousel' +
+                    carouselId.toString() +
+                    '" style="background: darkgray" data-ride="carousel">' +
+                    '<div class="carousel-inner" style="height: 600px; max-height: 700px;" id="carouselImages' +
+                    carouselId.toString() +
+                    '"></div>' +
+                    '<a class="carousel-control-prev" href="#carousel' +
+                    carouselId.toString() +
+                    '" role="button" data-slide="prev">' +
+                    '<span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
+                    '<span class="sr-only">Previous</span>' +
+                    '</a>' +
+                    '<a class="carousel-control-next" href="#carousel' +
+                    carouselId.toString() +
+                    '" role="button" data-slide="next">' +
+                    '<span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+                    '<span class="sr-only">Next</span>' +
+                    '</a>' +
+                    '</div>' +
+                    '<div class="col-md-4 adminControl" id="addImageCarBtn' +
+                    carouselId.toString() +
+                    '">' +
+                    '<div id="msg"></div>' +
+                    '<input type="file" id="carouselImages' +
+                    carouselId.toString() +
+                    '" name="' +
+                    carouselId.toString() +
+                    '" hidden class="carouselImages' +
+                    carouselId.toString() +
+                    '" accept="image/*">' +
+                    '<div class="input-group my-3">' +
+                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameCarousel' +
+                    carouselId.toString() +
+                    '">' +
+                    '<div class="input-group-append">' +
+                    '<input type="button" class="btn btn-primary" onclick="$(this).parents().find(\'#carouselImages' +
+                    carouselId.toString() +
+                    '\').trigger(\'click\');" value="Add image" />' + removeBtn +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+                carouselId++;
+            });
+
+            $('#addEditor').click(function() {
+                var modules = document.getElementById("modules");
+                var removeBtn = '<div class="m-2 adminControl"><input type="button" class="btn btn-danger" onclick="CKEDITOR.instances[\'' + 'additionalEditor' + editorId.toString() + '\'].destroy(); $(\'div.editor\').remove(); $(this).remove()" value="Remove editor"/></div>';
+                modules.insertAdjacentHTML('beforeend',
+                    '<div class="mt-2 mb-2 editor"><textarea name="additionalEditor' +
+                    editorId.toString() +
+                    '"></textarea></div>' + removeBtn);
+                CKEDITOR.replace('additionalEditor' + editorId.toString());
+                editorId++;
+                if (editorId == 10) {
+                    $(this).hide();
+                }
+            });
+
+
+            $(".toggleMenu").on('click',
+                function() {
+                    $("#mainMenu").toggleClass('open');
                 });
 
-
-            $('#addGallery').click(function() {
-            var modules = document.getElementById('modules');
-            modules.insertAdjacentHTML('beforeend',
-                '<div class="row" id="' +
-                galleryId.toString() +
-                '"></div>' +
-                '<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
-                '<div id="msg"></div>' +
-                '<input type="file" id="galleryImages' +
-                galleryId.toString() +
-                '" name="' +
-                galleryId.toString() +
-                '" hidden class="galleryImage" accept="image/*">' +
-                '<div class="input-group my-3">' +
-                '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameGallery' +
-                galleryId.toString() +
-                '">' +
-                '<div class="input-group-append">' +
-                '<input type="button" id="' +
-                galleryId.toString() +
-                '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages' +
-                galleryId.toString() +
-                '\').trigger(\'click\');" value="Add image" />' +
-                '</div>' +
-                '</div>' +
-                '</div>');
-            galleryId++;
-        });
-
-        $('#addCarousel').click(function() {
-            var modules = document.getElementById('modules');
-            modules.insertAdjacentHTML('beforeend',
-                '<div id="carousel' +
-                carouselId.toString() +
-                '" class="carousel slide mt-2 mb-2 additionalCarousel' +
-                carouselId.toString() +
-                '" style="background: darkgray" data-ride="carousel">' +
-                '<div class="carousel-inner" style="height: 600px; max-height: 700px;" id="carouselImages' +
-                carouselId.toString() +
-                '"></div>' +
-                '<a class="carousel-control-prev" href="#carousel' +
-                carouselId.toString() +
-                '" role="button" data-slide="prev">' +
-                '<span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
-                '<span class="sr-only">Previous</span>' +
-                '</a>' +
-                '<a class="carousel-control-next" href="#carousel' +
-                carouselId.toString() +
-                '" role="button" data-slide="next">' +
-                '<span class="carousel-control-next-icon" aria-hidden="true"></span>' +
-                '<span class="sr-only">Next</span>' +
-                '</a>' +
-                '</div>' +
-                '<div class="col-md-4 adminControl" id="addImageCarBtn' +
-                carouselId.toString() +
-                '">' +
-                '<div id="msg"></div>' +
-                '<input type="file" id="carouselImages' +
-                carouselId.toString() +
-                '" name="' +
-                carouselId.toString() +
-                '" hidden class="carouselImages' +
-                carouselId.toString() +
-                '" accept="image/*">' +
-                '<div class="input-group my-3">' +
-                '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameCarousel' +
-                carouselId.toString() +
-                '">' +
-                '<div class="input-group-append">' +
-                '<input type="button" class="btn btn-primary" onclick="$(this).parents().find(\'#carouselImages' +
-                carouselId.toString() +
-                '\').trigger(\'click\');" value="Add image" />' +
-                '</div>' +
-                '</div>' +
-                '</div>');
-            carouselId++;
-        });
-
-        $('#addEditor').click(function() {
-            var modules = document.getElementById("modules");
-            modules.insertAdjacentHTML('beforeend',
-                '<div class="mt-2 mb-2"><textarea name="additionalEditor' +
-                editorId.toString() +
-                '"></textarea></div>');
-            CKEDITOR.replace('additionalEditor' + editorId.toString());
-            editorId++;
-            if (editorId == 10) {
-                $(this).hide();
-            }
-        });
+            CKEDITOR.replace('Content');
 
 
-        $(".toggleMenu").on('click',
-            function() {
-                $("#mainMenu").toggleClass('open');
-            });
-
-        CKEDITOR.replace('Content');
-
-
-        $("#createBtn").click(function() {
-            if ($("#Title").val() === "" || $("#Content").val() === "") {
-                alert("Field's can not be empty !");
-                return;
-            }
-            $("div").remove(".adminControl");
-
-            $("div#modules").find('.cke').replaceWith(function() {
-                var id = 'additionalEditor' + $(this).attr('id').substr(-1);
-                alert(id);
-                var editor = CKEDITOR.instances[id];
-                alert(editor);
-                return editor.getData();
-            });
-
-            document.getElementById('AdditionalContent').value += document.getElementById('modules').innerHTML;
-
-        });
-
-        $(document).on("click",
-            ".browse",
-            function() {
-                var file = $(this).parents().find(".file");
-                file.trigger("click");
-            });
-
-        $(document).on('change',
-            'input[type="file"]',
-            function(e) {
-                if (e.target.files[0] == undefined) {
+            $("#saveBtn").click(function() {
+                if ($("#Title").val() === "" || $("#Content").val() === "") {
+                    alert("Field's can not be empty !");
                     return;
                 }
-                var fileName = e.target.files[0].name;
-                var idEl = $(this).attr('id');
-                var idParent = $(this).attr('name');
-                var reader;
-                switch (idEl) {
-                case 'headFile':
-                    $("#fileName").val(fileName);
-                    reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#HeadImageBase64').val(reader.result);
-                        $('#previewImage').removeClass('d-none');
-                        document.getElementById("previewImage").src = e.target.result;
-                    };
-                    reader.readAsDataURL(this.files[0]);
-                    break;
-                case 'carouselImages' + idParent:
-                    $("#fileNameCarousel" + idParent).val(fileName);
-                    reader = new FileReader();
-                    reader.onload = function(e) {
-                        addImageCarousel(e.target.result, idParent);
-                    };
-                    reader.readAsDataURL(this.files[0]);
-                    break;
-                case 'galleryImages' + idParent:
-                    $("#fileNameGallery" + $(this).attr('name')).val(fileName);
-                    reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById(idParent.toString()).innerHTML +=
-                            '<div class="col-lg-3 col-md-4 col-xs-6 thumb galleryItem"><img src="' +
-                            e.target.result +
-                            '"style="width: 100%; height: 100%;" class="zoom img-fluid " alt=""></a></div>';
-                    };
-                    reader.readAsDataURL(this.files[0]);
-                    return;
-                default:
-                    alert("None");
-                    break;
-                }
+                $("div").remove(".adminControl");
+
+                $("div#modules").find('.cke').replaceWith(function() {
+                    var id = 'additionalEditor' + $(this).attr('id').substr(-1);
+                    var editor = CKEDITOR.instances[id];
+                    return editor.getData();
+                });
+                document.getElementById('AdditionalContent').value = document.getElementById('modules').innerHTML;
             });
-    });
+
+            $(document).on("click",
+                ".browse",
+                function() {
+                    var file = $(this).parents().find(".file");
+                    file.trigger("click");
+                });
+
+            $(document).on('change',
+                'input[type="file"]',
+                function(e) {
+                    if (e.target.files[0] == undefined) {
+                        return;
+                    }
+                    var fileName = e.target.files[0].name;
+                    var idEl = $(this).attr('id');
+                    var idParent = $(this).attr('name');
+                    var reader;
+                    switch (idEl) {
+                    case 'headFile':
+                        $("#fileName").val(fileName);
+                        reader = new FileReader();
+                        reader.onload = function(e) {
+                            $('#HeadImageBase64').val(reader.result);
+                            $('#previewImage').removeClass('d-none');
+                            document.getElementById("previewImage").src = e.target.result;
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                        break;
+                    case 'carouselImages' + idParent:
+                        $("#fileNameCarousel" + idParent).val(fileName);
+                        reader = new FileReader();
+                        reader.onload = function(e) {
+                            addImageCarousel(e.target.result, idParent);
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                        break;
+                    case 'galleryImages' + idParent:
+                        $("#fileNameGallery" + $(this).attr('name')).val(fileName);
+                        reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById(idParent.toString()).innerHTML +=
+                                '<div class="col-lg-3 col-md-4 col-xs-6 thumb galleryItem"><img src="' +
+                                e.target.result +
+                                '"style="width: 100%; height: 100%;" class="zoom img-fluid " alt=""></a></div>';
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                        return;
+                    default:
+                        alert("Error has occured :(");
+                        break;
+                    }
+                });
+        });
 
     </script>
 

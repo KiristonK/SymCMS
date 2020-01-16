@@ -22,7 +22,6 @@ namespace SymCMS.Models
         [DataType(DataType.MultilineText)]
         public string CommentText { get; set; }
         public string AuthorName { get; set; }
-        public string AuthorContact { get; set; }
 
         [ForeignKey("Post")]
         public int? PostId { get; set; }
@@ -30,6 +29,6 @@ namespace SymCMS.Models
 
         [ForeignKey("Page")]
         public int? PageId { get; set; }
-        public virtual PostModel Page { get; set; }
+        public virtual PageModels Page { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace SymCMS.Controllers
     public class AdminController : Controller
     {
         private readonly PostService _postService = new PostService();
+        private readonly  PageService _pageService = new PageService();
         private readonly CommentService _commentService = new CommentService();
 
         public ActionResult Index()
@@ -94,10 +95,16 @@ namespace SymCMS.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult UpdateCommenting(PostViewModel postViewModel)
+        public ActionResult UpdateCommentingPost(PostViewModel postViewModel)
         {
             _postService.UpdateCommenting(postViewModel);
             return RedirectToAction("Details", _postService.GetPost(postViewModel.Id));
+        }
+        [System.Web.Mvc.HttpPost]
+        public ActionResult UpdateCommentingPage(PageViewModels pageViewModel)
+        {
+            _pageService.UpdateCommenting(pageViewModel);
+            return View("~/Views/Pages/Details.cshtml", _pageService.GetPage(pageViewModel.PageId));
         }
 
         public ActionResult Delete(int? id)

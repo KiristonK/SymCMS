@@ -31,7 +31,14 @@ namespace SymCMS.Services
 
         public CommentViewModel EditComment(CommentViewModel comment)
         {
-            var commentModel = new CommentModel(comment);
+            var commentModel = _db.CommentModels.Find(comment.CommentId);
+            if (commentModel == null) return null;
+            commentModel.CommentId = comment.CommentId;
+            commentModel.CommentText = comment.CommentText;
+            commentModel.AuthorName = comment.AuthorName;
+            commentModel.PostId = comment.PostId;
+            commentModel.PageId = comment.PageId;
+
             _db.Entry(commentModel).State = EntityState.Modified;
             _db.SaveChanges();
             return new CommentViewModel(commentModel);
