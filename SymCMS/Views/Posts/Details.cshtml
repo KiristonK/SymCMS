@@ -3,22 +3,6 @@
 
 @{
     ViewBag.Title = "Details";
-    if (!ViewData.ContainsKey("postId"))
-    {
-        ViewData.Add("postId", Model.Id);
-    }
-    else
-    {
-        ViewData["postId"] = Model.Id;
-    }
-    if (!ViewData.ContainsKey("PostComments"))
-    {
-        ViewData.Add("PostComments", Model.CommentsEnabled);
-    }
-    else
-    {
-        ViewData["PostComments"] = Model.CommentsEnabled;
-    }
 }
 
     <div>

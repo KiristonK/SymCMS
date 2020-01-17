@@ -9,15 +9,9 @@ namespace SymCMS.Controllers
     public class CommentController : Controller
     {
         private readonly CommentService _cs = new CommentService();
-        private readonly PageService _paS = new PageService();
 
-        private readonly PostService _ps = new PostService();
-
-        // GET: Comment
         public ActionResult Index()
         {
-            //ViewBag.ExComments = _cs.GetAllComments();
-            //IEnumerable<CommentViewModel> model;
             if (ViewData.ContainsKey("postId"))
             {
                 int.TryParse(ViewData["postId"].ToString(), out var id);
@@ -32,8 +26,6 @@ namespace SymCMS.Controllers
             }
         }
 
-
-        // GET: Comment/Create
         public ActionResult Create()
         {
             if (ViewData.ContainsKey("postId"))
@@ -50,7 +42,6 @@ namespace SymCMS.Controllers
             }
         }
 
-        // POST: Comment/Create
         [HttpPost]
         public ActionResult Create([Bind(Include = "Author, Comment, PostId, PageId")]
             CommentViewModel comment)
@@ -65,7 +56,6 @@ namespace SymCMS.Controllers
                 : RedirectToAction("Details", "Pages", new {id = comment.PageId.Value});
         }
 
-        // GET: Comment/Edit/5
         [Authorize]
         public ActionResult Edit(int id)
         {
@@ -79,7 +69,6 @@ namespace SymCMS.Controllers
                 : RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
         }
 
-        // POST: Comment/Edit/5
         [HttpPost]
         [Authorize]
         public ActionResult Edit([Bind(Include = "CommentId, Author, Comment, PostId, PageId")]
@@ -95,7 +84,6 @@ namespace SymCMS.Controllers
                 : RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
         }
 
-        // GET: Comment/Delete/5
         [Authorize]
         public ActionResult Delete(int id)
         {
@@ -109,7 +97,6 @@ namespace SymCMS.Controllers
                 : RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
         }
 
-        // POST: Comment/Delete/5
         [HttpPost]
         [Authorize]
         public ActionResult Delete(int id, FormCollection collection)

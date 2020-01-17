@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using SymCMS.Models;
 using SymCMS.Services;
@@ -23,7 +24,16 @@ namespace SymCMS.Controllers
         public ActionResult PostsView()
         {
             ViewBag.ExComments = _commentService.GetAllComments();
-            return View(_postService.GetPosts());
+            var posts = _postService.GetPosts();
+            foreach (var post in posts.Where(post => string.IsNullOrEmpty(post.ContentPreview)))
+            {
+                post.ContentPreview = Regex.Replace(post.Content, "<.*?>", string.Empty);
+                if (post.ContentPreview.Length >= 1000)
+                {
+                    post.ContentPreview = post.ContentPreview.Substring(0, 1000) + "...";
+                }
+            }
+            return View(posts);
         }
 
         public ActionResult Details(int? id)
@@ -32,6 +42,17 @@ namespace SymCMS.Controllers
             ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PostId == id);
             var postViewModel = _postService.GetPost(id.Value);
             if (postViewModel == null) return HttpNotFound();
+            if (!ViewData.ContainsKey("postId"))
+                ViewData.Add("postId", postViewModel.Id);
+            else
+                ViewData["postId"] = postViewModel.Id;
+
+
+            if (!ViewData.ContainsKey("PostComments"))
+                ViewData.Add("PostComments", postViewModel.CommentsEnabled);
+            else
+                ViewData["PostComments"] = postViewModel.CommentsEnabled;
+
             return View(postViewModel);
         }
 
@@ -48,13 +69,10 @@ namespace SymCMS.Controllers
                 "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime,CommentsEnabled,ContentPreview")]
             PostViewModel postViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                _postService.EditPost(postViewModel);
-                return RedirectToAction("PostsView");
-            }
+            if (!ModelState.IsValid) return View(postViewModel);
+            _postService.EditPost(postViewModel);
+            return RedirectToAction("PostsView");
 
-            return View(postViewModel);
         }
 
         public ActionResult CreatePost()
@@ -69,15 +87,12 @@ namespace SymCMS.Controllers
                 "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime,CommentsEnabled,ContentPreview")]
             PostViewModel postViewModel)
         {
-            if (ModelState.IsValid && postViewModel.CategoryId != 0)
-            {
-                _postService.AddPost(postViewModel);
-                if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
-                    return RedirectToAction("PostsView");
-                return View("~/Views/Posts/Index.cshtml", _postService.GetPosts());
-            }
+            if (!ModelState.IsValid || postViewModel.CategoryId == 0) return View(postViewModel);
+            _postService.AddPost(postViewModel);
+            if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                return RedirectToAction("PostsView");
+            return View("~/Views/Posts/Index.cshtml", _postService.GetPosts());
 
-            return View(postViewModel);
         }
 
         [HttpPost]
@@ -107,6 +122,8 @@ namespace SymCMS.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var postViewModel = _postService.GetPosts().Find(p => p.Id == id);
             if (postViewModel == null) return HttpNotFound();
+
+            ViewData.Add("partial", 1);
             return View(postViewModel);
         }
 
@@ -121,7 +138,6 @@ namespace SymCMS.Controllers
 
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
         public ActionResult CreateCategory(PostCategory category)
         {
             return View(_postService.CreateCategory(category.Name)

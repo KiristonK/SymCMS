@@ -1,5 +1,4 @@
-﻿@using System.Text.RegularExpressions
-@model IEnumerable<SymCMS.ViewModels.PostViewModel>
+﻿@model IEnumerable<SymCMS.ViewModels.PostViewModel>
 
 @{
     ViewBag.Title = "PostsView";
@@ -41,20 +40,7 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-
-                    @if (item.ContentPreview == string.Empty || item.ContentPreview == null)
-                    {
-                        item.Content = Regex.Replace(item.Content, "<.*?>", string.Empty);
-                        if (item.Content.Length >= 100)
-                        {
-                            item.Content = item.Content.Substring(0, 100) + "...";
-                        }
-                        @Html.Raw(item.Content)
-                    }
-                    else
-                    {
-                        @Html.Raw(item.ContentPreview)
-                    }
+                    @Html.Raw(item.ContentPreview)
                 </td>
                 @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
                 {

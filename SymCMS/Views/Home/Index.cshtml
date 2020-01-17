@@ -31,15 +31,7 @@
                     </div>
                 </div>
                 <div class="text-index-post">
-                    @if (string.IsNullOrEmpty(post.ContentPreview))
-                    {
-                        @Html.Raw(post.Content)
-                    }
-                    else
-                    {
-                        @Html.Raw(post.ContentPreview)
-                    }
-
+                    @Html.Raw(post.ContentPreview)
                 </div>
                 <p class="mt-1 position-absolute" style="bottom: 10px; right: 20px; z-index: 3">
                     <a class="btn btn-info" href="/Posts/Details/@Html.ValueFor(model => post.Id)">Details &raquo;</a>

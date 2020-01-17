@@ -33,6 +33,16 @@ namespace SymCMS.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var postViewModel = _postService.GetPost(id.Value);
             if (postViewModel == null) return HttpNotFound();
+
+            if (!ViewData.ContainsKey("postId"))
+                ViewData.Add("postId", postViewModel.Id);
+            else
+                ViewData["postId"] = postViewModel.Id;
+
+            if (!ViewData.ContainsKey("PostComments"))
+                ViewData.Add("PostComments", postViewModel.CommentsEnabled);
+            else
+                ViewData["PostComments"] = postViewModel.CommentsEnabled;
             return View(postViewModel);
         }
 

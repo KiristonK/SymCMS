@@ -32,6 +32,15 @@ namespace SymCMS.Controllers
             ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PageId == id);
             var pageViewModels = _pS.GetPage(id);
             if (pageViewModels == null) return HttpNotFound();
+            if (!ViewData.ContainsKey("pageId"))
+                ViewData.Add("pageId", pageViewModels.PageId);
+            else
+                ViewData["pageId"] = pageViewModels.PageId;
+
+            if (!ViewData.ContainsKey("PageComments"))
+                ViewData.Add("PageComments", pageViewModels.CommentsEnabled);
+            else
+                ViewData["PageComments"] = pageViewModels.CommentsEnabled;
             return View(pageViewModels);
         }
 
@@ -51,13 +60,10 @@ namespace SymCMS.Controllers
         public ActionResult Create([Bind(Include = "Id,Title,Author,Content,AdditionalContent,CommentsEnabled")]
             PageViewModels pageViewModels)
         {
-            if (ModelState.IsValid)
-            {
-                _pS.AddPage(pageViewModels);
-                return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid) return View(pageViewModels);
+            _pS.AddPage(pageViewModels);
+            return RedirectToAction("Index");
 
-            return View(pageViewModels);
         }
 
         // GET: PageModels/Edit/5
@@ -82,13 +88,10 @@ namespace SymCMS.Controllers
         public ActionResult Edit([Bind(Include = "PageId,Title,Author,Content,AdditionalContent,CommentsEnabled")]
             PageViewModels pageViewModels)
         {
-            if (ModelState.IsValid)
-            {
-                _pS.EditPage(pageViewModels);
-                return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid) return View(pageViewModels);
+            _pS.EditPage(pageViewModels);
+            return RedirectToAction("Index");
 
-            return View(pageViewModels);
         }
 
         // GET: PageModels/Delete/5
@@ -99,6 +102,9 @@ namespace SymCMS.Controllers
             ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PageId == id);
             var pageViewModels = _pS.GetPage(id);
             if (pageViewModels == null) return HttpNotFound();
+
+            ViewData.Add("partial", 1);
+            ViewData.Add("PageComments", pageViewModels.CommentsEnabled);
             return View(pageViewModels);
         }
 

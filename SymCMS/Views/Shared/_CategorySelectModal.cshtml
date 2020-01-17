@@ -44,8 +44,7 @@
         });
         $('#selectCategoryBtn').click(function() {
             var e = document.getElementById('categorySelector');
-            if (e.options[e.selectedIndex].value == 0) {
-                // window.location.href = "/Admin/CreateCategory?name=" + $('#CategoryName').val();
+            if (e.options[e.selectedIndex].value === 0) {
                 $.ajax({
                     type: "POST",
                     url: "/Admin/CreateCategory/",

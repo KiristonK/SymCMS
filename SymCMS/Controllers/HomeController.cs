@@ -13,12 +13,12 @@ namespace SymCMS.Controllers
         {
             var posts = _pS.GetPosts();
             posts.Reverse();
-            foreach (var post in posts)
+            foreach (var post in posts.Where(post => string.IsNullOrEmpty(post.ContentPreview)))
             {
-                post.Content = Regex.Replace(post.Content, "<.*?>", string.Empty);
-                if (post.Content.Length >= 1000)
+                post.ContentPreview = Regex.Replace(post.Content, "<.*?>", string.Empty);
+                if (post.ContentPreview.Length >= 1000)
                 {
-                    post.Content = post.Content.Substring(0, 1000) + "...";
+                    post.ContentPreview = post.ContentPreview.Substring(0, 1000) + "...";
                 }
             }
             return View(posts.Where(m => m.Visible));

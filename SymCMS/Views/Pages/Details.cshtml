@@ -3,22 +3,6 @@
 
 @{
     ViewBag.Title = "Details";
-    if (!ViewData.ContainsKey("pageId"))
-    {
-        ViewData.Add("pageId", Model.PageId);
-    }
-    else
-    {
-        ViewData["pageId"] = Model.PageId;
-    }
-    if (!ViewData.ContainsKey("PageComments"))
-    {
-        ViewData.Add("PageComments", Model.CommentsEnabled);
-    }
-    else
-    {
-        ViewData["PageComments"] = Model.CommentsEnabled;
-    }
 }
 <div class="mt-5">
     <h3 class="display-2">@Model.Title</h3>
