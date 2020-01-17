@@ -15,7 +15,6 @@ $(document).ready(function () {
 });
 
 $(".post_visibility").change(function() {
-    console.log($(this).data("postid"));
     $.ajax({
         url: "/Admin/Update/",
         method: "POST",
