@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using SymCMS.ViewModels;
 
 namespace SymCMS.Services.Interfaces
@@ -12,7 +11,5 @@ namespace SymCMS.Services.Interfaces
         void AddPage(PageViewModels pageViewModels);
         void DeletePage(int id);
         void Dispose();
-
-
     }
 }

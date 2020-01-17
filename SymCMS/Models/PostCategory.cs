@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using SymCMS.ViewModels;
 
 namespace SymCMS.Models
 {
     public sealed class PostCategory
     {
-        public PostCategory() { }
+        public PostCategory()
+        {
+        }
 
         public PostCategory(CategoriesViewModel categoriesViewModel)
         {
@@ -19,8 +15,8 @@ namespace SymCMS.Models
             Name = categoriesViewModel.Name;
         }
 
-        [Key]
-        public int CategoryId { get; set; }
+        [Key] public int CategoryId { get; set; }
+
         public string Name { get; set; }
     }
 }

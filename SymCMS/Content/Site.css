@@ -2,268 +2,233 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700|Oswald:400,300,700);
 
 .mainMenuOverlay.open .navire {
-    right: 70%;
     -webkit-transition: right 28s ease 1s;
+    right: 70%;
     transition: right 28s ease 1s;
 }
+
 /* ### main Menu Overlay */
+
 .mainMenuOverlay {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: -420px;
-    z-index: 999;
-    height: 420px;
     -webkit-transition: bottom 0.5s ease;
+    bottom: -420px;
+    height: 420px;
+    left: 0;
+    position: fixed;
+    right: 0;
     transition: bottom 0.5s ease;
+    z-index: 999;
 }
 
-    .mainMenuOverlay.open {
-        bottom: 0;
-    }
+.mainMenuOverlay.open { bottom: 0; }
 
-    .mainMenuOverlay .toggleMenu {
-        display: block;
-        background-color: #65B5D0;
-        border: 1px solid #FFF;
-        border-radius: 80px;
-        width: 62px;
-        height: 62px;
-        position: absolute;
-        top: -12px;
-        left: 50%;
-        margin: -31px 0 0 -31px;
-        cursor: pointer;
-        font-size: 24px;
-        color: #FFF;
-        text-align: center;
-        line-height: 58px;
-        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2) inset, 0 0 16px -4px #063343;
-        -webkit-transition: box-shadow 0.5s ease, top 0.5s ease;
-        transition: box-shadow 0.5s ease, top 0.5s ease;
-    }
+.mainMenuOverlay .toggleMenu {
+    -webkit-transition: box-shadow 0.5s ease, top 0.5s ease;
+    background-color: #65B5D0;
+    border: 1px solid #FFF;
+    border-radius: 80px;
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2) inset, 0 0 16px -4px #063343;
+    color: #FFF;
+    cursor: pointer;
+    display: block;
+    font-size: 24px;
+    height: 62px;
+    left: 50%;
+    line-height: 58px;
+    margin: -31px 0 0 -31px;
+    position: absolute;
+    text-align: center;
+    top: -12px;
+    transition: box-shadow 0.5s ease, top 0.5s ease;
+    width: 62px;
+}
 
-        .mainMenuOverlay .toggleMenu:hover, .mainMenuOverlay .toggleMenu:active {
-        }
+.mainMenuOverlay .toggleMenu:hover, .mainMenuOverlay .toggleMenu:active { }
 
-    .mainMenuOverlay.open .toggleMenu {
-        top: 50%;
-        background-color: #2298C3;
-    }
+.mainMenuOverlay.open .toggleMenu {
+    background-color: #2298C3;
+    top: 50%;
+}
 
-    .mainMenuOverlay .itemMenuBox {
-        background: url(https://res.cloudinary.com/dioieuprs/image/upload/v1466688705/floating-menu/go2.png) no-repeat center center;
-        background-size: 28px auto;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin: -31px 0 0 -31px;
-        height: 62px;
-        width: 142px;
-        text-align: right;
-        border-radius: 40px;
-        -webkit-transform-origin: 31px 31px;
-        -ms-transform-origin: 31px 31px;
-        transform-origin: 31px 31px;
-        -webkit-transition: all 1s ease 0.4s;
-        transition: all 1s ease 0.4s;
-    }
+.mainMenuOverlay .itemMenuBox {
+    -ms-transform-origin: 31px 31px;
+    -webkit-transform-origin: 31px 31px;
+    -webkit-transition: all 1s ease 0.4s;
+    background: url(https://res.cloudinary.com/dioieuprs/image/upload/v1466688705/floating-menu/go2.png) no-repeat center center;
+    background-size: 28px auto;
+    border-radius: 40px;
+    height: 62px;
+    left: 50%;
+    margin: -31px 0 0 -31px;
+    position: absolute;
+    text-align: right;
+    top: 50%;
+    transform-origin: 31px 31px;
+    transition: all 1s ease 0.4s;
+    width: 142px;
+}
 
-    .mainMenuOverlay.open .itemMenuBox {
-        width: 182px;
-        -webkit-transition: all 1s ease 0s;
-        transition: all 1s ease 0s;
-    }
+.mainMenuOverlay.open .itemMenuBox {
+    -webkit-transition: all 1s ease 0s;
+    transition: all 1s ease 0s;
+    width: 182px;
+}
 
-    .mainMenuOverlay .itemMenuBox.crouselAdd {
-        -webkit-transform: rotate(270deg);
-        -ms-transform: rotate(270deg);
-        transform: rotate(270deg);
-    }
+.mainMenuOverlay .itemMenuBox.crouselAdd {
+    -ms-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
 
-    .mainMenuOverlay .itemMenuBox.galleryAdd {
-        -webkit-transform: rotate(330deg);
-        -ms-transform: rotate(330deg);
-        transform: rotate(330deg);
-    }
+.mainMenuOverlay .itemMenuBox.galleryAdd {
+    -ms-transform: rotate(330deg);
+    -webkit-transform: rotate(330deg);
+    transform: rotate(330deg);
+}
 
-    .mainMenuOverlay .itemMenuBox.editorAdd {
-        -webkit-transform: rotate(30deg);
-        -ms-transform: rotate(30deg);
-        transform: rotate(30deg);
-    }
+.mainMenuOverlay .itemMenuBox.editorAdd {
+    -ms-transform: rotate(30deg);
+    -webkit-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
 
 
-    .mainMenuOverlay .itemMenuBox .itemMenu {
-        display: inline-block;
-        border: 2px solid rgba(255,255,255,0.6);
-        border-radius: 40px;
-        background-color: #1f97c2;
-        background-repeat: no-repeat;
-        background-position: center center;
-        width: 67px;
-        height: 67px;
-        border-radius: 40px;
-        transition: all 0.8s ease;
-        color: #FFF;
-        font-size: 28px;
-        line-height: 58px;
-        text-align: center;
-    }
+.mainMenuOverlay .itemMenuBox .itemMenu {
+    background-color: #1f97c2;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 40px;
+    border-radius: 40px;
+    color: #FFF;
+    display: inline-block;
+    font-size: 28px;
+    height: 67px;
+    line-height: 58px;
+    text-align: center;
+    transition: all 0.8s ease;
+    width: 67px;
+}
 
-    .mainMenuOverlay .itemMenuBox.crouselAdd .itemMenu {
-        -webkit-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        transform: rotate(90deg);
-    }
+.mainMenuOverlay .itemMenuBox.crouselAdd .itemMenu {
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
 
-    .mainMenuOverlay .itemMenuBox.galleryAdd .itemMenu {
-        -webkit-transform: rotate(30deg);
-        -ms-transform: rotate(30deg);
-        transform: rotate(30deg);
-    }
+.mainMenuOverlay .itemMenuBox.galleryAdd .itemMenu {
+    -ms-transform: rotate(30deg);
+    -webkit-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
 
-    .mainMenuOverlay .itemMenuBox.editorAdd .itemMenu {
-        -webkit-transform: rotate(330deg);
-        -ms-transform: rotate(330deg);
-        transform: rotate(330deg);
-    }
+.mainMenuOverlay .itemMenuBox.editorAdd .itemMenu {
+    -ms-transform: rotate(330deg);
+    -webkit-transform: rotate(330deg);
+    transform: rotate(330deg);
+}
 
-    /* Hover */
-    .mainMenuOverlay .itemMenuBox.crouselAdd .itemMenu:hover {
-        -webkit-transform: rotate(450deg);
-        -ms-transform: rotate(450deg);
-        transform: rotate(450deg);
-    }
+/* Hover */
 
-    .mainMenuOverlay .itemMenuBox.galleryAdd .itemMenu:hover {
-        -webkit-transform: rotate(390deg);
-        -ms-transform: rotate(390deg);
-        transform: rotate(390deg);
-    }
+.mainMenuOverlay .itemMenuBox.crouselAdd .itemMenu:hover {
+    -ms-transform: rotate(450deg);
+    -webkit-transform: rotate(450deg);
+    transform: rotate(450deg);
+}
 
-    .mainMenuOverlay .itemMenuBox.editorAdd .itemMenu:hover {
-        -webkit-transform: rotate(690deg);
-        -ms-transform: rotate(690deg);
-        transform: rotate(690deg);
-    }
+.mainMenuOverlay .itemMenuBox.galleryAdd .itemMenu:hover {
+    -ms-transform: rotate(390deg);
+    -webkit-transform: rotate(390deg);
+    transform: rotate(390deg);
+}
+
+.mainMenuOverlay .itemMenuBox.editorAdd .itemMenu:hover {
+    -ms-transform: rotate(690deg);
+    -webkit-transform: rotate(690deg);
+    transform: rotate(690deg);
+}
 
 .floating {
-    -webkit-animation-name: Floatingx;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: ease-in-out;
-    -moz-animation-name: Floating;
     -moz-animation-duration: 3s;
     -moz-animation-iteration-count: infinite;
+    -moz-animation-name: Floating;
     -moz-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: Floatingx;
+    -webkit-animation-timing-function: ease-in-out;
 }
 
 @-webkit-keyframes Floatingx {
-    from {
-        -webkit-transform: translate(0, 0px);
-    }
+    from { -webkit-transform: translate(0, 0px); }
 
-    65% {
-        -webkit-transform: translate(0, 5px);
-    }
+    65% { -webkit-transform: translate(0, 5px); }
 
-    to {
-        -webkit-transform: translate(0, -0px);
-    }
+    to { -webkit-transform: translate(0, -0px); }
 }
 
 @-moz-keyframes Floating {
-    from {
-        -moz-transform: translate(0, 0px);
-    }
+    from { -moz-transform: translate(0, 0px); }
 
-    65% {
-        -moz-transform: translate(0, 5px);
-    }
+    65% { -moz-transform: translate(0, 5px); }
 
-    to {
-        -moz-transform: translate(0, -0px);
-    }
+    to { -moz-transform: translate(0, -0px); }
 }
 
 .floating2 {
-    -webkit-animation-name: Floatingx2;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: ease-in-out;
-    -moz-animation-name: Floating2;
     -moz-animation-duration: 3s;
     -moz-animation-iteration-count: infinite;
+    -moz-animation-name: Floating2;
     -moz-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: Floatingx2;
+    -webkit-animation-timing-function: ease-in-out;
 }
 
 @-webkit-keyframes Floatingx2 {
-    from {
-        -webkit-transform: translate(0, 0px);
-    }
+    from { -webkit-transform: translate(0, 0px); }
 
-    45% {
-        -webkit-transform: translate(0, 8px);
-    }
+    45% { -webkit-transform: translate(0, 8px); }
 
-    to {
-        -webkit-transform: translate(0, -0px);
-    }
+    to { -webkit-transform: translate(0, -0px); }
 }
 
 @-moz-keyframes Floating2 {
-    from {
-        -moz-transform: translate(0, 0px);
-    }
+    from { -moz-transform: translate(0, 0px); }
 
-    45% {
-        -moz-transform: translate(0, 8px);
-    }
+    45% { -moz-transform: translate(0, 8px); }
 
-    to {
-        -moz-transform: translate(0, -0px);
-    }
+    to { -moz-transform: translate(0, -0px); }
 }
 
 .floating3 {
-    -webkit-animation-name: Floatingx3;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: ease-in-out;
-    -moz-animation-name: Floating3;
     -moz-animation-duration: 3s;
     -moz-animation-iteration-count: infinite;
+    -moz-animation-name: Floating3;
     -moz-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: Floatingx3;
+    -webkit-animation-timing-function: ease-in-out;
 }
 
 @-webkit-keyframes Floatingx3 {
-    from {
-        -webkit-transform: translate(0, 0px);
-    }
+    from { -webkit-transform: translate(0, 0px); }
 
-    50% {
-        -webkit-transform: translate(2px, 4px);
-    }
+    50% { -webkit-transform: translate(2px, 4px); }
 
-    to {
-        -webkit-transform: translate(0, -0px);
-    }
+    to { -webkit-transform: translate(0, -0px); }
 }
 
 @-moz-keyframes Floating3 {
-    from {
-        -moz-transform: translate(0, 0px);
-    }
+    from { -moz-transform: translate(0, 0px); }
 
-    50% {
-        -moz-transform: translate(2px, 4px);
-    }
+    50% { -moz-transform: translate(2px, 4px); }
 
-    to {
-        -moz-transform: translate(0, -0px);
-    }
+    to { -moz-transform: translate(0, -0px); }
 }
+
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -272,87 +237,79 @@
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt {
-    white-space: normal;
-}
+
+.dl-horizontal dt { white-space: normal; }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select{
-    max-width: 280px;
-}
 
-textarea{
-    overflow:hidden;
-    height:auto;
+input,
+select { max-width: 280px; }
+
+textarea {
+    height: auto;
+    overflow: hidden;
 }
 
 
 .switch_box {
+    -ms-flex: 1;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -webkit-box-flex: 1;
+    -webkit-box-pack: center;
+    align-items: center;
+    background-color: transparent;
+    content: "Visible";
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    background-color: transparent;
-    width:auto;
-    height: auto;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
     flex: 1;
-    content:"Visible";
+    height: auto;
+    justify-content: center;
+    width: auto;
 }
 
 /* Switch 1 Specific Styles Start */
 
 input[type="checkbox"].switch_1 {
-    font-size: 30px;
-    -webkit-appearance: none;
     -moz-appearance: none;
-    width: 3.5em;
-    height: 1.5em;
+    -webkit-appearance: none;
+    -webkit-transition: all .2s ease-in-out;
     background: #ddd;
     border-radius: 3em;
-    position: relative;
     cursor: pointer;
+    font-size: 30px;
+    height: 1.5em;
     outline: none;
-    -webkit-transition: all .2s ease-in-out;
+    position: relative;
     transition: all .2s ease-in-out;
+    width: 3.5em;
 }
 
-    input[type="checkbox"].switch_1:checked {
-        background: #0ebeff;
-    }
+input[type="checkbox"].switch_1:checked { background: #0ebeff; }
 
-    input[type="checkbox"].switch_1:after {
-        position: absolute;
-        content: "";
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 50%;
-        background: #ffffff;
-        -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
-        box-shadow: 0 0 .25em rgba(0,0,0,.3);
-        -webkit-transform: scale(.7);
-        transform: scale(.7);
-        left: 0;
-        -webkit-transition: all .2s ease-in-out;
-        transition: all .2s ease-in-out;
-    }
-
-    input[type="checkbox"].switch_1:checked:after {
-        left: calc(100% - 1.5em);
-    }
-
-
-
-#form-container {
-    width: 500px;
+input[type="checkbox"].switch_1:after {
+    -webkit-box-shadow: 0 0 .25em rgba(0, 0, 0, .3);
+    -webkit-transform: scale(.7);
+    -webkit-transition: all .2s ease-in-out;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 .25em rgba(0, 0, 0, .3);
+    content: "";
+    height: 1.5em;
+    left: 0;
+    position: absolute;
+    transform: scale(.7);
+    transition: all .2s ease-in-out;
+    width: 1.5em;
 }
+
+input[type="checkbox"].switch_1:checked:after { left: calc(100% - 1.5em); }
+
+
+
+#form-container { width: 500px; }
 
 .change-link {
     background-color: #000;
@@ -367,123 +324,121 @@ input[type="checkbox"].switch_1 {
     width: 150px;
 }
 
-    .change-link:hover {
-        color: #fff;
-        text-decoration: none;
-    }
+.change-link:hover {
+    color: #fff;
+    text-decoration: none;
+}
 
 
 .img-head {
-    width: 100%;
     height: auto;
+    width: 100%;
 }
-.img-container{
-    position:relative;
-    background: rgba(0,0,0,.3);
+
+.img-container {
+    background: rgba(0, 0, 0, .3);
+    position: relative;
 }
 
 .left-bottom {
+    color: #ffffff;
+    left: 10%;
     position: absolute;
     top: 90%;
-    left: 10%;
     transform: translate(-10%, -90%);
-    color: #ffffff;
 }
 
 .text-block {
-    position: absolute;
+    background-color: rgba(0, 0, 0, .5);
     bottom: 20px;
-    right: 20px;
-    background-color: rgba(0,0,0,.5);
     color: white;
     padding-left: 20px;
     padding-right: 20px;
+    position: absolute;
+    right: 20px;
 }
 
 .text-block-index {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, .5);
     color: white;
     padding-left: 20px;
     padding-right: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
 }
 
 .text-index-post {
-    position: absolute;
+    background-color: rgba(0, 0, 0, .5);
     bottom: 30px;
-    left: 10px;
-    right: 120px;
-    background-color: rgba(0,0,0,.5);
     color: white;
+    left: 10px;
     padding-left: 20px;
     padding-right: 20px;
+    position: absolute;
+    right: 120px;
 }
 
 
 .text-index-blog {
-    position: absolute;
+    background-color: rgba(0, 0, 0, .5);
     bottom: 20px;
-    left: 30px;
-    right: 130px;
-    background-color: rgba(0,0,0,.5);
     color: white;
+    left: 30px;
     padding-left: 20px;
     padding-right: 20px;
+    position: absolute;
+    right: 130px;
 }
 
 
 
 #demo {
     height: 100%;
-    position: relative;
     overflow: hidden;
+    position: relative;
 }
 
 
-.green {
-    background-color: #6fb936;
-}
+.green { background-color: #6fb936; }
 
-.thumb {
-    margin-bottom: 30px;
-}
+.thumb { margin-bottom: 30px; }
 
-.page-top {
-    margin-top: 85px;
-}
+.page-top { margin-top: 85px; }
 
 
 img.zoom {
-    width: 100%;
-    height: 200px;
-    border-radius: 5px;
-    object-fit: cover;
-    -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
-    -o-transition: all .3s ease-in-out;
     -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    border-radius: 5px;
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
 }
 
 img.zoom:hover {
-    -webkit-transform: scale(1.2);
     -moz-transform: scale(1.2);
     -o-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
     transform: scale(1.2);
 }
 
 .transition {
-    -webkit-transform: scale(1.2);
     -moz-transform: scale(1.2);
     -o-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
     transform: scale(1.2);
 }
 
-.modal-header {
-    border-bottom: none;
-}
+.modal-header { border-bottom: none; }
 
-.modal-title {
-    color: #000;
+.modal-title { color: #000; }
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        margin: 1.75rem auto;
+        max-width: 100%;
+    }
 }

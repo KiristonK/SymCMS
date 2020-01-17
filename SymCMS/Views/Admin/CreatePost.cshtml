@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        <hr />
+        <hr/>
         <div id="msg"></div>
         <input type="file" name="HeadImage" hidden class="file" accept="image/*">
         <div class="input-group my-3">
@@ -26,22 +26,22 @@
             <img src="https://placehold.it/80x80" id="previewImage" class="d-none w-100 h-25">
         </div>
         @Html.HiddenFor(model => model.HeadImageBase64)
-        @Html.ValidationMessageFor(model => model.HeadImageBase64, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.HeadImageBase64, "", new {@class = "text-danger"})
     </div>
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <hr/>
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Title, new {@class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
         </div>
 
-        @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Author, new {@class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Author, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(model => model.Author, "", new {@class = "text-danger"})
         </div>
     </div>
 
@@ -49,45 +49,45 @@
         <div class="col-md-10">
             <label for="ContentPreview">Content preview</label>
             <textarea name="ContentPreview"></textarea>
-            @Html.ValidationMessageFor(model => model.ContentPreview, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.ContentPreview, "", new {@class = "text-danger"})
         </div>
         <div class="col-md-10">
             <label for="Content">Content</label>
             <textarea name="Content"></textarea>
-            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Content, "", new {@class = "text-danger"})
         </div>
         <div class="input-group date m-3">
             <label for="datePicker">Expiration date</label>
             <input class="form-control datepicker" id="datePicker" type="text">
             @Html.HiddenFor(model => model.Livetime)
-            @Html.ValidationMessageFor(model => model.Livetime, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Livetime, "", new {@class = "text-danger"})
         </div>
     </div>
 
     <div class="form-group">
         <div class="switch_box box_1 justify-content-start">
-            @Html.LabelFor(model => model.Visible, htmlAttributes: new { @class = "control-label col-md-1" })
-            @Html.EditorFor(model => model.Visible, new { htmlAttributes = new { @class = "switch_1 col-md-1 justify-content-start" } })
-        
-            @Html.LabelFor(model => model.CommentsEnabled, htmlAttributes: new { @class = "control-label mr-5 col-md-1" })
-            @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 ml-5 justify-content-start" } })
+            @Html.LabelFor(model => model.Visible, new {@class = "control-label col-md-1"})
+            @Html.EditorFor(model => model.Visible, new {htmlAttributes = new {@class = "switch_1 col-md-1 justify-content-start"}})
+
+            @Html.LabelFor(model => model.CommentsEnabled, new {@class = "control-label mr-5 col-md-1"})
+            @Html.EditorFor(model => model.CommentsEnabled, new {htmlAttributes = new {@class = "switch_1 col-md-1 ml-5 justify-content-start"}})
         </div>
     </div>
 
     <div class="input-group mb-2">
         <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary run-modal-url" data-url="@Html.Raw(Url.Action("CategorySelectModal", "Admin" ))" type="button">
+            <button class="btn btn-outline-secondary run-modal-url" data-url="@Html.Raw(Url.Action("CategorySelectModal", "Admin"))" type="button">
                 Category
             </button>
-            @Html.HiddenFor(model => model.CategoryId, new { htmlAttributes = new { id = "categoryId" } })
-            <input class="form-control" disabled id="categoryName" />
+            @Html.HiddenFor(model => model.CategoryId, new {htmlAttributes = new {id = "categoryId"}})
+            <input class="form-control" disabled id="categoryName"/>
         </div>
     </div>
 
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-primary" id="createBtn" />
+            <input type="submit" value="Create" class="btn btn-primary" id="createBtn"/>
         </div>
     </div>
 }
@@ -96,35 +96,36 @@
 
 <div>
     <form action="/Admin/PostsView/">
-        <input type="submit" class="btn btn-outline-dark" value="Back to list" />
+        <input type="submit" class="btn btn-outline-dark" value="Back to list"/>
     </form>
 </div>
 
 @section Scripts{
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
 
 
     <script>
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             window.CKEDITOR.replace('Content');
-            window.CKEDITOR.replace('ContentPreview', {
-                customConfig: '/Scripts/ckeditor/config_preview.js'
-            });
+            window.CKEDITOR.replace('ContentPreview',
+                {
+                    customConfig: '/Scripts/ckeditor/config_preview.js'
+                });
 
             $('.datepicker').datepicker({
                 uiLibrary: 'bootstrap4',
                 format: 'dd-mm-yyyy'
             });
 
-            $('.datepicker').change(function () {
+            $('.datepicker').change(function() {
 
                 $('#Livetime').val($('#datePicker').val());
             });
 
             $('.run-modal-url').on('click',
-                function () {
+                function() {
                     var url = $(this).data('url');
                     if (url) {
                         if (!$(this).hasClass('run-modal-url-disabled')) {
@@ -132,13 +133,13 @@
                             $('.loading--fullscreen').show();
                             $.ajax({
                                 url: url,
-                                success: function (data) {
+                                success: function(data) {
                                     $('.loading--fullscreen').hide();
                                     $('#modalContainer').html(data);
                                     $('#modal-url').modal('show');
                                     $('.run-modal-url').removeClass('run-modal-url-disabled');
                                 },
-                                fail: function (xhr, textStatus, errorThrown) {
+                                fail: function(xhr, textStatus, errorThrown) {
                                     $('.loading--fullscreen').hide();
                                     alert('Error.');
                                     $('.run-modal-url').removeClass('run-modal-url-disabled');
@@ -150,7 +151,7 @@
 
                 });
 
-            $("#createBtn").click(function () {
+            $("#createBtn").click(function() {
                 if ($("#Title").val() === "" || $("#Content").val() === "") {
                     alert("Field's can not be empty !");
                     return;
@@ -158,18 +159,22 @@
             });
 
 
-            $(document).on("click", ".browse", function () {
-                var file = $(this).parents().find(".file");
-                file.trigger("click");
-            });
+            $(document).on("click",
+                ".browse",
+                function() {
+                    var file = $(this).parents().find(".file");
+                    file.trigger("click");
+                });
 
-            $('input[type="file"]').change(function (e) {
-                if (e.target.files[0] == undefined) { return }
+            $('input[type="file"]').change(function(e) {
+                if (e.target.files[0] == undefined) {
+                    return
+                }
                 var fileName = e.target.files[0].name;
                 $("#file").val(fileName);
 
                 var reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     // get loaded data and render thumbnail.
                     $('#HeadImageBase64').val(reader.result);
                     $('#previewImage').removeClass('d-none');

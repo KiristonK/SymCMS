@@ -13,76 +13,85 @@
 <div class="table-responsive overflow-hidden justify-content-between">
     <table class="table table-hover" id="posts">
         <thead class="thead-light">
-            <tr>
-                <th style="width:150px;">
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
+        <tr>
+            <th style="width: 150px;">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+            {
                 <th>
-                    @Html.DisplayNameFor(model => model.Content)
+                    @Html.DisplayNameFor(model => model.Visible)
                 </th>
-                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
-                {
-                    <th>
-                        @Html.DisplayNameFor(model => model.Visible)
-                    </th>
-                }
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th style="min-width:270px; max-width:270px;"></th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th style="max-width: 270px; min-width: 270px;"></th>
 
-            </tr>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                    
-                        @if (item.ContentPreview == string.Empty || item.ContentPreview == null){
-                            item.Content = Regex.Replace(item.Content, "<.*?>", String.Empty);
-                            if (item.Content.Length >= 100){
-                                item.Content = item.Content.Substring(0, 100) + "...";
-                            }
-                            @Html.Raw(item.Content)
-                        } else {
-                            @Html.Raw(item.ContentPreview)
-                        }
-                    </td>
-                    @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+
+                    @if (item.ContentPreview == string.Empty || item.ContentPreview == null)
                     {
-                        <td>
-                            <div class="switch_box box_1">
-                                <input type="checkbox" class="switch_1 post_visibility" data-postid="@item.Id" @if (item.Visible) { <text> checked</text> } />
-                            </div>
-                        </td>
+                        item.Content = Regex.Replace(item.Content, "<.*?>", string.Empty);
+                        if (item.Content.Length >= 100)
+                        {
+                            item.Content = item.Content.Substring(0, 100) + "...";
+                        }
+                        @Html.Raw(item.Content)
                     }
+                    else
+                    {
+                        @Html.Raw(item.ContentPreview)
+                    }
+                </td>
+                @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                {
                     <td>
-                        @Html.DisplayFor(modelItem => item.Category.Name)
-                    </td>
-                    <td>
-                        <div class="row mx-2">
-                            <form action="/Admin/Details/@item.Id">
-                                <input type="submit" class="btn btn-outline-primary rounded mr-2" value="Details" />
-                            </form>
-                            @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
-                            {
-                                <form action="/Admin/Edit/@item.Id">
-                                    <input type="submit" class="btn btn-outline-secondary rounded mr-2" value="Edit" />
-                                </form>
-                                if (User.IsInRole("Administrator")) { 
-                                    <form action="/Admin/Delete/@item.Id">
-                                        <input type="submit" class="btn btn-outline-danger rounded mr-2" value="Delete" />
-                                    </form>
-                                }
-                            }
+                        <div class="switch_box box_1">
+                            <input type="checkbox" class="switch_1 post_visibility" data-postid="@item.Id"
+                                   @if (item.Visible)
+                                   {
+                                       <text> checked</text>
+                                   }/>
                         </div>
                     </td>
-                </tr>
-            }
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <div class="row mx-2">
+                        <form action="/Admin/Details/@item.Id">
+                            <input type="submit" class="btn btn-outline-primary rounded mr-2" value="Details"/>
+                        </form>
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                        {
+                            <form action="/Admin/Edit/@item.Id">
+                                <input type="submit" class="btn btn-outline-secondary rounded mr-2" value="Edit"/>
+                            </form>
+                            if (User.IsInRole("Administrator"))
+                            {
+                                <form action="/Admin/Delete/@item.Id">
+                                    <input type="submit" class="btn btn-outline-danger rounded mr-2" value="Delete"/>
+                                </form>
+                            }
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
         </tbody>
 
     </table>

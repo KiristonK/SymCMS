@@ -3,37 +3,41 @@
 {
     if (User.IsInRole("Administrator"))
     {
-       
-    <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item active">
-            <form id="adminPanelEnter" action="/Admin/Panel/">
-                <button class="btn btn-danger" type="submit">Admin Panel</button>
-            </form>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link text-success">@User.Identity.GetUserName()</a>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item active">
+                <form id="adminPanelEnter" action="/Admin/Panel/">
+                    <button class="btn btn-danger" type="submit">Admin Panel</button>
+                </form>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link text-success">@User.Identity.GetUserName()</a>
 
-        </li>
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-        {
-           @Html.AntiForgeryToken()
+            </li>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
+            {
+                @Html.AntiForgeryToken()
 
-         <li class="nav-item active">
-            <form id="logoutForm" action="javascript:document.getElementById('logoutForm').submit()"><button type="submit" class="btn btn-primary">Log off</button></form>
-         </li>
-        }
-    </ul>
-        
-    }else { 
-        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                <li class="nav-item active">
+                    <form id="logoutForm" action="javascript:document.getElementById('logoutForm').submit()">
+                        <button type="submit" class="btn btn-primary">Log off</button>
+                    </form>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
         {
             @Html.AntiForgeryToken()
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="form-control w-auto  mr-1">
-                   Hello @User.Identity.GetUserName()
+                    Hello @User.Identity.GetUserName()
                 </li>
-                <li><a class="btn btn-danger" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                <li>
+                    <a class="btn btn-danger" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                </li>
             </ul>
         }
     }

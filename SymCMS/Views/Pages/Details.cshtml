@@ -22,32 +22,118 @@
 }
 <div class="mt-5">
     <h3 class="display-2">@Model.Title</h3>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dd>
             @Html.Raw(Model.Content)
             @Html.Raw(Model.AdditionalContent)
         </dd>
     </dl>
-    <div class ="justify-content-end">
+    <div class="justify-content-end">
         <h5 class="font-weight-light">By @Model.Author</h5>
     </div>
 </div>
-<hr />
-<div>
-    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
-</div>
+<hr/>
 @if (!ViewData.ContainsKey("partial"))
 {
-    <div class="row mx-3">
-        @if (User.Identity.IsAuthenticated)
-        {
-            <form action="/Pages/Edit/@Model.PageId">
-                <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
-            </form>
-            <form action="/Pages/PagesView/">
-                <input type="submit" value="Back to List" class="btn btn-outline-dark" />
-            </form>
-        }
+<div class="row mx-3">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form action="/Pages/Edit/@Model.PageId">
+            <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
+        </form>
+        <form action="/Pages/PagesView/">
+            <input type="submit" value="Back" class="btn btn-outline-dark" />
+        </form>
+    }
+    else
+    {
+        <form action="/Home/Index/">
+            <input type="submit" value="Back" class="btn btn-outline-dark" />
+        </form>
+    }
+
+
+</div>
+}
+<hr/>
+<div>
+    @if (Model.CommentsEnabled)
+    {
+        @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+        <hr/>
+        <div class="row mx-3">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form action="/Pages/PagesView/">
+                    <input type="submit" value="Back" class="btn btn-outline-dark" />
+                </form>
+            }
+            else
+            {
+                <form action="/Home/Index/">
+                    <input type="submit" value="Back" class="btn btn-outline-dark"/>
+                </form>
+            }
+            
+
+        </div>
+    }
+</div>
+
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modContent" style="height: auto; width: 100%;">
+            <div class="modal-body p-0">
+                <button type="button" class="close position-absolute" style="right: 2rem; top: 1rem;" data-dismiss="modal">
+                    <span aria-hidden="true" style="color: white">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <img src="" class="imagepreview" style="height: 100%; width: 100%;">
+            </div>
+        </div>
     </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $('.zoom, .carousel-item ').on('click',
+                function() {
+                    if ($(window).width() >= 700) {
+                        var srcImg = $(this).attr('src');
+                        if (srcImg == null) {
+                            srcImg = $(this).find('img').attr('src');
+                        }
+                        $('.imagepreview').attr('src', srcImg);
+
+                        var i = new Image();
+
+                        i.onload = function() {
+                            if (i.width >= window.innerWidth - 50) {
+                                $('#modContent').css({
+                                    "width": window.innerWidth - 50
+                                });
+                                $('#imagemodal').css({
+                                    "left": 25
+                                });
+                            } else {
+                                $('#imagemodal').css({
+                                    "left": (window.innerWidth - i.width) / 2
+                                });
+                                $('#modContent').css({
+                                    "width": i.width
+                                });
+                            }
+                        };
+
+                        i.src = srcImg;
+
+                        $('#imagemodal').modal('show');
+                    }
+                });
+        });
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
 }

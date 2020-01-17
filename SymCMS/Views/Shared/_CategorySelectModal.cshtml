@@ -13,7 +13,7 @@
                 </div>
                 <div class="modal-body font-weight-light" id="select2-modal-body">
                     If you can not find your category in the list you can create it by yourself.
-                    <hr />
+                    <hr/>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <select id="categorySelector" class="btn btn-outline-secondary dropdown-toggle">
@@ -21,7 +21,7 @@
                                 {
                                     <option class="dropdown-item" value="@category.CategoryId" href="#">@category.Name</option>
                                 }
-                                <separator />
+                                <separator/>
                                 <option class="dropdown-item" id="CategoryCreate" value="0">Create category</option>
                             </select>
                         </div>
@@ -38,12 +38,12 @@
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#CategoryName').val($('#categorySelector option:selected').html());
         $('#categorySelector').click(function() {
             $('#CategoryName').val($('#categorySelector option:selected').html());
         });
-        $('#selectCategoryBtn').click(function () {
+        $('#selectCategoryBtn').click(function() {
             var e = document.getElementById('categorySelector');
             if (e.options[e.selectedIndex].value == 0) {
                 // window.location.href = "/Admin/CreateCategory?name=" + $('#CategoryName').val();

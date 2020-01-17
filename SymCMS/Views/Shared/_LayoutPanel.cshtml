@@ -1,5 +1,4 @@
 ﻿@using SymCMS.Services
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,25 +7,26 @@
     <title>@ViewBag.Title - SymCMS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
 
         .vertical-nav {
-            min-width: 17rem;
-            width: 20rem;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
             height: 100vh;
+            left: 0;
+            min-width: 17rem;
+            overflow-y: auto;
             position: fixed;
             top: 0;
-            left: 0;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.4s;
-            overflow-y:auto;
+            width: 20rem;
         }
 
         .page-content {
-            width: calc(100% - 17rem);
             margin-left: 17rem;
             transition: all 0.4s;
+            width: calc(100% - 17rem);
         }
 
         /* for toggle behavior */
@@ -36,8 +36,8 @@
         }
 
         #content.active {
-            width: 100%;
             margin: 0;
+            width: 100%;
         }
 
         body {
@@ -47,8 +47,8 @@
         }
 
         .separator {
-            margin: 3rem 0;
             border-bottom: 1px dashed #fff;
+            margin: 3rem 0;
         }
 
         .text-uppercase {
@@ -65,169 +65,170 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="col-12">
-            <div class="vertical-nav bg-white z-index" id="sidebar">
-                <div class="py-4 px-3 mb-4 bg-light sticky-top">
-                    <div class="media d-flex align-items-center">
-                        <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
-                        <div class="media-body">
-                            <h4 class="m-0">@User.Identity.Name</h4>
-                            <p class="font-weight-light text-muted mb-0">
-                                @if (User.IsInRole("Administrator"))
-                                {
-                                    <text>Administator</text>
-                                }
-                                else if (User.IsInRole("Editor"))
-                                {
-                                    <text>Editor</text>
-                                }
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col justify-content-start mt-3">
-                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                        {
-                            @Html.AntiForgeryToken()
-
-
-
-                            <form id="logoutForm" action="javascript:document.getElementById('logoutForm').submit()">
-                                <input type="submit" class="btn btn-outline-danger w-100 ml-0" value="Log off" />
-                            </form>
-
-                        }
+<div class="container-fluid">
+    <div class="col-12">
+        <div class="vertical-nav bg-white z-index" style="height: 100%" id="sidebar">
+            <div class="py-4 px-3 mb-4 bg-light sticky-top">
+                <div class="media d-flex align-items-center">
+                    <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+                    <div class="media-body">
+                        <h4 class="m-0">@User.Identity.Name</h4>
+                        <p class="font-weight-light text-muted mb-0">
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <text>Administator</text>
+                            }
+                            else if (User.IsInRole("Editor"))
+                            {
+                                <text>Editor</text>
+                            }
+                        </p>
                     </div>
                 </div>
-
-                <div class="col">
-
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleSitemap" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Site map</p>
-                    </button>
-
-                    <div class="collapse" id="navbarToggleSitemap">
-                        <ul class="nav flex-column bg-white mb-0">
-                            <li class="nav-item">
-                                <a href="/Home/Index/" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-                                    Home
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Home/About/" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                                    About
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Home/Contact/" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                                    Contact
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Posts/Index" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                                    Blog
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <h5 class="text-gray font-weight-bold text-uppercase ml-4 mb-0">Additional pages</h5>
-                            </li>
-                            @foreach (var page in new PageService().GetAllPages())
-                            {
-                                <li class="nav-item">
-                                    <a href="/Pages/Details/@page.PageId" class="nav-link text-dark font-italic bg-light">
-                                        <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                                        @page.Title
-                                    </a>
-                                </li>
-                                @*<a class="dropdown-item" href="/Pages/Details/@@page.PageId">@page.Title</a>*@
-                            }
-                        </ul>
-                    </div>
-
-                    <br />
-                    <hr />
-                        <h4 class="text-gray font-weight-bold text-uppercase  mb-0">Admin options</h4>
-                    <hr />
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePosts" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Posts</p>
-                    </button>
-
-                    <div class="collapse" id="navbarTogglePosts">
-                        <ul class="nav flex-column bg-white mb-0">
-                            <li class="nav-item">
-                                <a href="/Admin/CreatePost" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-                                    New post
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Admin/PostsView" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                                    Show all posts
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Admin/PostsView" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                                    Edit posts
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="col justify-content-start mt-3">
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm"}))
+                    {
+                        @Html.AntiForgeryToken()
 
 
-                    <br />
-
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePages" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0" style="width: inherit;">Pages</p>
-                    </button>
-
-                    <div class="collapse" id="navbarTogglePages">
-                        <ul class="nav flex-column bg-white mb-0">
-                            <li class="nav-item">
-                                <a href="/Pages/Create" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
-                                    New page
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Pages/PagesView" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
-                                    All pages
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/Pages/PagesView" class="nav-link text-dark font-italic bg-light">
-                                    <i class="fa fa-pie-chart mr-3 text-primary fa-fw"></i>
-                                    Edit pages
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <br />
-                    <br />
+                        <form id="logoutForm" action="javascript:document.getElementById('logoutForm').submit()">
+                            <input type="submit" class="btn btn-outline-danger w-100 ml-0" value="Log off"/>
+                        </form>
+                    }
                 </div>
             </div>
-            <div class="row">
-                <div class="page-content p-5 position-relative" id="content">
-                    <!-- Toggle button -->
-                    <button id="sidebarCollapse" type="button" onclick=" $('#sidebar, #content').toggleClass('active')" class="btn btn-light bg-white rounded-pill shadow-sm mb-4"><small class="text-uppercase font-weight-bold">Menu</small></button>
 
-                    @RenderBody()
-                    <hr />
-                    <footer class="justify-content-center">
-                        <p>&copy; @DateTime.Now.Year - SymCMS</p>
-                    </footer>
+            <div class="col">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleSitemap" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Site map</p>
+                </button>
+
+                <div class="collapse" id="navbarToggleSitemap">
+                    <ul class="nav flex-column bg-white mb-0">
+                        <li class="nav-item">
+                            <a href="/Home/Index/" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-home mr-3 text-primary fa-fw"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Home/About/" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-info-circle mr-3 text-primary fa-fw"></i>
+                                About
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Home/Contact/" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-id-card mr-3 text-primary fa-fw"></i>
+                                Contact
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Posts/Index" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-hashtag mr-3 text-primary fa-fw"></i>
+                                Blog
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <h5 class="text-gray font-weight-bold text-uppercase ml-4 mb-0">Additional pages</h5>
+                        </li>
+                        @foreach (var page in new PageService().GetAllPages())
+                        {
+                            <li class="nav-item">
+                                <a href="/Pages/Details/@page.PageId" class="nav-link text-dark font-italic bg-light">
+                                    <i class="fa fa-angle-double-right mr-3 text-primary fa-fw"></i>
+                                    @page.Title
+                                </a>
+                            </li>
+                        }
+                    </ul>
                 </div>
+
+                <br/>
+                <hr/>
+                <h4 class="text-gray font-weight-bold text-uppercase  mb-0">
+                    @if (User.IsInRole("Administrator")){<text> Admin </text>}else{<text> Editor </text>}options
+                        </h4>
+                <hr/>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePosts" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Posts</p>
+                </button>
+
+                <div class="collapse" id="navbarTogglePosts">
+                    <ul class="nav flex-column bg-white mb-0">
+                        <li class="nav-item">
+                            <a href="/Admin/CreatePost" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-plus-square mr-3 text-primary fa-fw"></i>
+                                New post
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Admin/PostsView" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-tasks mr-3 text-primary fa-fw"></i>
+                                Show all posts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Admin/PostsView" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-edit mr-3 text-primary fa-fw"></i>
+                                Edit posts
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <br/>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglePages" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0" style="width: inherit;">Pages</p>
+                </button>
+
+                <div class="collapse" id="navbarTogglePages">
+                    <ul class="nav flex-column bg-white mb-0">
+                        <li class="nav-item">
+                            <a href="/Pages/Create" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-plus-square mr-3 text-primary fa-fw"></i>
+                                New page
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Pages/PagesView" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-tasks mr-3 text-primary fa-fw"></i>
+                                All pages
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Pages/PagesView" class="nav-link text-dark font-italic bg-light">
+                                <i class="fa fa-edit mr-3 text-primary fa-fw"></i>
+                                Edit pages
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <br/>
+                <br/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="page-content p-5 position-relative" style="min-width: 700px;" id="content">
+                <!-- Toggle button -->
+                <button id="sidebarCollapse" type="button" onclick=" $('#sidebar, #content').toggleClass('active');" class="btn btn-light bg-white rounded-pill shadow-sm mb-4">
+                    <small class="text-uppercase font-weight-bold">Menu</small>
+                </button>
+
+                @RenderBody()
+                <hr/>
+                <footer class="justify-content-center">
+                    <p>&copy; @DateTime.Now.Year - SymCMS</p>
+                </footer>
             </div>
         </div>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("Scripts", required: false)
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("Scripts", false)
 </body>
 </html>

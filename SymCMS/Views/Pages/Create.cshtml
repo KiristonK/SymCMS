@@ -4,31 +4,27 @@
     ViewBag.Title = "Create";
     // Layout = "~/Views/Shared/_LayoutPanel.cshtml";
 }
-<head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<h2 class="display-2">Create page</h2>
 
+<h2 class="display-2">Create page</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <hr/>
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Title, new {@class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
         </div>
 
-        @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Author, new {@class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Author, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(model => model.Author, "", new {@class = "text-danger"})
         </div>
     </div>
 
@@ -36,13 +32,21 @@
         <div class="col-md-10">
             <label for="Content">Content</label>
             <textarea name="Content"></textarea>
-            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Content, "", new {@class = "text-danger"})
         </div>
     </div>
     <div id="mainMenu" class="mainMenuOverlay floating2">
         <div class="navire floating3"></div>
-        <div class="itemMenuBox editorAdd"><a href="javascript:void(0)" id="addEditor" class="itemMenu "><i class="fas fa-file-alt" aria-hidden="true"></i></a></div>
-        <div class="itemMenuBox galleryAdd"><a href="javascript:void(0)" id="addGallery" class="itemMenu "><i class="fas fa-images" aria-hidden="true"></i></a></div>
+        <div class="itemMenuBox editorAdd">
+            <a href="javascript:void(0)" id="addEditor" class="itemMenu ">
+                <i class="fas fa-file-alt" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="itemMenuBox galleryAdd">
+            <a href="javascript:void(0)" id="addGallery" class="itemMenu ">
+                <i class="fas fa-images" aria-hidden="true"></i>
+            </a>
+        </div>
         <div class="itemMenuBox crouselAdd">
             <a href="javascript:void(0)" id="addCarousel" class="itemMenu ">
                 <i class="fas fa-angle-left small"></i>
@@ -51,24 +55,27 @@
             </a>
         </div>
 
-        <a href="javascript:void(0)" class="toggleMenu floating"><i class="fas fa-bars" aria-hidden="true"></i></a>
+        <a href="javascript:void(0)" class="toggleMenu floating">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </a>
     </div>
 
     <div class="m-3" id="modules" class="modules">
     </div>
-    @Html.HiddenFor(model => model.AdditionalContent);
+    @Html.HiddenFor(model => model.AdditionalContent)
+    ;
 
 
     <div class="form-group">
         <div class="switch_box box_1 justify-content-start">
-            @Html.LabelFor(model => model.CommentsEnabled, htmlAttributes: new { @class = "control-label mr-5 col-md-1" })
-            @Html.EditorFor(model => model.CommentsEnabled, new { htmlAttributes = new { @class = "switch_1 col-md-1 ml-5 justify-content-start" } })
+            @Html.LabelFor(model => model.CommentsEnabled, new {@class = "control-label mr-5 col-md-1"})
+            @Html.EditorFor(model => model.CommentsEnabled, new {htmlAttributes = new {@class = "switch_1 col-md-1 ml-5 justify-content-start"}})
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-primary" id="createBtn" />
+            <input type="submit" value="Create" class="btn btn-primary" id="createBtn"/>
         </div>
     </div>
 }
@@ -77,7 +84,7 @@
 
 <div>
     <form action="/Admin/PostsView/">
-        <input type="submit" class="btn btn-outline-dark" value="Back to list" />
+        <input type="submit" class="btn btn-outline-dark" value="Back to list"/>
     </form>
 </div>
 
@@ -99,7 +106,8 @@
             else
                 active = 1;
             if (active <= 0) {
-                document.getElementById('carouselImages' + id.toString()).innerHTML = '<div class="carousel-item active">' +
+                document.getElementById('carouselImages' + id.toString()).innerHTML =
+                    '<div class="carousel-item active">' +
                     '<img class="d-block w-100" src="' +
                     imgSource +
                     '" alt="">' +
@@ -120,57 +128,111 @@
 
         $(document).ready(function() {
 
-            $('#addGallery').click(function () {
+            $('#addGallery').click(function() {
                 var modules = document.getElementById('modules');
-                modules.insertAdjacentHTML('beforeend', '<div class="row gallery" id="' +
+                var removeBtn = '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#' +
                     galleryId.toString() +
-                    '"></div>' + '<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
+                    '\').remove(); $(\'#addImageGalleryBtn\').remove(); $(this).remove()" value="Remove gallery"/></div>';
+                modules.insertAdjacentHTML('beforeend',
+                    '<div class="row gallery" id="' +
+                    galleryId.toString() +
+                    '"></div>' +
+                    '<div class="col-md-4 adminControl" id="addImageGalleryBtn">' +
                     '<div id="msg"></div>' +
                     '<input type="file" id="galleryImages' +
                     galleryId.toString() +
-                    '" name="'+galleryId.toString()+'" hidden class="galleryImage" accept="image/*">' +
+                    '" name="' +
+                    galleryId.toString() +
+                    '" hidden class="galleryImage" accept="image/*">' +
                     '<div class="input-group my-3">' +
-                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameGallery'+galleryId.toString()+'">' +
+                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameGallery' +
+                    galleryId.toString() +
+                    '">' +
                     '<div class="input-group-append">' +
                     '<input type="button" id="' +
                     galleryId.toString() +
-                    '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages'+galleryId.toString()+'\').trigger(\'click\');" value="Add image" />' +
+                    '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages' +
+                    galleryId.toString() +
+                    '\').trigger(\'click\');" value="Add image" />' +
                     '</div>' +
                     '</div>' +
-                    '</div>');
+                    '</div>' +
+                    removeBtn);
                 galleryId++;
             });
 
-            $('#addCarousel').click(function () {
+            $('#addCarousel').click(function() {
                 var modules = document.getElementById('modules');
+                var removeBtn =
+                    '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#carousel' +
+                        carouselId.toString() +
+                        '\').remove(); $(\'#addImageCarBtn' +
+                        carouselId.toString() +
+                        '\').remove(); $(this).remove()" value="Remove carousel"/></div>';
+
                 modules.insertAdjacentHTML('beforeend',
-                    '<div id="carousel'+carouselId.toString()+'" class="carousel slide mt-2 mb-2 additionalCarousel'+carouselId.toString()+'" style="background: darkgray" data-ride="carousel">' +
-                    '<div class="carousel-inner" style="height: 600px; max-height: 700px;" id="carouselImages'+carouselId.toString()+'"></div>'+
-                    '<a class="carousel-control-prev" href="#carousel' + carouselId.toString() +'" role="button" data-slide="prev">'+
-                    '<span class="carousel-control-prev-icon" aria-hidden="true"></span>'+
-                    '<span class="sr-only">Previous</span>'+
-                    '</a>'+
-                    '<a class="carousel-control-next" href="#carousel' + carouselId.toString() +'" role="button" data-slide="next">'+
-                    '<span class="carousel-control-next-icon" aria-hidden="true"></span>'+
-                    '<span class="sr-only">Next</span>'+
-                    '</a>'+
-                    '</div>'+
-                    '<div class="col-md-4 adminControl" id="addImageCarBtn'+carouselId.toString()+'">'+
-                    '<div id="msg"></div>'+
-                    '<input type="file" id="carouselImages' + carouselId.toString() + '" name="' + carouselId.toString() + '" hidden class="carouselImages' + carouselId.toString() +'" accept="image/*">'+
-                    '<div class="input-group my-3">'+
-                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameCarousel' + carouselId.toString() +'">'+
-                    '<div class="input-group-append">'+
-                    '<input type="button" class="btn btn-primary" onclick="$(this).parents().find(\'#carouselImages' + carouselId.toString() +'\').trigger(\'click\');" value="Add image" />'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>');
+                    '<div id="carousel' +
+                    carouselId.toString() +
+                    '" class="carousel slide mt-2 mb-2 additionalCarousel' +
+                    carouselId.toString() +
+                    '" style="background: darkgray" data-ride="carousel">' +
+                    '<div class="carousel-inner" style="max-height: 700px;" id="carouselImages' +
+                    carouselId.toString() +
+                    '"></div>' +
+                    '<a class="carousel-control-prev" href="#carousel' +
+                    carouselId.toString() +
+                    '" role="button" data-slide="prev">' +
+                    '<span class="carousel-control-prev-icon" aria-hidden="true"></span>' +
+                    '<span class="sr-only">Previous</span>' +
+                    '</a>' +
+                    '<a class="carousel-control-next" href="#carousel' +
+                    carouselId.toString() +
+                    '" role="button" data-slide="next">' +
+                    '<span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+                    '<span class="sr-only">Next</span>' +
+                    '</a>' +
+                    '</div>' +
+                    '<div class="col-md-4 adminControl" id="addImageCarBtn' +
+                    carouselId.toString() +
+                    '">' +
+                    '<div id="msg"></div>' +
+                    '<input type="file" id="carouselImages' +
+                    carouselId.toString() +
+                    '" name="' +
+                    carouselId.toString() +
+                    '" hidden class="carouselImages' +
+                    carouselId.toString() +
+                    '" accept="image/*">' +
+                    '<div class="input-group my-3">' +
+                    '<input type="text" class="form-control" disabled placeholder="Click add image to upload image" id="fileNameCarousel' +
+                    carouselId.toString() +
+                    '">' +
+                    '<div class="input-group-append">' +
+                    '<input type="button" class="btn btn-primary" onclick="$(this).parents().find(\'#carouselImages' +
+                    carouselId.toString() +
+                    '\').trigger(\'click\');" value="Add image" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    removeBtn);
                 carouselId++;
             });
 
             $('#addEditor').click(function() {
                 var modules = document.getElementById("modules");
-                modules.insertAdjacentHTML('beforeend', '<div class="mt-2 mb-2 editor"><textarea name="additionalEditor'+editorId.toString()+'"></textarea></div>');
+                var removeBtn =
+                    '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="CKEDITOR.instances[\'additionalEditor' +
+                        editorId.toString() +
+                        '\'].destroy(); $(\'#editor' +
+                        editorId.toString() +
+                        '\').remove(); $(this).remove()" value="Remove editor"/></div>';
+                modules.insertAdjacentHTML('beforeend',
+                    '<div class="mt-2 mb-2 editor" id="editor' +
+                    editorId.toString() +
+                    '"><textarea name="additionalEditor' +
+                    editorId.toString() +
+                    '"></textarea></div>' +
+                    removeBtn);
                 CKEDITOR.replace('additionalEditor' + editorId.toString());
                 editorId++;
                 if (editorId == 10) {
@@ -194,14 +256,14 @@
                 }
                 $("div").remove(".adminControl");
 
-                $("div#modules").find('.cke').replaceWith(function () {
+                $("div#modules").find('.cke').replaceWith(function() {
                     var id = 'additionalEditor' + $(this).attr('id').substr(-1);
                     var editor = CKEDITOR.instances[id];
                     return editor.getData();
                 });
-                  
+
                 document.getElementById('AdditionalContent').value += document.getElementById('modules').innerHTML;
-                
+
             });
 
             $(document).on("click",
@@ -211,27 +273,29 @@
                     file.trigger("click");
                 });
 
-            $(document).on('change', 'input[type="file"]' ,function (e) {
-                if (e.target.files[0] == undefined) {
-                    return;
-                }
-                var fileName = e.target.files[0].name;
-                var idEl = $(this).attr('id');
-                var idParent = $(this).attr('name');
-                var reader;
-                switch (idEl) {
-                case 'carouselImages'+idParent:
-                        $("#fileNameCarousel"+idParent).val(fileName);
+            $(document).on('change',
+                'input[type="file"]',
+                function(e) {
+                    if (e.target.files[0] == undefined) {
+                        return;
+                    }
+                    var fileName = e.target.files[0].name;
+                    var idEl = $(this).attr('id');
+                    var idParent = $(this).attr('name');
+                    var reader;
+                    switch (idEl) {
+                    case 'carouselImages' + idParent:
+                        $("#fileNameCarousel" + idParent).val(fileName);
                         reader = new FileReader();
-                        reader.onload = function (e) {
+                        reader.onload = function(e) {
                             addImageCarousel(e.target.result, idParent);
                         };
                         reader.readAsDataURL(this.files[0]);
                         break;
-                    case 'galleryImages'+idParent:
-                        $("#fileNameGallery"+$(this).attr('name')).val(fileName);
+                    case 'galleryImages' + idParent:
+                        $("#fileNameGallery" + $(this).attr('name')).val(fileName);
                         reader = new FileReader();
-                        reader.onload = function (e) {
+                        reader.onload = function(e) {
                             document.getElementById(idParent.toString()).innerHTML +=
                                 '<div class="col-lg-3 col-md-4 col-xs-6 thumb galleryItem"><img src="' +
                                 e.target.result +
@@ -242,8 +306,8 @@
                     default:
                         alert("None");
                         break;
-                }
-            });
+                    }
+                });
         });
 
     </script>

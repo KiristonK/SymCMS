@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using SymCMS.ViewModels;
 
 namespace SymCMS.Services.Interfaces
 {
-    interface IPostService
+    internal interface IPostService
     {
         bool AddPost(PostViewModel postViewModel);
         PostViewModel EditPost(PostViewModel postViewModel);

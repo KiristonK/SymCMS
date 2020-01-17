@@ -1,20 +1,32 @@
-﻿$(document).ready(function () {
-    $("textarea").autoResize();
-    });
+﻿$(window).on("load", function() {
+    if ($(window).width() < 1000) {
+        $("p").find("img").each(function () {
+                $(this).css({
+                    "width": "75%",
+                    "height": "auto"
+                });
+            }
+        );
+    }
+});
 
-$(".post_visibility").change(function () {
+$(document).ready(function () {
+    $("textarea").autoResize();
+});
+
+$(".post_visibility").change(function() {
     console.log($(this).data("postid"));
     $.ajax({
         url: "/Admin/Update/",
         method: "POST",
         data: { id: $(this).data("postid"), visible: $(this).prop("checked") }
-    }).fail(function () {
+    }).fail(function() {
         $(this).prop("checked", false);
     });
 });
 
 
-$(".comment_switch").change(function () {
+$(".comment_switch").change(function() {
     var id, url, data;
     if ($(this).data("postid") == undefined) {
         id = $(this).data("pageid");
@@ -29,13 +41,11 @@ $(".comment_switch").change(function () {
         url: url,
         method: "POST",
         data: data,
-    }).fail(function () {
+    }).fail(function() {
         $(this).prop("checked", false);
     });
     setTimeout("location.reload(true);", 1000);
 });
-
-
 
 
 function createCategory() {
@@ -49,19 +59,19 @@ function createCategory() {
 
 
         modal.style.display = "block";
-      
+
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+        span.onclick = function() {
             modal.style.display = "none";
-        }
+        };
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
-        }
+        };
         //var catName = prompt("Please enter category name: ", "My Category");
         //if (catName == null || catName == "") {
         //    //<div class="alert alert-danger" role="alert">
@@ -77,61 +87,61 @@ function createCategory() {
         //    e.selectedIndex = 0;
         //}
     } else {
-        
+
     }
-   
+
 }
 
 
+(function($) {
 
-
-(function ($) {
-
-    $.fn.autoResize = function (options) {
+    $.fn.autoResize = function(options) {
 
         // Just some abstracted details,
         // to make plugin users happy:
         var settings = $.extend({
-            onResize: function () { },
-            animate: true,
-            animateDuration: 150,
-            animateCallback: function () { },
-            extraSpace: 20,
-            limit: 1000
-        }, options);
+                onResize: function() {},
+                animate: true,
+                animateDuration: 150,
+                animateCallback: function() {},
+                extraSpace: 20,
+                limit: 1000
+            },
+            options);
 
         // Only textarea's auto-resize:
-        this.filter('textarea').each(function () {
+        this.filter("textarea").each(function() {
 
             // Get rid of scrollbars and disable WebKit resizing:
-            var textarea = $(this).css({ resize: 'none', 'overflow-y': 'hidden' }),
+            var textarea = $(this).css({ resize: "none", 'overflow-y': "hidden" }),
 
                 // Cache original height, for use later:
                 origHeight = textarea.height(),
 
                 // Need clone of textarea, hidden off screen:
-                clone = (function () {
+                clone = (function() {
 
                     // Properties which may effect space taken up by chracters:
-                    var props = ['height', 'width', 'lineHeight', 'textDecoration', 'letterSpacing'],
+                    var props = ["height", "width", "lineHeight", "textDecoration", "letterSpacing"],
                         propOb = {};
 
                     // Create object of styles to apply:
-                    $.each(props, function (i, prop) {
-                        propOb[prop] = textarea.css(prop);
-                    });
+                    $.each(props,
+                        function(i, prop) {
+                            propOb[prop] = textarea.css(prop);
+                        });
 
                     // Clone the actual textarea removing unique properties
                     // and insert before original textarea:
-                    return textarea.clone().removeAttr('id').removeAttr('name').css({
-                        position: 'absolute',
+                    return textarea.clone().removeAttr("id").removeAttr("name").css({
+                        position: "absolute",
                         top: 0,
                         left: -9999
-                    }).css(propOb).attr('tabIndex', '-1').insertBefore(textarea);
+                    }).css(propOb).attr("tabIndex", "-1").insertBefore(textarea);
 
                 })(),
                 lastScrollTop = null,
-                updateSize = function () {
+                updateSize = function() {
 
                     // Prepare the clone:
                     clone.height(0).val($(this).val()).scrollTop(10000);
@@ -141,29 +151,33 @@ function createCategory() {
                         toChange = $(this).add(clone);
 
                     // Don't do anything if scrollTip hasen't changed:
-                    if (lastScrollTop === scrollTop) { return; }
+                    if (lastScrollTop === scrollTop) {
+                        return;
+                    }
                     lastScrollTop = scrollTop;
 
                     // Check for limit:
                     if (scrollTop >= settings.limit) {
-                        $(this).css('overflow-y', '');
+                        $(this).css("overflow-y", "");
                         return;
                     }
                     // Fire off callback:
                     settings.onResize.call(this);
 
                     // Either animate or directly apply height:
-                    settings.animate && textarea.css('display') === 'block' ?
-                        toChange.stop().animate({ height: scrollTop }, settings.animateDuration, settings.animateCallback)
+                    settings.animate && textarea.css("display") === "block"
+                        ? toChange.stop().animate({ height: scrollTop },
+                            settings.animateDuration,
+                            settings.animateCallback)
                         : toChange.height(scrollTop);
                 };
 
             // Bind namespaced handlers to appropriate events:
             textarea
-                .unbind('.dynSiz')
-                .bind('keyup.dynSiz', updateSize)
-                .bind('keydown.dynSiz', updateSize)
-                .bind('change.dynSiz', updateSize);
+                .unbind(".dynSiz")
+                .bind("keyup.dynSiz", updateSize)
+                .bind("keydown.dynSiz", updateSize)
+                .bind("change.dynSiz", updateSize);
 
         });
 
@@ -171,7 +185,6 @@ function createCategory() {
         return this;
 
     };
-
 
 
 })(jQuery);

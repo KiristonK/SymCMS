@@ -21,46 +21,50 @@
     }
 }
 
-<div>
-    <div class="img-container">
-        <img src="@Html.ValueFor(model => model.HeadImageBase64)" alt="..." class="img-head">
-        <div class="w3-hide-small text-block">
-            <h4 class="display-1">@Html.DisplayFor(model => model.Title)</h4>
+    <div>
+        <div class="img-container">
+            <img src="@Html.ValueFor(model => model.HeadImageBase64)" alt="..." class="img-head">
+            <div class="w3-hide-small text-block">
+                <h4 class="display-1">@Html.DisplayFor(model => model.Title)</h4>
+            </div>
+        </div>
+        <hr />
+        <div class="card bg-transparent" style="width: auto;">
+
+            <div class="card-body bg-transparent w-auto">
+                @Html.Raw(Model.Content)
+            </div>
+
+        </div>
+     
+        <div class="justify-content-end">
+            <h5 class="font-weight-light">By @Model.Author</h5>
         </div>
     </div>
-    <hr />
-    <div class="card bg-transparent" style="width:auto;">
-
-        <div class="card-body bg-transparent w-auto">
-            @Html.Raw(Model.Content)
-        </div>
-
-    </div>
-</div>
-<hr />
+<hr/>
 <div>
     @if (Model.CommentsEnabled)
     {
-    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+        @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
     }
 </div>
 @if (!ViewData.ContainsKey("partial"))
 {
-<div class="row mx-3">
-    @if (User.Identity.IsAuthenticated)
-    {
-        <form action="/Admin/Edit/@Model.Id">
-            <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
-        </form>
-        <form action="/Admin/PostsView/">
-            <input type="submit" value="Back to List" class="btn btn-outline-dark" />
-        </form>
-    }
-    else
-    {
-        <form action="/Posts/Index/">
-            <input type="submit" value="Back" class="btn btn-outline-dark" />
-        </form>
-    }
-</div>
+    <div class="row mx-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form action="/Admin/Edit/@Model.Id">
+                <input type="submit" class="btn btn-danger rounded mr-2" value="Edit"/>
+            </form>
+            <form action="/Admin/PostsView/">
+                <input type="submit" value="Back to List" class="btn btn-outline-dark"/>
+            </form>
+        }
+        else
+        {
+            <form action="/Posts/Index/">
+                <input type="submit" value="Back" class="btn btn-outline-dark"/>
+            </form>
+        }
+    </div>
 }

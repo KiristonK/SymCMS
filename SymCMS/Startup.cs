@@ -1,7 +1,9 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using SymCMS;
 
-[assembly: OwinStartupAttribute(typeof(SymCMS.Startup))]
+[assembly: OwinStartupAttribute(typeof(Startup))]
+
 namespace SymCMS
 {
     public partial class Startup
@@ -9,7 +11,6 @@ namespace SymCMS
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-
         }
     }
 }

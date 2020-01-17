@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SymCMS.ViewModels.PageViewModels>
+﻿@using System.Text.RegularExpressions
+@model IEnumerable<SymCMS.ViewModels.PageViewModels>
 
 @{
     ViewBag.Title = "Index";
@@ -31,20 +32,26 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @if (item.Content.Length >= 100)
-                    {
-                        item.Content = item.Content.Substring(0, 100) + "...";
+                    @{
+                        item.Content = Regex.Replace(item.Content, "<.*?>", string.Empty);
+                        if (item.Content.Length >= 100)
+                        {
+                            item.Content = item.Content.Substring(0, 100) + "...";
+                        }
+                        @Html.Raw(item.Content)
                     }
-                    @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
                     <div class="row justify-content-end">
-                        @Html.ActionLink("Details", "Details", new { id = item.PageId }, new { @class = "btn btn-outline-primary rounded mr-2" })
-                        @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
+                        @Html.ActionLink("Details", "Details", new {id = item.PageId}, new {@class = "btn btn-outline-primary rounded mr-2"})
+                        @if (User.IsInRole("Administrator"))
                         {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.PageId }, new { @class = "btn btn-outline-secondary rounded mr-2" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.PageId }, new { @class = "btn btn-outline-danger rounded mr-2" })
+                            @Html.ActionLink("Edit", "Edit", new {id = item.PageId}, new {@class = "btn btn-outline-secondary rounded mr-2"})
+                            @Html.ActionLink("Delete", "Delete", new {id = item.PageId}, new {@class = "btn btn-outline-danger rounded mr-2"})
+                        } else if (User.IsInRole("Editor")) {
+                            @Html.ActionLink("Edit", "Edit", new {id = item.PageId}, new {@class = "btn btn-outline-secondary rounded mr-2"})
                         }
+
                     </div>
                 </td>
             </tr>

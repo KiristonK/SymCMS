@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using SymCMS.DAL;
 using SymCMS.Models;
 using SymCMS.Services.Interfaces;
@@ -13,17 +11,14 @@ namespace SymCMS.Services
 {
     public class PostService : IPostService
     {
+        private readonly SymDbContext _db = new SymDbContext();
+
         public PostService()
         {
             foreach (var post in GetPosts())
-            {
                 if (post.Livetime < DateTime.Now)
-                {
                     DeletePost(post.Id);
-                }
-            }
         }
-        private readonly SymDbContext _db = new SymDbContext();
 
         public bool AddPost(PostViewModel postViewModel)
         {
@@ -59,10 +54,7 @@ namespace SymCMS.Services
         public PostViewModel GetPost(int? id)
         {
             var post = _db.PostModels.Find(id);
-            if (post != null)
-            {
-                return new PostViewModel(post);
-            }
+            if (post != null) return new PostViewModel(post);
             return null;
         }
 
@@ -76,22 +68,15 @@ namespace SymCMS.Services
 
         public List<PostViewModel> GetPosts()
         {
-            List<PostViewModel> posts = new List<PostViewModel>();
+            var posts = new List<PostViewModel>();
             var postList = _db.PostModels.ToList();
             foreach (var post in postList)
             {
                 post.Category = _db.PostCategories.Find(post.CategoryId);
                 posts.Add(new PostViewModel(post));
             }
-            return posts;
-        }
 
-        public void UpdateCommenting(PostViewModel postViewModel)
-        {
-            var post = _db.PostModels.Find(postViewModel.Id);
-            if (post != null)
-                post.CommentsEnabled = postViewModel.CommentsEnabled;
-            _db.SaveChanges();
+            return posts;
         }
 
         public bool RemovePost(int id)
@@ -103,6 +88,14 @@ namespace SymCMS.Services
                 _db.CommentModels.RemoveRange(comments);
             _db.SaveChanges();
             return true;
+        }
+
+        public void UpdateCommenting(PostViewModel postViewModel)
+        {
+            var post = _db.PostModels.Find(postViewModel.Id);
+            if (post != null)
+                post.CommentsEnabled = postViewModel.CommentsEnabled;
+            _db.SaveChanges();
         }
 
 
@@ -124,7 +117,7 @@ namespace SymCMS.Services
 
         public void DeletePost(int id)
         {
-            PostModel postModel = _db.PostModels.Find(id);
+            var postModel = _db.PostModels.Find(id);
             if (postModel != null) _db.PostModels.Remove(postModel);
             _db.SaveChanges();
         }

@@ -29,33 +29,44 @@
             <h4 class="display-1">@Html.DisplayFor(model => model.Title)</h4>
         </div>
     </div>
-    <hr />
-    <div class="card bg-transparent" style="width:auto;">
+    <hr/>
+    <div class="card bg-transparent" style="width: auto;">
 
         <div class="card-body bg-transparent w-auto">
             @Html.Raw(Model.Content)
         </div>
 
     </div>
+    
+    <div class="justify-content-end">
+        <h5 class="font-weight-light">By @Model.Author</h5>
+    </div>
 </div>
-<hr />
-<div>
-    @if (Model.CommentsEnabled)
-    {
-        @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
-    }
-</div>
+<hr/>
 @if (!ViewData.ContainsKey("partial"))
 {
     <div class="row mx-3">
         @if (User.Identity.IsAuthenticated)
         {
             <form action="/Admin/Edit/@Model.Id">
-                <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
+                <input type="submit" class="btn btn-danger rounded mr-2" value="Edit"/>
             </form>
         }
         <form action="/Admin/PostsView/">
-            <input type="submit" value="Back to List" class="btn btn-outline-dark" />
+            <input type="submit" value="Back" class="btn btn-outline-dark"/>
         </form>
     </div>
 }
+<hr/>
+<div>
+    @if (Model.CommentsEnabled)
+    {
+        @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+        <hr/>
+        <div class="row mx-3">
+            <form action="/Admin/PostsView/">
+                <input type="submit" value="Back" class="btn btn-outline-dark"/>
+            </form>
+        </div>
+    }
+</div>

@@ -32,18 +32,14 @@ namespace SymCMS.Services
         public IEnumerable<PageViewModels> GetAllPages()
         {
             var pageViewModels = new List<PageViewModels>();
-            foreach (var page in _db.PageModels.ToList())
-            {
-                pageViewModels.Add(new PageViewModels(page));
-            }
+            foreach (var page in _db.PageModels.ToList()) pageViewModels.Add(new PageViewModels(page));
             return pageViewModels;
         }
 
         public PageViewModels GetPage(int? id)
         {
             var pageModel = _db.PageModels.Find(id);
-            return  new PageViewModels(pageModel);
-
+            return new PageViewModels(pageModel);
         }
 
         public void AddPage(PageViewModels pageViewModel)
@@ -63,6 +59,7 @@ namespace SymCMS.Services
                 if (comments.Count() != 0)
                     _db.CommentModels.RemoveRange(comments);
             }
+
             _db.SaveChanges();
         }
 

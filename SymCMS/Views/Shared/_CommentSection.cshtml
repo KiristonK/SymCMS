@@ -1,6 +1,4 @@
-﻿@using System.Activities.Expressions
-@using System.Collections.Specialized
-@using SymCMS.ViewModels
+﻿@using SymCMS.ViewModels
 @model IEnumerable<SymCMS.ViewModels.CommentViewModel>
 
 @{
@@ -8,13 +6,13 @@
     string id;
     if (ViewData.ContainsKey("PostComments"))
     {
-        commentsEnabled = ((bool) ViewData["PostComments"]);
-        id = "data-postid="+ViewData["postId"].ToString();
+        commentsEnabled = (bool) ViewData["PostComments"];
+        id = "data-postid=" + ViewData["postId"];
     }
     else
     {
-        commentsEnabled = ((bool) ViewData["Pagecomments"]);
-        id = "data-pageid="+ViewData["pageId"].ToString();
+        commentsEnabled = (bool) ViewData["Pagecomments"];
+        id = "data-pageid=" + ViewData["pageId"];
     }
     if (User.Identity.IsAuthenticated && !ViewData.ContainsKey("partial"))
     {
@@ -22,9 +20,13 @@
             <div class="row justify-content-between">
                 <div class="col-4"></div>
                 <div class="col-4">
-                    <div class="switch_box box_1" style="justify-content: flex-end; right: 0%; position: absolute;">
+                    <div class="switch_box box_1" style="justify-content: flex-end; position: absolute; right: 0%;">
                         <p class="text-lg-left display-4 text-secondary mr-2">Comments</p>
-                        <input type="checkbox" class="switch_1 comment_switch" @id @if (commentsEnabled){<text> checked</text>}/>
+                        <input type="checkbox" class="switch_1 comment_switch" @id
+                               @if (commentsEnabled)
+                               {
+                                   <text> checked</text>
+                               }/>
                     </div>
                 </div>
             </div>
@@ -33,9 +35,9 @@
     if (commentsEnabled)
     {
         <div class="form-group">
-            @using (@Html.BeginForm("Create", "Comment"))
+            @using (Html.BeginForm("Create", "Comment"))
             {
-                CommentViewModel model = new CommentViewModel();
+                var model = new CommentViewModel();
                 <div class="row justify-content-between">
                     <div class="col-4">
                         <p class="text-lg-left display-4 text-secondary">New comment</p>

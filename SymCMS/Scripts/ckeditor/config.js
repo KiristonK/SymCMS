@@ -9,7 +9,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 	config.extraPlugins = 'wordcount';
 	config.wordcount = {
-
 // Whether or not you want to show the Paragraphs Count
 showParagraphs: false,
 

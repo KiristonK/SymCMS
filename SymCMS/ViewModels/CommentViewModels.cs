@@ -1,27 +1,27 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.Owin.Security;
+﻿using System.ComponentModel.DataAnnotations;
 using SymCMS.Models;
 
 namespace SymCMS.ViewModels
 {
     public class CommentViewModel
     {
-        public CommentViewModel() { }
+        public CommentViewModel()
+        {
+        }
 
         public CommentViewModel(CommentModel comment)
         {
-            this.CommentId = comment.CommentId;
-            this.CommentText = comment.CommentText;
-            this.AuthorName = comment.AuthorName;
-            this.PostId = comment.PostId;
-            this.PageId = comment.PageId;
-           
+            CommentId = comment.CommentId;
+            CommentText = comment.CommentText;
+            AuthorName = comment.AuthorName;
+            PostId = comment.PostId;
+            PageId = comment.PageId;
         }
+
         public int CommentId { get; set; }
-        [DataType(DataType.MultilineText)]
-        public string CommentText { get; set; }
+
+        [DataType(DataType.MultilineText)] public string CommentText { get; set; }
+
         public string AuthorName { get; set; }
         public int? PostId { get; set; }
         public virtual PostModel Post { get; set; }
@@ -29,5 +29,4 @@ namespace SymCMS.ViewModels
         public int? PageId { get; set; }
         public virtual PageModels Page { get; set; }
     }
-
 }
