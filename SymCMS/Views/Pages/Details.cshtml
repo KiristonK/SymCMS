@@ -61,23 +61,6 @@
     @if (Model.CommentsEnabled)
     {
         @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
-        <hr/>
-        <div class="row mx-3">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <form action="/Pages/PagesView/">
-                    <input type="submit" value="Back" class="btn btn-outline-dark" />
-                </form>
-            }
-            else
-            {
-                <form action="/Home/Index/">
-                    <input type="submit" value="Back" class="btn btn-outline-dark"/>
-                </form>
-            }
-            
-
-        </div>
     }
 </div>
 

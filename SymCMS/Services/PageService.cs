@@ -38,6 +38,7 @@ namespace SymCMS.Services
 
         public PageViewModels GetPage(int? id)
         {
+            if (id == null) return null;
             var pageModel = _db.PageModels.Find(id);
             return new PageViewModels(pageModel);
         }

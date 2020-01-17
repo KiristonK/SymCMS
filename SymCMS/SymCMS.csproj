@@ -266,6 +266,10 @@
     <Compile Include="Migrations\202001161426311_pagesMinusHeadImage.designer.cs">
       <DependentUpon>202001161426311_pagesMinusHeadImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001171327084_changes.cs" />
+    <Compile Include="Migrations\202001171327084_changes.designer.cs">
+      <DependentUpon>202001171327084_changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommentModels.cs" />
@@ -533,6 +537,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001161426311_pagesMinusHeadImage.resx">
       <DependentUpon>202001161426311_pagesMinusHeadImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001171327084_changes.resx">
+      <DependentUpon>202001171327084_changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -34,8 +34,8 @@ namespace SymCMS.Services
             var commentModel = _db.CommentModels.Find(comment.CommentId);
             if (commentModel == null) return null;
             commentModel.CommentId = comment.CommentId;
-            commentModel.CommentText = comment.CommentText;
-            commentModel.AuthorName = comment.AuthorName;
+            commentModel.CommentText = comment.Comment;
+            commentModel.AuthorName = comment.Author;
             commentModel.PostId = comment.PostId;
             commentModel.PageId = comment.PageId;
 

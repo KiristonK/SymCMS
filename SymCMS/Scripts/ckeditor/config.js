@@ -25,8 +25,8 @@ countSpacesAsChars: true,
 countHTML: false,
 
 // Maximum allowed Word Count, -1 is default for unlimited
-maxWordCount: 200,
+maxWordCount: -1,
 
 // Maximum allowed Char Count, -1 is default for unlimited
-maxCharCount: 4000};
+maxCharCount: -1};
 };

@@ -13,8 +13,8 @@ namespace SymCMS.Models
         public CommentModel(CommentViewModel commentView)
         {
             CommentId = commentView.CommentId;
-            CommentText = commentView.CommentText;
-            AuthorName = commentView.AuthorName;
+            CommentText = commentView.Comment;
+            AuthorName = commentView.Author;
             PostId = commentView.PostId;
             PageId = commentView.PageId;
         }

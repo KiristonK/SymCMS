@@ -52,7 +52,7 @@ namespace SymCMS.Controllers
 
         // POST: Comment/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "AuthorName, CommentText, PostId, PageId")]
+        public ActionResult Create([Bind(Include = "Author, Comment, PostId, PageId")]
             CommentViewModel comment)
         {
             if (!_cs.CreateComment(comment)) return RedirectToAction("Index");
@@ -82,7 +82,7 @@ namespace SymCMS.Controllers
         // POST: Comment/Edit/5
         [HttpPost]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "CommentId, AuthorName, CommentText, PostId, PageId")]
+        public ActionResult Edit([Bind(Include = "CommentId, Author, Comment, PostId, PageId")]
             CommentViewModel comment)
         {
             if (ModelState.IsValid) _cs.EditComment(comment);

@@ -12,17 +12,17 @@ namespace SymCMS.ViewModels
         public CommentViewModel(CommentModel comment)
         {
             CommentId = comment.CommentId;
-            CommentText = comment.CommentText;
-            AuthorName = comment.AuthorName;
+            Comment = comment.CommentText;
+            Author = comment.AuthorName;
             PostId = comment.PostId;
             PageId = comment.PageId;
         }
 
         public int CommentId { get; set; }
 
-        [DataType(DataType.MultilineText)] public string CommentText { get; set; }
+        [DataType(DataType.MultilineText)] public string Comment { get; set; }
 
-        public string AuthorName { get; set; }
+        public string Author { get; set; }
         public int? PostId { get; set; }
         public virtual PostModel Post { get; set; }
 

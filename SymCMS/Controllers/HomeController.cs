@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web.Mvc;
 using SymCMS.Services;
 
 namespace SymCMS.Controllers
@@ -9,7 +11,17 @@ namespace SymCMS.Controllers
 
         public ActionResult Index()
         {
-            return View(_pS.GetPosts());
+            var posts = _pS.GetPosts();
+            posts.Reverse();
+            foreach (var post in posts)
+            {
+                post.Content = Regex.Replace(post.Content, "<.*?>", string.Empty);
+                if (post.Content.Length >= 1000)
+                {
+                    post.Content = post.Content.Substring(0, 1000) + "...";
+                }
+            }
+            return View(posts.Where(m => m.Visible));
         }
 
         public ActionResult About()

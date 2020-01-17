@@ -55,9 +55,9 @@
 
                 @Html.HiddenFor(m => model.PostId)
                 @Html.HiddenFor(m => model.PageId)
-                @Html.EditorFor(m => model.AuthorName, new {htmlAttributes = new {@class = "form-control mb-4", id = "name", placeholder = "Enter your name or email"}})
+                @Html.EditorFor(m => model.Author, new {htmlAttributes = new {@class = "form-control mb-4", id = "name", placeholder = "Enter your name or email"}})
                 <label class="h3 font-weight-light" for="comment">Comment</label>
-                @Html.EditorFor(m => model.CommentText, new {htmlattributes = new {@class = "form-control", rows = "5", id = "comment", name = "text"}})
+                @Html.EditorFor(m => model.Comment, new {htmlattributes = new {@class = "form-control", rows = "5", id = "comment", name = "text"}})
                 <input type="submit" class="btn btn-primary mt-2 mb-2" id="addComment" value="Add comment"/>
             }
         </div>
