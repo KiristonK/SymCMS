@@ -16,40 +16,38 @@ namespace SymCMS.Controllers
         // GET: Comment
         public ActionResult Index()
         {
-            ViewBag.ExComments = _cs.GetAllComments();
-            IEnumerable<CommentViewModel> model;
+            //ViewBag.ExComments = _cs.GetAllComments();
+            //IEnumerable<CommentViewModel> model;
             if (ViewData.ContainsKey("postId"))
             {
                 int.TryParse(ViewData["postId"].ToString(), out var id);
-                model = _cs.GetAllComments().Where(m => m.PostId == id);
+                ViewBag.ExComments = _cs.GetAllComments().Where(m => m.PostId == id);
+                return RedirectToAction("Details", "Admin", new { id });
             }
             else
             {
                 int.TryParse(ViewData["pageId"].ToString(), out var id);
-                model = _cs.GetAllComments().Where(m => m.PageId == id);
+                ViewBag.ExComments = _cs.GetAllComments().Where(m => m.PageId == id);
+                return RedirectToAction("Details", "Pages", new { id });
             }
-
-            return PartialView("~/Views/Shared/_CommentSection.cshtml", model);
         }
 
 
         // GET: Comment/Create
         public ActionResult Create()
         {
-            IEnumerable<CommentViewModel> model;
             if (ViewData.ContainsKey("postId"))
             {
                 int.TryParse(ViewData["postId"].ToString(), out var id);
-                model = _cs.GetAllComments().Where(m => m.PostId == id);
+                ViewBag.ExComments = _cs.GetAllComments().Where(m => m.PostId == id);
+                return RedirectToAction("Details", "Admin", new {id});
             }
             else
             {
                 int.TryParse(ViewData["pageId"].ToString(), out var id);
-                model = _cs.GetAllComments().Where(m => m.PageId == id);
+                ViewBag.ExComments = _cs.GetAllComments().Where(m => m.PageId == id);
+                return RedirectToAction("Details", "Pages", new {id});
             }
-
-            ViewBag.ExComments = model;
-            return PartialView("~/Views/Shared/_CommentSection.cshtml");
         }
 
         // POST: Comment/Create
@@ -63,8 +61,8 @@ namespace SymCMS.Controllers
                 : _cs.GetAllComments().Where(m => m.PageId == comment.PageId);
 
             return comment.PostId != null
-                ? View("~/Views/Admin/Details.cshtml", _ps.GetPost(comment.PostId.Value))
-                : View("~/Views/Pages/Details.cshtml", _paS.GetPage(comment.PageId));
+                ? RedirectToAction("Details", "Admin", new {id = comment.PostId.Value})
+                : RedirectToAction("Details", "Pages", new {id = comment.PageId.Value});
         }
 
         // GET: Comment/Edit/5
@@ -77,8 +75,8 @@ namespace SymCMS.Controllers
                 : _cs.GetAllComments().Where(m => m.PageId == comment.PageId);
             ;
             return comment.PostId != null
-                ? View("~/Views/Admin/Details.cshtml", _ps.GetPost(comment.PostId.Value))
-                : View("~/Views/Pages/Details.cshtml", _paS.GetPage(comment.PageId));
+                ? RedirectToAction("Details", "Admin", new { id = comment.PostId.Value })
+                : RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
         }
 
         // POST: Comment/Edit/5
@@ -93,8 +91,8 @@ namespace SymCMS.Controllers
                 : _cs.GetAllComments().Where(m => m.PageId == comment.PageId);
 
             return comment.PostId != null
-                ? View("~/Views/Admin/Details.cshtml", _ps.GetPost(comment.PostId.Value))
-                : View("~/Views/Pages/Details.cshtml", _paS.GetPage(comment.PageId));
+                ? RedirectToAction("Details", "Admin", new { id = comment.PostId.Value })
+                : RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
         }
 
         // GET: Comment/Delete/5
@@ -107,8 +105,8 @@ namespace SymCMS.Controllers
                 : _cs.GetAllComments().Where(m => m.PageId == comment.PageId);
             ;
             return comment.PostId != null
-                ? View("~/Views/Admin/Details.cshtml", _ps.GetPost(comment.PostId.Value))
-                : View("~/Views/Pages/Details.cshtml", _paS.GetPage(comment.PageId));
+                ? RedirectToAction("Details", "Admin", new { id = comment.PostId.Value })
+                : RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
         }
 
         // POST: Comment/Delete/5
@@ -121,12 +119,12 @@ namespace SymCMS.Controllers
             {
                 _cs.DeleteComment(id);
                 ViewBag.ExComments = _cs.GetAllComments().Where(m => m.PostId == comment.PostId);
-                return View("~/Views/Admin/Details.cshtml", _ps.GetPost(comment.PostId));
+                return RedirectToAction("Details", "Admin", new { id = comment.PostId.Value });
             }
 
             _cs.DeleteComment(id);
             ViewBag.ExComments = _cs.GetAllComments().Where(m => m.PageId == comment.PageId);
-            return View("~/Views/Pages/Details.cshtml", _paS.GetPage(comment.PageId));
+            return RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
         }
     }
 }

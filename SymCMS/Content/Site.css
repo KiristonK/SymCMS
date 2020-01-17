@@ -409,7 +409,7 @@ input[type="checkbox"].switch_1:checked:after { left: calc(100% - 1.5em); }
 
 img.zoom {
     -moz-transition: all .3s ease-in-out;
-    -ms-transition: all .3s ease-in-out;
+    /*-ms-transition: all .3s ease-in-out;*/
     -o-transition: all .3s ease-in-out;
     -webkit-transition: all .3s ease-in-out;
     border-radius: 5px;
