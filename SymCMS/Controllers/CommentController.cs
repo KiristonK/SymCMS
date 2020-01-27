@@ -43,17 +43,16 @@ namespace SymCMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Author, Comment, PostId, PageId")]
-            CommentViewModel comment)
+        public ActionResult Create([Bind(Include = "Author, Comment, PostId, PageId")] CommentViewModel commentViewModel)
         {
-            if (!_cs.CreateComment(comment)) return RedirectToAction("Index");
-            ViewBag.ExComments = comment.PostId != null
-                ? _cs.GetAllComments().Where(m => m.PostId == comment.PostId)
-                : _cs.GetAllComments().Where(m => m.PageId == comment.PageId);
+            if (!_cs.CreateComment(commentViewModel)) return RedirectToAction("Index");
+            ViewBag.ExComments = commentViewModel.PostId != null
+                ? _cs.GetAllComments().Where(m => m.PostId == commentViewModel.PostId)
+                : _cs.GetAllComments().Where(m => m.PageId == commentViewModel.PageId);
 
-            return comment.PostId != null
-                ? RedirectToAction("Details", "Admin", new {id = comment.PostId.Value})
-                : RedirectToAction("Details", "Pages", new {id = comment.PageId.Value});
+            return commentViewModel.PostId != null
+                ? RedirectToAction("Details", "Admin", new {id = commentViewModel.PostId.Value})
+                : RedirectToAction("Details", "Pages", new {id = commentViewModel.PageId.Value});
         }
 
         [Authorize]

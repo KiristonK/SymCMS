@@ -31,14 +31,8 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @{
-                        item.Content = Regex.Replace(item.Content, "<.*?>", string.Empty);
-                        if (item.Content.Length >= 100)
-                        {
-                            item.Content = item.Content.Substring(0, 100) + "...";
-                        }
+                    
                         @Html.Raw(item.Content)
-                    }
                 </td>
                 <td>
                     <div class="row justify-content-end">

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using SymCMS.Services;
@@ -15,7 +16,7 @@ namespace SymCMS.Controllers
         {
             ViewBag.ExComments = _commentService.GetAllComments();
             var posts = _postService.GetPosts();
-            foreach (var post in posts)
+            foreach (var post in posts.Where(post => !string.IsNullOrEmpty(post.Content)))
             {
                 post.Content = Regex.Replace(post.Content, "<.*?>", string.Empty);
                 if (post.Content.Length >= 1000)

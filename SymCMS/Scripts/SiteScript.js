@@ -12,6 +12,25 @@
 
 $(document).ready(function () {
     $("textarea").autoResize();
+    $("#CategoryName").val($("#categorySelector option:selected").html());
+    $("#categorySelector").click(function () {
+        $("#CategoryName").val($("#categorySelector option:selected").html());
+    });
+    $("#selectCategoryBtn").click(function () {
+        var e = document.getElementById("categorySelector");
+        if (e.options[e.selectedIndex].value === 0) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/CreateCategory/",
+                data: { Name: $("#CategoryName").val() },
+                dataType: typeof (string)
+            }).fail(alert("Fail"));
+        } else {
+            $("#category").val($("#CategoryName").val());
+            $("#CategoryId").val($("#categorySelector option:selected").val());
+            $("#categoryName").val($("#categorySelector option:selected").html());
+        }
+    });
 });
 
 $(".post_visibility").change(function() {
@@ -54,30 +73,30 @@ $(document).on("click",
         file.trigger("click");
     });
 
-$(document).on('change',
+$(document).on("change",
     'input[type="file"]',
     function (e) {
         if (e.target.files[0] == undefined) {
             return;
         }
         var fileName = e.target.files[0].name;
-        var idEl = $(this).attr('id');
-        var idParent = $(this).attr('name');
+        var idEl = $(this).attr("id");
+        var idParent = $(this).attr("name");
         var reader;
         switch (idEl) {
-            case 'HeadImage':
+            case "HeadImage":
                 $("#file").val(fileName);
 
                 reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#HeadImageBase64').val(reader.result);
-                    $('#previewImage').removeClass('d-none');
+                    $("#HeadImageBase64").val(reader.result);
+                    $("#previewImage").removeClass("d-none");
                     document.getElementById("previewImage").src = e.target.result;
 
                 };
                 reader.readAsDataURL(this.files[0]);
                 break;
-            case 'carouselImages' + idParent:
+            case "carouselImages" + idParent:
                 $("#fileNameCarousel" + idParent).val(fileName);
                 reader = new FileReader();
                 reader.onload = function (e) {
@@ -85,8 +104,8 @@ $(document).on('change',
                 };
                 reader.readAsDataURL(this.files[0]);
                 break;
-            case 'galleryImages' + idParent:
-                $("#fileNameGallery" + $(this).attr('name')).val(fileName);
+            case "galleryImages" + idParent:
+                $("#fileNameGallery" + $(this).attr("name")).val(fileName);
                 reader = new FileReader();
                 reader.onload = function (e) {
                     document.getElementById(idParent.toString()).innerHTML +=
@@ -244,12 +263,12 @@ function createCategory() {
 })(jQuery);
 
 function GalleryAdd(galleryId) {
-    var modules = document.getElementById('modules');
+    var modules = document.getElementById("modules");
     var strId = galleryId.toString();
     var removeBtn = '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#' +
         strId +
-        '\').remove(); $(\'#addImageGalleryBtn'+strId+'\').remove(); $(this).remove()" value="Remove gallery"/></div>';
-    modules.insertAdjacentHTML('beforeend',
+        "').remove(); $('#addImageGalleryBtn"+strId+'\').remove(); $(this).remove()" value="Remove gallery"/></div>';
+    modules.insertAdjacentHTML("beforeend",
         '<div class="row gallery" id="' +
         strId +
         '"></div>' +
@@ -270,9 +289,9 @@ function GalleryAdd(galleryId) {
         '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages' +
         strId +
         '\').trigger(\'click\');" value="Add image" />' +
-        '</div>' +
-        '</div>' +
-        '</div>' + removeBtn);
+        "</div>" +
+        "</div>" +
+        "</div>" + removeBtn);
 }
 
 function GalleryAdminControls(galleryId) {
@@ -298,9 +317,9 @@ function GalleryAdminControls(galleryId) {
         '" class="btn btn-primary addImageGallery" onclick="$(this).parents().find(\'#galleryImages' +
         strId +
         '\').trigger(\'click\');" value="Add image" />' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
         removeBtn;
     return html;
 }
@@ -310,25 +329,25 @@ function EditorAdd(editorId) {
     var removeBtn =
         '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="CKEDITOR.instances[\'additionalEditor' +
             editorId +
-            '\'].destroy(); $(\'#editor' +
+            "'].destroy(); $('#editor" +
             editorId +
             '\').remove(); $(this).remove()" value="Remove editor"/></div>';
-    modules.insertAdjacentHTML('beforeend',
+    modules.insertAdjacentHTML("beforeend",
         '<div class="mt-2 mb-2 editor" id="editor' +
         editorId +
         '"><textarea name="additionalEditor' +
         editorId +
         '"></textarea></div>' +
         removeBtn);
-    CKEDITOR.replace('additionalEditor' + editorId);
+    CKEDITOR.replace("additionalEditor" + editorId);
 }
 
 function CarouselAdd(carouselIdString) {
     var removeBtn =
         '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#carousel' +
-        carouselIdString + '\').remove(); $(\'#addImageCarBtn' + carouselIdString + '\').remove(); $(this).remove()" value="Remove carousel"/></div>';
-    var modules = document.getElementById('modules');
-    modules.insertAdjacentHTML('beforeend',
+        carouselIdString + "').remove(); $('#addImageCarBtn" + carouselIdString + '\').remove(); $(this).remove()" value="Remove carousel"/></div>';
+    var modules = document.getElementById("modules");
+    modules.insertAdjacentHTML("beforeend",
         '<div id="carousel' + carouselIdString + '" class="carousel slide mt-2 mb-2 additionalCarousel' + carouselIdString +
         '" style="background: darkgray" data-ride="carousel">' +
         '<div class="carousel-inner" style="max-height: 700px;" id="carouselImages' + carouselIdString + '"></div>' +
@@ -343,25 +362,25 @@ function CarouselAdd(carouselIdString) {
 }
 
 function addImageCarousel(imgSource, id) {
-    var $carousel = $('.additionalCarousel' + id.toString());
+    var $carousel = $(".additionalCarousel" + id.toString());
     var active;
-    if ($carousel.find('.active').index() < 0)
-        active = $carousel.find('.item').length - 1;
+    if ($carousel.find(".active").index() < 0)
+        active = $carousel.find(".item").length - 1;
     else
         active = 1;
     if (active <= 0) {
-        document.getElementById('carouselImages' + id.toString()).innerHTML =
+        document.getElementById("carouselImages" + id.toString()).innerHTML =
             '<div class="carousel-item active">' +
             '<img class="d-block w-100" src="' +
             imgSource +
             '" alt="">' +
-            '</div>';
+            "</div>";
     } else {
-        document.getElementById('carouselImages' + id.toString()).innerHTML += '<div class="carousel-item">' +
+        document.getElementById("carouselImages" + id.toString()).innerHTML += '<div class="carousel-item">' +
             '<img class="d-block w-100" src="' +
             imgSource +
             '" alt="">' +
-            '</div>';
+            "</div>";
     }
 
 }
@@ -371,7 +390,7 @@ function CarouselAdminControls(carouselId) {
     var removeBtn =
         '<div class="adminControl"><input type="button" class="btn btn-danger" onclick="$(\'#carousel' +
             carouselIdString +
-            '\').remove(); $(\'#addImageCarBtn' +
+            "').remove(); $('#addImageCarBtn" +
             carouselIdString +
             '\').remove(); $(this).remove()" value="Remove carousel"/></div>';
     var html = '<div class="col-md-4 adminControl" id="addImageCarBtn' +
@@ -393,9 +412,9 @@ function CarouselAdminControls(carouselId) {
         '<input type="button" class="btn btn-primary" onclick="$(this).parents().find(\'#carouselImages' +
         carouselIdString +
         '\').trigger(\'click\');" value="Add image" />' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
+        "</div>" +
+        "</div>" +
+        "</div>" +
         removeBtn;
     return html;
 }

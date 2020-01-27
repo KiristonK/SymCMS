@@ -1,7 +1,7 @@
 ﻿<!-- Modal -->
 @model SymCMS.ViewModels.PostViewModel
 <div class="modal fade" id="modal-url" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" style="margin-left: 500px;" role="document">
         <form class="selectionForm-Category">
             <div class="modal-content">
                 <div class="modal-header">
@@ -44,7 +44,7 @@
         });
         $('#selectCategoryBtn').click(function() {
             var e = document.getElementById('categorySelector');
-            if (e.options[e.selectedIndex].value === 0) {
+            if (e.options[e.selectedIndex].value === '0') {
                 $.ajax({
                     type: "POST",
                     url: "/Admin/CreateCategory/",

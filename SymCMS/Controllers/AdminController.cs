@@ -148,8 +148,7 @@ namespace SymCMS.Controllers
 
         public PartialViewResult CategorySelectModal()
         {
-            var exCategories = _postService.GetCategories();
-            ViewBag.ExCategories = exCategories;
+            ViewBag.ExCategories = _postService.GetCategories();
             return PartialView("~/Views/Shared/_CategorySelectModal.cshtml");
         }
     }

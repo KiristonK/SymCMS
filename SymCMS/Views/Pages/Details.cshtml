@@ -44,7 +44,7 @@
 <div>
     @if (Model.CommentsEnabled)
     {
-        @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+        @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new CommentViewModel(), ViewData)
     }
 </div>
 
