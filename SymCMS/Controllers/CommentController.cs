@@ -71,16 +71,16 @@ namespace SymCMS.Controllers
         [HttpPost]
         [Authorize]
         public ActionResult Edit([Bind(Include = "CommentId, Author, Comment, PostId, PageId")]
-            CommentViewModel comment)
+            CommentViewModel commentViewModel)
         {
-            if (ModelState.IsValid) _cs.EditComment(comment);
-            ViewBag.ExComments = comment.PostId != null
-                ? _cs.GetAllComments().Where(m => m.PostId == comment.PostId)
-                : _cs.GetAllComments().Where(m => m.PageId == comment.PageId);
+            if (ModelState.IsValid) _cs.EditComment(commentViewModel);
+            ViewBag.ExComments = commentViewModel.PostId != null
+                ? _cs.GetAllComments().Where(m => m.PostId == commentViewModel.PostId)
+                : _cs.GetAllComments().Where(m => m.PageId == commentViewModel.PageId);
 
-            return comment.PostId != null
-                ? RedirectToAction("Details", "Admin", new { id = comment.PostId.Value })
-                : RedirectToAction("Details", "Pages", new { id = comment.PageId.Value });
+            return commentViewModel.PostId != null
+                ? RedirectToAction("Details", "Admin", new { id = commentViewModel.PostId.Value })
+                : RedirectToAction("Details", "Pages", new { id = commentViewModel.PageId.Value });
         }
 
         [Authorize]
