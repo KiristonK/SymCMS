@@ -20,10 +20,13 @@
         </script>
         @if (User.IsInRole("Administrator") || User.IsInRole("Editor"))
         {
-            <input type="button" class="btn btn-secondary float-right" onclick="document.getElementById(@Html.ValueFor(model => model.CommentId)+' del').classList.toggle('d-none');
-document.getElementById(@Html.ValueFor(model => model.CommentId).ToString()).classList.toggle('d-none');
-document.getElementById(@Model.CommentId + ' name').toggleAttribute('readonly');
-document.getElementById(@Model.CommentId + ' text').toggleAttribute('readonly');" value="Edit" />
+            <input type="button" class="btn btn-secondary float-right" 
+                   onclick="
+    document.getElementById(@Html.ValueFor(model => model.CommentId)+' del').classList.toggle('d-none');
+    document.getElementById(@Html.ValueFor(model => model.CommentId).ToString()).classList.toggle('d-none');
+    document.getElementById(@Model.CommentId + ' name').toggleAttribute('readonly');
+    document.getElementById(@Model.CommentId + ' text').toggleAttribute('readonly');" 
+                   value="Edit" />
         }
     </div>
 </div>
