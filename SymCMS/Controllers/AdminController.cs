@@ -25,12 +25,13 @@ namespace SymCMS.Controllers
         {
             ViewBag.ExComments = _commentService.GetAllComments();
             var posts = _postService.GetPosts();
-            foreach (var post in posts.Where(post => !string.IsNullOrEmpty(post.ContentPreview)))
+            foreach (var post in posts)
             {
+                if (string.IsNullOrEmpty(post.ContentPreview) || string.IsNullOrEmpty(post.Content)) continue;
                 post.ContentPreview = Regex.Replace(post.Content, "<.*?>", string.Empty);
-                if (post.ContentPreview.Length >= 1000)
+                if (post.ContentPreview.Length >= 50)
                 {
-                    post.ContentPreview = post.ContentPreview.Substring(0, 1000) + "...";
+                    post.ContentPreview = post.ContentPreview.Substring(0, 50) + "...";
                 }
             }
             return View(posts);

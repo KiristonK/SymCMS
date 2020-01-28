@@ -45,16 +45,9 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
         <li class="mr-3">
             <form action="/Account/Login" id="loginLink">
                 <button class="btn btn-outline-light" role="button" type="submit">Sgin In</button>
-            </form>
-        </li>
-        <li class="mr-3">
-            <form action="/Account/Register" id="registerLink">
-                <button class="btn btn-success" role="button" type="submit">Sgin Up</button>
             </form>
         </li>
     </ul>
