@@ -26,17 +26,9 @@
         <form action="/Pages/Edit/@Model.PageId">
             <input type="submit" class="btn btn-danger rounded mr-2" value="Edit" />
         </form>
-        <form action="/Pages/PagesView/">
-            <input type="submit" value="Back" class="btn btn-outline-dark" />
-        </form>
-    }
-    else
-    {
-        <form action="/Home/Index/">
-            <input type="submit" value="Back" class="btn btn-outline-dark" />
-        </form>
     }
 
+    <input type="button" value="Back" class="btn btn-outline-dark" onclick="history.back();"/>
 
 </div>
 }

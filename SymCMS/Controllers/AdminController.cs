@@ -17,17 +17,14 @@ namespace SymCMS.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.ExComments = _commentService.GetAllComments();
             return Redirect("~/Views/Home/Index");
         }
 
         public ActionResult PostsView()
         {
-            ViewBag.ExComments = _commentService.GetAllComments();
             var posts = _postService.GetPosts();
-            foreach (var post in posts)
+            foreach (var post in posts.Where(post => !string.IsNullOrEmpty(post.ContentPreview) && !string.IsNullOrEmpty(post.Content)))
             {
-                if (string.IsNullOrEmpty(post.ContentPreview) || string.IsNullOrEmpty(post.Content)) continue;
                 post.ContentPreview = Regex.Replace(post.Content, "<.*?>", string.Empty);
                 if (post.ContentPreview.Length >= 50)
                 {
@@ -40,9 +37,10 @@ namespace SymCMS.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PostId == id);
             var postViewModel = _postService.GetPost(id.Value);
             if (postViewModel == null) return HttpNotFound();
+
+            ViewBag.ExComments = _commentService.GetAllComments().Where(m => m.PostId == id);
             if (!ViewData.ContainsKey("postId"))
                 ViewData.Add("postId", postViewModel.Id);
             else
@@ -60,6 +58,18 @@ namespace SymCMS.Controllers
         public ActionResult Edit(int id)
         {
             ViewBag.ExComments = _commentService.GetAllComments();
+            var postViewModel = _postService.GetPost(id);
+            ViewData.Add("PostComments", postViewModel.CommentsEnabled);
+            if (!ViewData.ContainsKey("postId"))
+                ViewData.Add("postId", postViewModel.Id);
+            else
+                ViewData["postId"] = postViewModel.Id;
+
+
+            if (!ViewData.ContainsKey("PostComments"))
+                ViewData.Add("PostComments", postViewModel.CommentsEnabled);
+            else
+                ViewData["PostComments"] = postViewModel.CommentsEnabled;
             return View(_postService.GetPost(id));
         }
 
@@ -70,6 +80,8 @@ namespace SymCMS.Controllers
                 "Id,Title,Content,Visible,CategoryId,HeadImageBase64,Author,LiveTime,CommentsEnabled,ContentPreview")]
             PostViewModel postViewModel)
         {
+
+            ViewData.Add("PostComments", postViewModel.CommentsEnabled);
             if (!ModelState.IsValid) return View(postViewModel);
             _postService.EditPost(postViewModel);
             return RedirectToAction("PostsView");
@@ -119,7 +131,7 @@ namespace SymCMS.Controllers
 
         public ActionResult Delete(int? id)
         {
-            ViewBag.ExComments = _commentService.GetAllComments();
+            ViewBag.ExComments = _commentService.GetAllComments().Where(comment => comment.PostId == id);
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var postViewModel = _postService.GetPosts().Find(p => p.Id == id);
             if (postViewModel == null) return HttpNotFound();

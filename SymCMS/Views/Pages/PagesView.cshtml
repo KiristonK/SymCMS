@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>All pages</h2>
+<h2 class="display-3">All pages</h2>
 @if (User.Identity.IsAuthenticated)
 {
     <p>
@@ -21,7 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Content)
             </th>
-            <th class="justify-content-end"></th>
+            <th class="justify-content-end" style="min-width: 220px;"></th>
         </tr>
 
         @foreach (var item in Model)

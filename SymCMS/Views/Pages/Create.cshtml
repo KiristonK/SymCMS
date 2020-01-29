@@ -99,20 +99,20 @@
 
         $(document).ready(function() {
 
-            $('#addGallery').click(function () {
+            $('#addGallery').click(function() {
                 GalleryAdd(galleryId);
                 galleryId++;
             });
 
-            $('#addCarousel').click(function () {
+            $('#addCarousel').click(function() {
                 CarouselAdd(carouselId.toString());
                 carouselId++;
             });
 
-            $('#addEditor').click(function () {
+            $('#addEditor').click(function() {
                 EditorAdd(editorId.toString());
                 editorId++;
-                if (editorId == 10) {
+                if (editorId === 10) {
                     $(this).hide();
                 }
             });
@@ -127,19 +127,23 @@
 
 
             $("#createBtn").click(function() {
-                if ($("#Title").val() === "" || $("#Content").val() === "") {
-                    alert("Field's can not be empty !");
+                if ($("#Title").val() === "") {
+                    alert("Title can not be empty !");
                     return;
+                } else if (CKEDITOR.instances["Content"].getData() === "") {
+                    alert("Content can not be empty !");
+                    return;
+                } else {
+                    $("div").remove(".adminControl");
+
+                    $("div#modules").find('.cke').replaceWith(function() {
+                        var id = 'additionalEditor' + $(this).attr('id').substr(-1);
+                        var editor = CKEDITOR.instances[id];
+                        return editor.getData();
+                    });
+
+                    document.getElementById('AdditionalContent').value += document.getElementById('modules').innerHTML;
                 }
-                $("div").remove(".adminControl");
-
-                $("div#modules").find('.cke').replaceWith(function() {
-                    var id = 'additionalEditor' + $(this).attr('id').substr(-1);
-                    var editor = CKEDITOR.instances[id];
-                    return editor.getData();
-                });
-
-                document.getElementById('AdditionalContent').value += document.getElementById('modules').innerHTML;
 
             });
         });

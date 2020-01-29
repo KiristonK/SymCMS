@@ -14,7 +14,6 @@ namespace SymCMS.Controllers
         // GET: PostModels
         public ActionResult Index()
         {
-            ViewBag.ExComments = _commentService.GetAllComments();
             var posts = _postService.GetPosts();
             foreach (var post in posts.Where(post => !string.IsNullOrEmpty(post.Content)))
             {
@@ -30,7 +29,7 @@ namespace SymCMS.Controllers
         // GET: PostModels/Details/5
         public ActionResult Details(int? id)
         {
-            ViewBag.ExComments = _commentService.GetAllComments();
+            ViewBag.ExComments = _commentService.GetAllComments().Where(comment => comment.PostId == id);
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var postViewModel = _postService.GetPost(id.Value);
             if (postViewModel == null) return HttpNotFound();

@@ -13,9 +13,8 @@ namespace SymCMS.Controllers
         {
             var posts = _pS.GetPosts();
             posts.Reverse();
-            foreach (var post in posts)
+            foreach (var post in posts.Where(post => !string.IsNullOrEmpty(post.ContentPreview) && !string.IsNullOrEmpty(post.Content)))
             {
-                if (string.IsNullOrEmpty(post.ContentPreview) || string.IsNullOrEmpty(post.Content)) continue;
                 post.ContentPreview = Regex.Replace(post.Content, "<.*?>", string.Empty);
                 if (post.ContentPreview.Length >= 1000)
                 {

@@ -1,8 +1,8 @@
-﻿@model SymCMS.ViewModels.PostViewModel
+﻿@using SymCMS.ViewModels
+@model SymCMS.ViewModels.PostViewModel
 
 @{
     ViewBag.Title = "Edit";
-    ViewData.Add("PostComments", Model.CommentsEnabled);
 }
 
 <h2 class="display-2">Editing of @Html.ValueFor(model => model.Title)</h2>
@@ -90,19 +90,18 @@
 
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary"/>
+            <div class="form-group">
+                <div class="row m-3">
+                    <input type="submit" value="Save" class="btn btn-danger mr-3" />
+                    <input type="button" value="Back" onclick="history.back();" class="btn btn-outline-secondary" />
+                </div>
             </div>
         </div>
     </div>
 }
-
 <div>
-    <form action="/Admin/PostsView/">
-        <input type="submit" value="Back to List" class="btn btn-outline-dark"/>
-    </form>
+    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new CommentViewModel(), ViewData)
 </div>
-
 
 @section Scripts{
 

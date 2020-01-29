@@ -3,22 +3,6 @@
 
 @{
     ViewBag.Title = "Edit";
-    if (!ViewData.ContainsKey("pageId"))
-    {
-        ViewData.Add("pageId", Model.PageId);
-    }
-    else
-    {
-        ViewData["pageId"] = Model.PageId;
-    }
-    if (!ViewData.ContainsKey("PageComments"))
-    {
-        ViewData.Add("PageComments", Model.CommentsEnabled);
-    }
-    else
-    {
-        ViewData["PageComments"] = Model.CommentsEnabled;
-    }
 }
 
 <h2 class="display-2">Edit</h2>
@@ -85,19 +69,20 @@
         
         @Html.HiddenFor(model => model.CommentsEnabled)
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" id="saveBtn" class="btn btn-primary"/>
+            <div class="row m-3">
+                <input type="submit" value="Save" id="saveBtn" class="btn btn-danger mr-3" />
+                <input type="button" value="Back" onclick="history.back();" class="btn btn-outline-secondary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new List<CommentViewModel>(ViewBag.ExComments), ViewData)
+    @Html.Partial("~/Views/Shared/_CommentSection.cshtml", new CommentViewModel(), ViewData)
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-outline-secondary"})
+    <input class = "btn btn-outline-secondary" value="Back" onclick="history.back();" />
 </div>
 
 @section Scripts {
