@@ -1,0 +1,377 @@
+USE [master]
+GO
+/****** Object:  Database [SymCMS_1.6]    Script Date: 1/30/2021 6:29:08 PM ******/
+CREATE DATABASE [SymCMS_1.6]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'SymCMS_1.6', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\SymCMS_1.6.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'SymCMS_1.6_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\SymCMS_1.6_log.ldf' , SIZE = 73728KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+ALTER DATABASE [SymCMS_1.6] SET COMPATIBILITY_LEVEL = 140
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [SymCMS_1.6].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [SymCMS_1.6] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET AUTO_CLOSE ON 
+GO
+ALTER DATABASE [SymCMS_1.6] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [SymCMS_1.6] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [SymCMS_1.6] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [SymCMS_1.6] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [SymCMS_1.6] SET READ_COMMITTED_SNAPSHOT ON 
+GO
+ALTER DATABASE [SymCMS_1.6] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [SymCMS_1.6] SET  MULTI_USER 
+GO
+ALTER DATABASE [SymCMS_1.6] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [SymCMS_1.6] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [SymCMS_1.6] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [SymCMS_1.6] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [SymCMS_1.6] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [SymCMS_1.6] SET QUERY_STORE = OFF
+GO
+USE [SymCMS_1.6]
+GO
+/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__MigrationHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ContextKey] [nvarchar](300) NOT NULL,
+	[Model] [varbinary](max) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK_dbo.__MigrationHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC,
+	[ContextKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetRoles](
+	[Id] [nvarchar](128) NOT NULL,
+	[Name] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserLogins](
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[ProviderKey] [nvarchar](128) NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
+(
+	[LoginProvider] ASC,
+	[ProviderKey] ASC,
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](128) NOT NULL,
+	[RoleId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUsers](
+	[Id] [nvarchar](128) NOT NULL,
+	[Email] [nvarchar](256) NULL,
+	[EmailConfirmed] [bit] NOT NULL,
+	[PasswordHash] [nvarchar](max) NULL,
+	[SecurityStamp] [nvarchar](max) NULL,
+	[PhoneNumber] [nvarchar](max) NULL,
+	[PhoneNumberConfirmed] [bit] NOT NULL,
+	[TwoFactorEnabled] [bit] NOT NULL,
+	[LockoutEndDateUtc] [datetime] NULL,
+	[LockoutEnabled] [bit] NOT NULL,
+	[AccessFailedCount] [int] NOT NULL,
+	[UserName] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CommentModels]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CommentModels](
+	[CommentId] [int] IDENTITY(1,1) NOT NULL,
+	[CommentText] [nvarchar](max) NULL,
+	[AuthorName] [nvarchar](max) NULL,
+	[PostId] [int] NULL,
+	[PageId] [int] NULL,
+ CONSTRAINT [PK_dbo.CommentModels] PRIMARY KEY CLUSTERED 
+(
+	[CommentId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PageModels]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PageModels](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](max) NULL,
+	[Content] [nvarchar](max) NULL,
+	[CommentsEnabled] [bit] NOT NULL,
+	[Author] [nvarchar](max) NOT NULL,
+	[CreationDate] [datetime2](7) NOT NULL,
+	[AdditionalContent] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.PageModels] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PostCategories]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PostCategories](
+	[CategoryId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.PostCategories] PRIMARY KEY CLUSTERED 
+(
+	[CategoryId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PostModels]    Script Date: 1/30/2021 6:29:09 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PostModels](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](max) NULL,
+	[Content] [nvarchar](max) NULL,
+	[Visible] [bit] NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[HeadImageBase64] [nvarchar](max) NULL,
+	[Author] [nvarchar](max) NULL,
+	[CreationDate] [datetime2](7) NOT NULL,
+	[Livetime] [datetime2](7) NOT NULL,
+	[CommentsEnabled] [bit] NOT NULL,
+	[ContentPreview] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.PostModels] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [RoleNameIndex]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex] ON [dbo].[AspNetRoles]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_UserId]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserClaims]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_UserId]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserLogins]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_RoleId]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE NONCLUSTERED INDEX [IX_RoleId] ON [dbo].[AspNetUserRoles]
+(
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_UserId]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserRoles]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UserNameIndex]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [dbo].[AspNetUsers]
+(
+	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_PageId]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE NONCLUSTERED INDEX [IX_PageId] ON [dbo].[CommentModels]
+(
+	[PageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_PostId]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE NONCLUSTERED INDEX [IX_PostId] ON [dbo].[CommentModels]
+(
+	[PostId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_CategoryId]    Script Date: 1/30/2021 6:29:09 PM ******/
+CREATE NONCLUSTERED INDEX [IX_CategoryId] ON [dbo].[PostModels]
+(
+	[CategoryId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PageModels] ADD  DEFAULT ((0)) FOR [CommentsEnabled]
+GO
+ALTER TABLE [dbo].[PageModels] ADD  DEFAULT ('') FOR [Author]
+GO
+ALTER TABLE [dbo].[PageModels] ADD  DEFAULT ('1900-01-01T00:00:00.000') FOR [CreationDate]
+GO
+ALTER TABLE [dbo].[PostModels] ADD  DEFAULT ((0)) FOR [Visible]
+GO
+ALTER TABLE [dbo].[PostModels] ADD  DEFAULT ((0)) FOR [CategoryId]
+GO
+ALTER TABLE [dbo].[PostModels] ADD  DEFAULT ((0)) FOR [CommentsEnabled]
+GO
+ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[CommentModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.CommentModels_dbo.PageModels_PageId] FOREIGN KEY([PageId])
+REFERENCES [dbo].[PageModels] ([Id])
+GO
+ALTER TABLE [dbo].[CommentModels] CHECK CONSTRAINT [FK_dbo.CommentModels_dbo.PageModels_PageId]
+GO
+ALTER TABLE [dbo].[CommentModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.CommentModels_dbo.PostModels_PostId] FOREIGN KEY([PostId])
+REFERENCES [dbo].[PostModels] ([Id])
+GO
+ALTER TABLE [dbo].[CommentModels] CHECK CONSTRAINT [FK_dbo.CommentModels_dbo.PostModels_PostId]
+GO
+ALTER TABLE [dbo].[PostModels]  WITH CHECK ADD  CONSTRAINT [FK_dbo.PostModels_dbo.PostCategories_CategoryId] FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[PostCategories] ([CategoryId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PostModels] CHECK CONSTRAINT [FK_dbo.PostModels_dbo.PostCategories_CategoryId]
+GO
+USE [master]
+GO
+ALTER DATABASE [SymCMS_1.6] SET  READ_WRITE 
+GO
