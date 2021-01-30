@@ -1,2 +1,2 @@
 # SymCMS
-This is a blog system with admin panel and great post customization.
+System blogowy z panelem administracujnym, z możliwąścią tworzenia postów lub bardziej rozwiniętych stron.
